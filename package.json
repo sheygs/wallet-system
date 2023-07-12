@@ -1,8 +1,8 @@
 {
   "name": "wallet-system",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "A RESTFul service that mocks a minimalistic wallet system",
+  "author": "Olusegun Ekoh <sheygs13>",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
