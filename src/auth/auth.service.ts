@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { HashService } from '../hash/hash.service';
 import { CreateUserDTO, LoginUserDTO } from '../users/dtos/user.dto';
@@ -9,6 +10,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private hashService: HashService,
+    private jwtService: JwtService,
   ) {}
   async signup(body: CreateUserDTO): Promise<User> {
     const users = await this.usersService.findUser(
@@ -31,22 +33,33 @@ export class AuthService {
     return user;
   }
 
-  async validateUser(email: string, password: string): Promise<User> | null {
-    const user = await this.usersService.findOneUser(
+  async validateUser(email: string, password: string) {
+    const user = await this.usersService.findUser(email);
+
+    if (
+      user.length &&
+      (await this.hashService.comparePassword(password, user[0].password))
+    ) {
+      return user;
+    }
+
+    return null;
+  }
+
+  async login(user: any) {
+    const payload = {
+      id: user.id,
+      email: user.email,
+      is_admin: user.is_admin,
+    };
+
+    const { id, email, is_admin } = payload;
+
+    return {
+      id,
       email,
-      // phone_number,
-    );
-
-    console.log({ user });
-
-    //  if (
-    //    user &&
-    //    (await this.hashService.comparePassword(password, user.password))
-    //  ) {
-    //    return user;
-    //  }
-
-    //  return null;
-    return user;
+      is_admin,
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }

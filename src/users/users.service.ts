@@ -25,14 +25,14 @@ export class UsersService {
   }
 
   // create a method to find a user by email or phone number
-  async findOneUser(email?: string, phoneNumber?: string) {
-    const user = await this.userRepository.findOne({
-      where: {
-        ...(email && { email }),
-        ...(phoneNumber && { phone_number: phoneNumber }),
-      },
-    });
+  //   async findOneUser(email?: string, phoneNumber?: string) {
+  //     const user = await this.userRepository.findOne({
+  //       where: {
+  //         ...(email && { email }),
+  //         ...(phoneNumber && { phone_number: phoneNumber }),
+  //       },
+  //     });
 
-    return user;
-  }
+  //     return user;
+  //   }
 }
