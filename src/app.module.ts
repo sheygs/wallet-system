@@ -11,6 +11,8 @@ import { User } from './users/user.entity';
 import { Wallet } from './wallets/wallet.entity';
 import { WalletTransaction } from './wallet-transactions/wallet-transaction.entity';
 import { WalletTransfer } from './wallet-transfers/wallet-transfer.entity';
+import { AuthModule } from './auth/auth.module';
+import { HashModule } from './hash/hash.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -29,6 +31,8 @@ import { WalletTransfer } from './wallet-transfers/wallet-transfer.entity';
     WalletsModule,
     WalletTransactionsModule,
     WalletTransfersModule,
+    AuthModule,
+    HashModule,
   ],
   controllers: [AppController],
   providers: [AppService],

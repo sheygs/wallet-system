@@ -6,8 +6,9 @@ import {
   PrimaryGeneratedColumn,
   BaseEntity,
 } from 'typeorm';
+import { Currency } from '../wallets/wallet.entity';
 
-@Entity()
+@Entity({ name: 'wallet_transfers' })
 export class WalletTransfer extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -22,13 +23,25 @@ export class WalletTransfer extends BaseEntity {
   @Column({ name: 'amount', type: 'varchar' })
   amount: string;
 
-  // default - 'NGN'
-  // enum - 'NGN', 'GHS', 'USD'
-  @Column({ name: 'currency', nullable: true, type: 'varchar', length: 3 })
-  currency?: string;
+  @Column({
+    name: 'currency',
+    nullable: true,
+    type: 'enum',
+    enum: Currency,
+    default: Currency.NGN,
+  })
+  currency?: Currency;
 
   @Column({ name: 'reason', nullable: true, type: 'text' })
   reason?: string;
+
+  @Column({
+    name: 'approved',
+    type: 'boolean',
+    nullable: true,
+    default: false,
+  })
+  approved?: boolean;
 
   @CreateDateColumn({
     name: 'created_at',
