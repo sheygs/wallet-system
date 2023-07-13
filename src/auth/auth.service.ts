@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { HashService } from '../hash/hash.service';
-import { CreateUserDTO, LoginUserDTO } from '../users/dtos/user.dto';
+import { CreateUserDTO } from '../users/dtos/user.dto';
 import { User } from '../users/user.entity';
 
 @Injectable()
@@ -34,6 +34,7 @@ export class AuthService {
   }
 
   async validateUser(email: string, password: string) {
+    // refactor
     const user = await this.usersService.findUser(email);
 
     if (
