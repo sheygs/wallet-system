@@ -8,7 +8,13 @@ import {
   BaseEntity,
 } from 'typeorm';
 
-@Entity()
+export enum Currency {
+  NGN = 'NGN',
+  USD = 'USD',
+  GHS = 'GHS',
+}
+
+@Entity({ name: 'wallets' })
 export class Wallet extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -22,10 +28,14 @@ export class Wallet extends BaseEntity {
   @Column({ name: 'balance', nullable: true, type: 'varchar' })
   balance?: string;
 
-  // default - 'NGN'
-  // enum - 'NGN', 'GHS', 'USD'
-  @Column({ name: 'currency', nullable: true, type: 'varchar', length: 3 })
-  currency?: string;
+  @Column({
+    name: 'currency',
+    nullable: true,
+    type: 'enum',
+    enum: Currency,
+    default: Currency.NGN,
+  })
+  currency?: Currency;
 
   @CreateDateColumn({
     name: 'created_at',

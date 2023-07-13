@@ -6,7 +6,18 @@ import {
   BaseEntity,
 } from 'typeorm';
 
-@Entity()
+export enum TransactionType {
+  DEPOSIT = 'DEPOSIT',
+  WITHDRAWAL = 'WITHDRAWAL',
+}
+
+export enum TransactionStatus {
+  PENDING = 'pending',
+  SUCCESSFUL = 'successful',
+  FAILED = 'failed',
+}
+
+@Entity({ name: 'wallet_transactions' })
 export class WalletTransaction extends BaseEntity {
   //transaction_id
   @PrimaryGeneratedColumn('uuid')
@@ -24,14 +35,21 @@ export class WalletTransaction extends BaseEntity {
   @Column({ name: 'amount', type: 'varchar' })
   amount: string;
 
-  // enum - 'deposit', 'withdrawal'
-  @Column({ name: 'transaction_type', type: 'varchar', length: 15 })
-  transaction_type: string;
+  @Column({
+    name: 'transaction_type',
+    type: 'enum',
+    nullable: false,
+    enum: TransactionType,
+  })
+  transaction_type: TransactionType;
 
-  // default - 'pending'
-  // enum - 'pending', 'successful', 'failed'
-  @Column({ name: 'transaction_status', type: 'varchar', length: 15 })
-  transaction_status: string;
+  @Column({
+    name: 'transaction_status',
+    type: 'enum',
+    enum: TransactionStatus,
+    default: TransactionStatus.PENDING,
+  })
+  transaction_status: TransactionStatus;
 
   @CreateDateColumn({
     name: 'created_at',
