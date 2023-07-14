@@ -5,8 +5,11 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   PrimaryGeneratedColumn,
+  ManyToOne,
   BaseEntity,
+  JoinColumn,
 } from 'typeorm';
+import { User } from '../users/user.entity';
 
 export enum Currency {
   NGN = 'NGN',
@@ -58,4 +61,8 @@ export class Wallet extends BaseEntity {
     nullable: true,
   })
   deleted_at: Date;
+
+  @ManyToOne(() => User, (user) => user.wallets)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }

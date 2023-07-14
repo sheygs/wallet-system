@@ -6,7 +6,9 @@ import {
   DeleteDateColumn,
   PrimaryGeneratedColumn,
   BaseEntity,
+  OneToMany,
 } from 'typeorm';
+import { Wallet } from '../wallets/wallet.entity';
 
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
@@ -80,4 +82,7 @@ export class User extends BaseEntity {
     nullable: true,
   })
   deleted_at: Date;
+
+  @OneToMany(() => Wallet, (wallet) => wallet.user)
+  wallets: Wallet[];
 }
