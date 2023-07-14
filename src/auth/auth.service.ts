@@ -18,8 +18,6 @@ export class AuthService {
       body.phone_number,
     );
 
-    console.log({ users });
-
     if (users.length) {
       throw new BadRequestException('user already exists');
     }
