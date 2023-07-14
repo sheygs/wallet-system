@@ -25,12 +25,12 @@ export class Wallet extends BaseEntity {
   @Column({ name: 'user_id', type: 'uuid' })
   user_id: string;
 
-  @Column({ name: 'balance', nullable: true, type: 'varchar' })
-  balance?: string;
+  @Column({ name: 'balance', nullable: false, type: 'decimal', default: 0 })
+  balance?: number;
 
   @Column({
     name: 'currency',
-    nullable: true,
+    nullable: false,
     type: 'enum',
     enum: Currency,
     default: Currency.NGN,
