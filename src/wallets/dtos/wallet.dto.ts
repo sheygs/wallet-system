@@ -1,9 +1,12 @@
+import { PartialType } from '@nestjs/mapped-types';
 import {
   IsString,
   IsOptional,
   IsUUID,
   IsNotEmpty,
   IsEnum,
+  Min,
+  IsNumber,
 } from 'class-validator';
 
 import { Currency } from '../wallet.entity';
@@ -26,4 +29,17 @@ export class GetWalletDTO {
   @IsNotEmpty()
   @IsUUID()
   wallet_id: string;
+}
+
+export class initializePaymentDTO extends GetWalletDTO {
+  @IsNumber()
+  @IsNotEmpty()
+  @Min(1000)
+  amount: number;
+}
+
+export class FundWalletDTO extends PartialType(initializePaymentDTO) {
+  @IsString()
+  @IsNotEmpty()
+  reference: string;
 }

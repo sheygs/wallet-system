@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
@@ -29,7 +29,15 @@ export class UsersService {
       where: {
         id: user_id,
       },
+
+      relations: {
+        wallets: true,
+      },
     });
+
+    if (!user) {
+      throw new NotFoundException('No account exists for this user');
+    }
 
     return user;
   }

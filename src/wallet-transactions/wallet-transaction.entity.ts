@@ -23,17 +23,17 @@ export class WalletTransaction extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'user_id', type: 'uuid' })
-  user_id: string;
+  @Column({ name: 'user_id', type: 'uuid', nullable: true })
+  user_id?: string;
 
   // setup one to many relationship
   // a wallet can create multiple wallet transactions
   // a wallet transactions belongs to one wallet
-  @Column({ name: 'wallet_id', type: 'uuid', nullable: true })
-  wallet_id?: string;
+  @Column({ name: 'source_wallet_id', type: 'uuid' })
+  source_wallet_id: string;
 
-  @Column({ name: 'amount', type: 'varchar' })
-  amount: string;
+  @Column({ name: 'amount', type: 'decimal', nullable: false })
+  amount: number;
 
   @Column({
     name: 'transaction_type',
