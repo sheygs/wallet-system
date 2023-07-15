@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  wallet-system:
+    container_name: wallet-systen
+    image: sheygs13/wallet-system:1.0.0
+    build: .
+    ports:
+      - 4000:4000
+    environment:
+      - DB_TYPE=postgres
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=${postgres}
+      - POSTGRES_PASSWORD=${postgres}
+      - POSTGRES_DB=${postgres}
+      - POSTGRES_PORT=5432
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: postgres:15
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${postgres}
+      - POSTGRES_PASSWORD=${postgres}
+      - POSTGRES_DB=${postgres}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata: {}

@@ -33,6 +33,7 @@ import winstonLogger from './utilities/logger';
 
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     UsersModule,
     TypeOrmModule.forRoot({

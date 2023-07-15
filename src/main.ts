@@ -26,6 +26,6 @@ import { AppModule } from './app.module';
   appMiddleware(app);
 
   await app.listen(PORT, () => {
-    Logger.verbose(`server listening on port:${PORT}`);
+    Logger.verbose(`${process.env.NODE_ENV}: server listening on port:${PORT}`);
   });
 })();

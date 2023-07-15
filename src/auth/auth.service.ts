@@ -44,7 +44,7 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
+  async login(user: { [key: string]: string | boolean }) {
     const payload = {
       id: user.id,
       email: user.email,
