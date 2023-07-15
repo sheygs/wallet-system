@@ -3,10 +3,14 @@ import { WalletTransactionsService } from './wallet-transactions.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/RolesGuard';
 import { TransactionHistoryDTO } from './dto/wallet-transactions.dto';
+import { Helpers } from '../utilities/helpers';
 
 @Controller('wallet-transactions')
 export class WalletTransactionsController {
-  constructor(private walletTransactionsService: WalletTransactionsService) {}
+  constructor(
+    private walletTransactionsService: WalletTransactionsService,
+    public helpersService: Helpers,
+  ) {}
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('/history')
@@ -14,11 +18,10 @@ export class WalletTransactionsController {
     const transactions =
       await this.walletTransactionsService.getTransactionHistory(queryParams);
 
-    return {
-      code: 200,
-      status: 'success',
-      message: 'transactions retrieved',
-      data: transactions,
-    };
+    return this.helpersService.successResponse(
+      200,
+      transactions,
+      'transactions retrieved',
+    );
   }
 }

@@ -5,9 +5,11 @@ import { TransferService } from './transfers.service';
 import { WalletTransactionsModule } from '../wallet-transactions/wallet-transactions.module';
 import { WalletsModule } from '../wallets/wallets.module';
 import { Transfer } from './transfer.entity';
+import { HelpersModule } from '../utilities/helpers.module';
 
 @Module({
   imports: [
+    HelpersModule,
     TypeOrmModule.forFeature([Transfer]),
     WalletTransactionsModule,
     WalletsModule,

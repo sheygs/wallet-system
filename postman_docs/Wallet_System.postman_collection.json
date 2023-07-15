@@ -76,8 +76,8 @@
 							]
 						}
 					},
-					"status": "Bad Request",
-					"code": 400,
+					"status": "Created",
+					"code": 201,
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
@@ -138,11 +138,11 @@
 						},
 						{
 							"key": "Content-Length",
-							"value": "114"
+							"value": "323"
 						},
 						{
 							"key": "ETag",
-							"value": "W/\"72-rzJvKcvNhGyGtM0rbR4DrwkAcgw\""
+							"value": "W/\"143-2SUI95Or5BcLlI9KayCRNVwA1hk\""
 						},
 						{
 							"key": "Vary",
@@ -150,7 +150,7 @@
 						},
 						{
 							"key": "Date",
-							"value": "Sat, 15 Jul 2023 02:39:58 GMT"
+							"value": "Sat, 15 Jul 2023 09:19:01 GMT"
 						},
 						{
 							"key": "Connection",
@@ -162,7 +162,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"code\": 400,\n    \"status\": \"failure\",\n    \"data\": null,\n    \"error\": {\n        \"message\": \"user already exists\",\n        \"path\": \"/api/v1/auth/signup\"\n    }\n}"
+					"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"User created\",\n    \"data\": {\n        \"first_name\": \"john\",\n        \"last_name\": \"doe\",\n        \"email\": \"john.doe@gmail.com\",\n        \"phone_number\": \"+2347039301972\",\n        \"is_admin\": false,\n        \"updated_at\": \"2023-07-15T09:19:01.350Z\",\n        \"deleted_at\": null,\n        \"id\": \"3b7b8566-bcba-47cf-8bb4-cd129c6b4bd8\",\n        \"created_at\": \"2023-07-15T09:19:01.350Z\"\n    }\n}"
 				}
 			]
 		},
@@ -283,11 +283,11 @@
 						},
 						{
 							"key": "Content-Length",
-							"value": "369"
+							"value": "357"
 						},
 						{
 							"key": "ETag",
-							"value": "W/\"171-6JAFMt5avyMwx5FCkKv1HMly4Rk\""
+							"value": "W/\"165-vE7CH3i5upomSEKhpKPBzHrQ/u8\""
 						},
 						{
 							"key": "Vary",
@@ -295,7 +295,7 @@
 						},
 						{
 							"key": "Date",
-							"value": "Sat, 15 Jul 2023 07:39:06 GMT"
+							"value": "Sat, 15 Jul 2023 09:21:23 GMT"
 						},
 						{
 							"key": "Connection",
@@ -307,7 +307,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"id\": \"729c41c5-f786-4278-962c-d6283d352aba\",\n    \"email\": \"kolawole.ekoh@gmail.com\",\n    \"is_admin\": false,\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTQwNjc0NiwiZXhwIjoxNjg5NDA3OTQ2fQ.c4RH4ZgJgQMCIB-_9wI1rlH4StlNCw7ca8yGLHapuyk\"\n}"
+					"body": "{\n    \"id\": \"3b7b8566-bcba-47cf-8bb4-cd129c6b4bd8\",\n    \"email\": \"john.doe@gmail.com\",\n    \"is_admin\": false,\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNiN2I4NTY2LWJjYmEtNDdjZi04YmI0LWNkMTI5YzZiNGJkOCIsImVtYWlsIjoiam9obi5kb2VAZ21haWwuY29tIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2ODk0MTI4ODMsImV4cCI6MTY4OTQxNDA4M30.NrPdt56KropAHLuoKd5LeHaUUjBcxViZcF740EWGZtA\"\n}"
 				}
 			]
 		},
@@ -328,7 +328,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"user_id\": \"729c41c5-f786-4278-962c-d6283d352aba\",\n    \"currency\": \"NGN\"\n}",
+					"raw": "{\n    \"user_id\": \"729c41c5-f786-4278-962c-d6283d352aba\",\n    \"currency\": \"GHS\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -409,120 +409,6 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Wallet created\",\n    \"data\": {\n        \"user_id\": \"4b4e29f9-4a9c-4af7-81b0-156c080e5830\",\n        \"currency\": \"GHS\",\n        \"updated_at\": \"2023-07-14T08:34:59.885Z\",\n        \"deleted_at\": null,\n        \"id\": \"0a3a4252-94d1-4600-86f2-cd239aa4a96d\",\n        \"balance\": \"0\",\n        \"created_at\": \"2023-07-14T08:34:59.885Z\"\n    }\n}"
-				},
-				{
-					"name": "Create Wallet",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"user_id\": \"729c41c5-f786-4278-962c-d6283d352aba\",\n    \"currency\": \"NGN\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/api/v1/wallets",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"wallets"
-							]
-						}
-					},
-					"status": "Conflict",
-					"code": 409,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Content-Security-Policy",
-							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
-						},
-						{
-							"key": "Cross-Origin-Opener-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Cross-Origin-Resource-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Origin-Agent-Cluster",
-							"value": "?1"
-						},
-						{
-							"key": "Referrer-Policy",
-							"value": "no-referrer"
-						},
-						{
-							"key": "Strict-Transport-Security",
-							"value": "max-age=15552000; includeSubDomains"
-						},
-						{
-							"key": "X-Content-Type-Options",
-							"value": "nosniff"
-						},
-						{
-							"key": "X-DNS-Prefetch-Control",
-							"value": "off"
-						},
-						{
-							"key": "X-Download-Options",
-							"value": "noopen"
-						},
-						{
-							"key": "X-Frame-Options",
-							"value": "SAMEORIGIN"
-						},
-						{
-							"key": "X-Permitted-Cross-Domain-Policies",
-							"value": "none"
-						},
-						{
-							"key": "X-XSS-Protection",
-							"value": "0"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "Content-Length",
-							"value": "138"
-						},
-						{
-							"key": "ETag",
-							"value": "W/\"8a-YiaL9t+dsIbqNVhcLgNgv7jDkhU\""
-						},
-						{
-							"key": "Vary",
-							"value": "Accept-Encoding"
-						},
-						{
-							"key": "Date",
-							"value": "Sat, 15 Jul 2023 01:56:37 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"code\": 409,\n    \"status\": \"failure\",\n    \"data\": null,\n    \"error\": {\n        \"message\": \"Wallet of the specified currency already exists\",\n        \"path\": \"/api/v1/wallets\"\n    }\n}"
 				}
 			]
 		},
@@ -1131,7 +1017,7 @@
 					"variable": [
 						{
 							"key": "transfer_id",
-							"value": null
+							"value": "22e5bcad-82ae-44fc-8d7e-69ac08e40538"
 						}
 					]
 				}

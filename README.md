@@ -62,7 +62,7 @@ DB_TYPE=postgres
 #### Docker
 
 - Install [Docker](https://www.docker.com/)
-- Run `docker-compose up -d`. But If you like to see those clumsy logs 😬, RUN `docker-compose up`
+- Run `docker-compose up -d db`. But If you like to see those clumsy logs 😬, RUN `docker-compose up`
 - Open browser and visit `http://localhost:4000` and rock it
 
 #### Without Docker
@@ -73,6 +73,8 @@ DB_TYPE=postgres
 - Open browser and visit `http://localhost:4000` and rock it
 
 ### Production Packaging
+
+- RUN `yarn run start:prod` to start the production build
 
 ```
 docker build -t ${IMAGETAG} -f Dockerfile .
@@ -122,3 +124,4 @@ docker build -t ${IMAGETAG} -f Dockerfile .
 ### Improvement Points
 
 - Implement a Notification process (email or mobile notification) when an automated deposit fails due to insufficient funds.
+- Implement Phone Number verification using third-party providers e.g. Twilio API

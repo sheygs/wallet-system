@@ -21,6 +21,7 @@ import {
 } from '../wallet-transactions/wallet-transaction.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/RolesGuard';
+import { Helpers } from '../utilities/helpers';
 
 @Controller('transfers')
 export class TransfersController {
@@ -28,6 +29,7 @@ export class TransfersController {
     private transferservice: TransferService,
     private walletTransactionsService: WalletTransactionsService,
     private walletService: WalletsService,
+    private helperService: Helpers,
   ) {}
 
   @UseGuards(JwtAuthGuard)
@@ -78,12 +80,11 @@ export class TransfersController {
       transaction_status: TransactionStatus.SUCCESSFUL,
     });
 
-    return {
-      code: 201,
-      status: 'success',
-      message: 'transfer successful',
-      data: transfer,
-    };
+    return this.helperService.successResponse(
+      201,
+      transfer,
+      'transfer successful',
+    );
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -100,11 +101,10 @@ export class TransfersController {
       await this.transferservice.changeApproval(transfer.id, approved);
     }
 
-    return {
-      code: 201,
-      status: 'success',
-      message: 'transfer successful',
-      data: transfer,
-    };
+    return this.helperService.successResponse(
+      200,
+      transfer,
+      'transfer successful',
+    );
   }
 }
