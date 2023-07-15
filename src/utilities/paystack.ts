@@ -1,10 +1,10 @@
+import axios from 'axios';
 import { Injectable } from '@nestjs/common';
 import 'dotenv/config';
 import {
   InitializePaymentRequest,
   InitializePaymentResponse,
 } from '../interface/types';
-import axios from 'axios';
 
 @Injectable()
 export class PaystackService {

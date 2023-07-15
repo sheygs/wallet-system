@@ -3,7 +3,11 @@ import { Status, SuccessResponse, ErrorResponse } from '../interface/types';
 
 @Injectable()
 export class Helpers {
-  successResponse(code: number, data: any, message: string): SuccessResponse {
+  successResponse(
+    code: number,
+    data: any | { [key: string]: string | number },
+    message: string,
+  ): SuccessResponse {
     return {
       code,
       status: Status.SUCCESS,

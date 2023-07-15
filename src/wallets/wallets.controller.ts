@@ -21,6 +21,7 @@ import {
   TransactionStatus,
   TransactionType,
 } from '../wallet-transactions/wallet-transaction.entity';
+import { Helpers } from '../utilities/helpers';
 
 @Controller('wallets')
 export class WalletsController {
@@ -28,6 +29,7 @@ export class WalletsController {
     private walletTransactionService: WalletTransactionsService,
     private walletService: WalletsService,
     private userService: UsersService,
+    private helpersService: Helpers,
   ) {}
 
   @UseGuards(JwtAuthGuard)
@@ -36,7 +38,7 @@ export class WalletsController {
     // check if the account for that user exists
     const user = await this.userService.getUserById(body.user_id);
 
-    // check if the user has already created a wallet for that currency
+    // check for duplicate currency wallet creation
     const existingWallet = await this.walletService.searchWallet({
       user_id: user.id,
       currency: body.currency,
@@ -45,12 +47,7 @@ export class WalletsController {
     if (!existingWallet) {
       const wallet = await this.walletService.createWallet(body);
 
-      return {
-        code: 201,
-        status: 'success',
-        message: 'Wallet created',
-        data: wallet,
-      };
+      return this.helpersService.successResponse(201, wallet, 'Wallet created');
     }
   }
 
@@ -61,12 +58,11 @@ export class WalletsController {
 
     const { currency, balance } = existingWallet;
 
-    return {
-      code: 200,
-      status: 'success',
-      message: 'Wallet balance retrieved',
-      data: { currency, balance },
-    };
+    return this.helpersService.successResponse(
+      200,
+      { currency, balance },
+      'Wallet balance retrieved',
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -74,7 +70,7 @@ export class WalletsController {
   async initializePayment(@Body() body: initializePaymentDTO) {
     const wallet = await this.walletService.getWalletByID(body.wallet_id);
 
-    // call paystack API to initiate payment
+    // call paystack API to initialize payment
     const response = await this.walletService.initializePaymentTransaction({
       email: wallet?.user?.email,
       amount: String(body.amount),
@@ -83,12 +79,11 @@ export class WalletsController {
       user_id: wallet.user_id,
     });
 
-    return {
-      code: 200,
-      status: 'success',
-      message: 'Payment initialized successfully',
-      data: response,
-    };
+    return this.helpersService.successResponse(
+      200,
+      response,
+      'Payment initialized successfully',
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -132,11 +127,6 @@ export class WalletsController {
       this.walletService.updateWalletBalance(wallet_id, amount, 'INC'),
     ]);
 
-    return {
-      code: 200,
-      status: 'success',
-      message: 'Wallet funded',
-      response,
-    };
+    return this.helpersService.successResponse(200, response, 'Wallet funded');
   }
 }

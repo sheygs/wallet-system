@@ -8,9 +8,11 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
+import { HelpersModule } from '../utilities/helpers.module';
 
 @Module({
   imports: [
+    HelpersModule,
     UsersModule,
     HashModule,
     PassportModule,
