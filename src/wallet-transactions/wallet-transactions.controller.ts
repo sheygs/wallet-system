@@ -8,7 +8,7 @@ import { TransactionHistoryDTO } from './dto/wallet-transactions.dto';
 export class WalletTransactionsController {
   constructor(private walletTransactionsService: WalletTransactionsService) {}
 
-  // @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('/history')
   async getTransactionHistory(@Query() queryParams: TransactionHistoryDTO) {
     const transactions =

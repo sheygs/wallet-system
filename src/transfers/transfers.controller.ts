@@ -30,7 +30,7 @@ export class TransfersController {
     private walletService: WalletsService,
   ) {}
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post('/')
   async createWalletTransfer(@Body() body: CreateTransferDTO) {
     const { source_wallet_id, destination_wallet_id, amount } = body;
@@ -86,7 +86,7 @@ export class TransfersController {
     };
   }
 
-  // @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch('/:transfer_id/approve')
   async approveTransfer(
     @Param() { transfer_id }: TransferIdDTO,

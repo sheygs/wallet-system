@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
@@ -7,7 +8,6 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstant } from './constant';
 
 @Module({
   imports: [
@@ -15,8 +15,8 @@ import { jwtConstant } from './constant';
     HashModule,
     PassportModule,
     JwtModule.register({
-      secret: jwtConstant.secret,
-      signOptions: { expiresIn: '20m' },
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: process.env.JWT_EXPIRY },
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],

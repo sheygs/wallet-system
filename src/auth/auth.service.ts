@@ -32,7 +32,6 @@ export class AuthService {
   }
 
   async validateUser(email: string, password: string) {
-    // refactor
     const user = await this.usersService.findUser(email);
 
     if (

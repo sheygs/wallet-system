@@ -6,7 +6,6 @@ import {
   CreateTransactionDTO,
   TransactionHistoryDTO,
 } from './dto/wallet-transactions.dto';
-import { from } from 'rxjs';
 
 @Injectable()
 export class WalletTransactionsService {
