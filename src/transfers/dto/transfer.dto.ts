@@ -7,7 +7,6 @@ import {
   IsNotEmpty,
   Min,
   IsBoolean,
-  IsBooleanString,
 } from 'class-validator';
 import { Currency } from '../../wallets/wallet.entity';
 
