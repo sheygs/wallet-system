@@ -1,0 +1,1446 @@
+{
+	"info": {
+		"_postman_id": "0c105bfa-b545-4740-98ba-cf5022f3d4df",
+		"name": "Wallet System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28150349",
+		"_collection_link": "https://dark-crater-74135.postman.co/workspace/My-WorkSpace~3290af0b-7b0d-430e-b44a-a44418cffba2/collection/28150349-0c105bfa-b545-4740-98ba-cf5022f3d4df?action=share&creator=28150349&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Base",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign Up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"john\",\n    \"last_name\": \"doe\",\n    \"phone_number\": \"+2347039301972\",\n    \"email\": \"john.doe@gmail.com\",\n    \"password\": \"kkols\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/auth/signup",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Sign Up",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"john\",\n    \"last_name\": \"doe\",\n    \"phone_number\": \"+2347039301972\",\n    \"email\": \"john.doe@gmail.com\",\n    \"password\": \"kkols\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/auth/signup",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "114"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"72-rzJvKcvNhGyGtM0rbR4DrwkAcgw\""
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 15 Jul 2023 02:39:58 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 400,\n    \"status\": \"failure\",\n    \"data\": null,\n    \"error\": {\n        \"message\": \"user already exists\",\n        \"path\": \"/api/v1/auth/signup\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"john.doe@gmail.com\",\n    \"password\": \"kkols\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/auth/login",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"john.doe@gmail.com\",\n    \"password\": \"kkols\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "369"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"171-6JAFMt5avyMwx5FCkKv1HMly4Rk\""
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 15 Jul 2023 07:39:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"729c41c5-f786-4278-962c-d6283d352aba\",\n    \"email\": \"kolawole.ekoh@gmail.com\",\n    \"is_admin\": false,\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTQwNjc0NiwiZXhwIjoxNjg5NDA3OTQ2fQ.c4RH4ZgJgQMCIB-_9wI1rlH4StlNCw7ca8yGLHapuyk\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Wallet",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTM4NjE3OSwiZXhwIjoxNjg5Mzg3Mzc5fQ.qttKI0E_T5UA-896kLMJzBD4Z4qVkMKgCy-WfGTxGgg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\": \"729c41c5-f786-4278-962c-d6283d352aba\",\n    \"currency\": \"NGN\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/wallets",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"wallets"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": \"4b4e29f9-4a9c-4af7-81b0-156c080e5830\",\n    \"currency\": \"GHS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/wallets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"wallets"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "289"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"121-/uaypYkdyLn+0J3ibC4joilG8lw\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jul 2023 08:34:59 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Wallet created\",\n    \"data\": {\n        \"user_id\": \"4b4e29f9-4a9c-4af7-81b0-156c080e5830\",\n        \"currency\": \"GHS\",\n        \"updated_at\": \"2023-07-14T08:34:59.885Z\",\n        \"deleted_at\": null,\n        \"id\": \"0a3a4252-94d1-4600-86f2-cd239aa4a96d\",\n        \"balance\": \"0\",\n        \"created_at\": \"2023-07-14T08:34:59.885Z\"\n    }\n}"
+				},
+				{
+					"name": "Create Wallet",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": \"729c41c5-f786-4278-962c-d6283d352aba\",\n    \"currency\": \"NGN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/wallets",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallets"
+							]
+						}
+					},
+					"status": "Conflict",
+					"code": 409,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "138"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"8a-YiaL9t+dsIbqNVhcLgNgv7jDkhU\""
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 15 Jul 2023 01:56:37 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 409,\n    \"status\": \"failure\",\n    \"data\": null,\n    \"error\": {\n        \"message\": \"Wallet of the specified currency already exists\",\n        \"path\": \"/api/v1/wallets\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Wallet Balance",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTM4NjE3OSwiZXhwIjoxNjg5Mzg3Mzc5fQ.qttKI0E_T5UA-896kLMJzBD4Z4qVkMKgCy-WfGTxGgg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/wallets/:wallet_id/balance",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"wallets",
+						":wallet_id",
+						"balance"
+					],
+					"variable": [
+						{
+							"key": "wallet_id",
+							"value": "192d1158-ba6b-4928-92d0-5053ed4a75a7"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Wallet Balance",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/wallets/:wallet_id/balance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"wallets",
+								":wallet_id",
+								"balance"
+							],
+							"variable": [
+								{
+									"key": "wallet_id",
+									"value": "0a3a4252-94d1-4600-86f2-cd239aa4a96d"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "108"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"6c-zFPmR3RAI2/jhFkMwGh640NUnt4\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jul 2023 08:36:46 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Wallet balance retrieved\",\n    \"data\": {\n        \"currency\": \"GHS\",\n        \"balance\": \"0\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Fund Wallet",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI2ODI2ODk2LTZjYzQtNGQyOC1hYzE2LThiNjVhMjVjZjdjNiIsImVtYWlsIjoic3h4eHgueXl5eUBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTI2NTQ0MSwiZXhwIjoxNjg5MjY2NjQxfQ.3np6FHBfp91UUixBOn0907UNKKtsigoPSdysmp9RI70",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"reference\": \"lm7nz5xmrl\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/wallets/deposit",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"wallets",
+						"deposit"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Fund Wallet",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"reference\": \"lm7nz5xmrl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/wallets/deposit",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallets",
+								"deposit"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"6a8-LtNGfv7iY6KUuo7IYs95hnsFQtQ\""
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 15 Jul 2023 01:16:24 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Wallet funded\",\n    \"response\": {\n        \"status\": true,\n        \"message\": \"Verification successful\",\n        \"data\": {\n            \"id\": 2951395777,\n            \"domain\": \"test\",\n            \"status\": \"success\",\n            \"reference\": \"lm7nz5xmrl\",\n            \"receipt_number\": null,\n            \"amount\": 10000000,\n            \"message\": null,\n            \"gateway_response\": \"Successful\",\n            \"paid_at\": \"2023-07-15T01:15:52.000Z\",\n            \"created_at\": \"2023-07-15T01:15:33.000Z\",\n            \"channel\": \"card\",\n            \"currency\": \"NGN\",\n            \"ip_address\": \"197.211.58.37\",\n            \"metadata\": {\n                \"amount\": \"10000000\",\n                \"wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n                \"user_id\": \"27158712-3e0e-44be-8da5-6a248f5376c9\"\n            },\n            \"log\": {\n                \"start_time\": 1689383747,\n                \"time_spent\": 5,\n                \"attempts\": 1,\n                \"errors\": 0,\n                \"success\": true,\n                \"mobile\": false,\n                \"input\": [],\n                \"history\": [\n                    {\n                        \"type\": \"action\",\n                        \"message\": \"Attempted to pay with card\",\n                        \"time\": 4\n                    },\n                    {\n                        \"type\": \"success\",\n                        \"message\": \"Successfully paid with card\",\n                        \"time\": 5\n                    }\n                ]\n            },\n            \"fees\": 160000,\n            \"fees_split\": null,\n            \"authorization\": {\n                \"authorization_code\": \"AUTH_kp26dol5di\",\n                \"bin\": \"408408\",\n                \"last4\": \"4081\",\n                \"exp_month\": \"12\",\n                \"exp_year\": \"2030\",\n                \"channel\": \"card\",\n                \"card_type\": \"visa \",\n                \"bank\": \"TEST BANK\",\n                \"country_code\": \"NG\",\n                \"brand\": \"visa\",\n                \"reusable\": true,\n                \"signature\": \"SIG_yypN86wTD58Y0eNNc17N\",\n                \"account_name\": null,\n                \"receiver_bank_account_number\": null,\n                \"receiver_bank\": null\n            },\n            \"customer\": {\n                \"id\": 130309284,\n                \"first_name\": null,\n                \"last_name\": null,\n                \"email\": \"segun.ekoh@gmail.com\",\n                \"customer_code\": \"CUS_688zyt20w0z19o6\",\n                \"phone\": null,\n                \"metadata\": null,\n                \"risk_action\": \"default\",\n                \"international_format_phone\": null\n            },\n            \"plan\": null,\n            \"split\": {},\n            \"order_id\": null,\n            \"paidAt\": \"2023-07-15T01:15:52.000Z\",\n            \"createdAt\": \"2023-07-15T01:15:33.000Z\",\n            \"requested_amount\": 10000000,\n            \"pos_transaction_data\": null,\n            \"source\": null,\n            \"fees_breakdown\": null,\n            \"transaction_date\": \"2023-07-15T01:15:33.000Z\",\n            \"plan_object\": {},\n            \"subaccount\": {}\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Intialize Payment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTM4NjE3OSwiZXhwIjoxNjg5Mzg3Mzc5fQ.qttKI0E_T5UA-896kLMJzBD4Z4qVkMKgCy-WfGTxGgg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n    \"amount\": 10000000,\n    \"currency\": \"NGN\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/wallets/initialize-payment",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"wallets",
+						"initialize-payment"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Intialize Payment",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n    \"amount\": 10000000,\n    \"currency\": \"NGN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/wallets/initialize-payment",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallets",
+								"initialize-payment"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "153"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"99-2cYhzejIMXakacejC6Z2igtRavs\""
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 15 Jul 2023 01:15:33 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Payment initialized successfully\",\n    \"data\": {\n        \"authorization_url\": \"https://checkout.paystack.com/gjzbuqz08ghiac0\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Wallets Transfer",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTM4NjE3OSwiZXhwIjoxNjg5Mzg3Mzc5fQ.qttKI0E_T5UA-896kLMJzBD4Z4qVkMKgCy-WfGTxGgg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"source_wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n    \"destination_wallet_id\": \"f741ca75-bed1-4239-a58f-d344590dbbd1\",\n    \"amount\": 1000,\n    \"currency\": \"NGN\",\n    \"reason\": \"test simulation\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/transfers",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transfers"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Wallets Transfer",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"source_wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n    \"destination_wallet_id\": \"f741ca75-bed1-4239-a58f-d344590dbbd1\",\n    \"amount\": 1000,\n    \"currency\": \"NGN\",\n    \"reason\": \"test simulation\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/transfers",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transfers"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "423"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1a7-HCcIVX2r8kbyYQCxOlbmqDUDXK8\""
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 15 Jul 2023 01:17:59 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"transfer successful\",\n    \"data\": {\n        \"source_wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n        \"destination_wallet_id\": \"f741ca75-bed1-4239-a58f-d344590dbbd1\",\n        \"transferred_amount\": 1000,\n        \"currency\": \"NGN\",\n        \"reason\": \"test simulation\",\n        \"approved\": false,\n        \"updated_at\": \"2023-07-15T01:17:59.361Z\",\n        \"id\": \"039dc1b3-b7fd-4d43-a6f8-5837b1a331ed\",\n        \"status\": \"pending\",\n        \"created_at\": \"2023-07-15T01:17:59.361Z\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Approve Transfer",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTM4NjE3OSwiZXhwIjoxNjg5Mzg3Mzc5fQ.qttKI0E_T5UA-896kLMJzBD4Z4qVkMKgCy-WfGTxGgg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"approved\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/transfers/:transfer_id/approve",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transfers",
+						":transfer_id",
+						"approve"
+					],
+					"variable": [
+						{
+							"key": "transfer_id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Approve Transfer",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"approved\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/transfers/:transfer_id/approve",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transfers",
+								":transfer_id",
+								"approve"
+							],
+							"variable": [
+								{
+									"key": "transfer_id",
+									"value": null
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "425"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1a9-LWBm4UWlLc4JsKV0qvJIvLtE4FQ\""
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 15 Jul 2023 01:20:11 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"transfer successful\",\n    \"data\": {\n        \"id\": \"039dc1b3-b7fd-4d43-a6f8-5837b1a331ed\",\n        \"source_wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n        \"destination_wallet_id\": \"f741ca75-bed1-4239-a58f-d344590dbbd1\",\n        \"transferred_amount\": \"1000\",\n        \"currency\": \"NGN\",\n        \"reason\": \"test simulation\",\n        \"status\": \"pending\",\n        \"approved\": false,\n        \"created_at\": \"2023-07-15T01:17:59.361Z\",\n        \"updated_at\": \"2023-07-15T01:17:59.361Z\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Transaction Summary",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTM4NjE3OSwiZXhwIjoxNjg5Mzg3Mzc5fQ.qttKI0E_T5UA-896kLMJzBD4Z4qVkMKgCy-WfGTxGgg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/wallet-transactions/history?from_date=2023-07-15&to_date=2023-07-16&target_month=7&target_year=2023",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"wallet-transactions",
+						"history"
+					],
+					"query": [
+						{
+							"key": "from_date",
+							"value": "2023-07-15",
+							"description": "[Optional] - Start Date"
+						},
+						{
+							"key": "to_date",
+							"value": "2023-07-16",
+							"description": "[Optional] - End Date, When specified, Start Date must be specified"
+						},
+						{
+							"key": "target_month",
+							"value": "7",
+							"description": "[Optional] - Get Transaction Summary Based on a Specified month. When specified, target_year must be specified"
+						},
+						{
+							"key": "target_year",
+							"value": "2023",
+							"description": "[Optional] - Target Year for date range filtering"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Transaction Summary",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/wallet-transactions/history?from_date=2023-07-15&to_date=2023-07-16&target_month=7&target_year=2023",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallet-transactions",
+								"history"
+							],
+							"query": [
+								{
+									"key": "from_date",
+									"value": "2023-07-15",
+									"description": "[Optional] - Start Date"
+								},
+								{
+									"key": "to_date",
+									"value": "2023-07-16",
+									"description": "[Optional] - End Date, When specified, Start Date must be specified"
+								},
+								{
+									"key": "target_month",
+									"value": "7",
+									"description": "[Optional] - Get Transaction Summary Based on a Specified month. When specified, target_year must be specified"
+								},
+								{
+									"key": "target_year",
+									"value": "2023",
+									"description": "[Optional] - Target Year for date range filtering"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "590"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"24e-vVXfGwZwNWF6KO70e3EKKm79CI8\""
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 15 Jul 2023 01:40:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"transactions retrieved\",\n    \"data\": [\n        {\n            \"id\": \"64103605-e450-443d-95b4-77b78e567d74\",\n            \"user_id\": \"27158712-3e0e-44be-8da5-6a248f5376c9\",\n            \"source_wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n            \"amount\": \"10000000\",\n            \"transaction_type\": \"DEPOSIT\",\n            \"transaction_status\": \"successful\",\n            \"created_at\": \"2023-07-15T01:16:24.636Z\"\n        },\n        {\n            \"id\": \"4a089ad8-c164-4f7d-9105-593bb5b52e1f\",\n            \"user_id\": null,\n            \"source_wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n            \"amount\": \"1000\",\n            \"transaction_type\": \"TRANSFER\",\n            \"transaction_status\": \"successful\",\n            \"created_at\": \"2023-07-15T01:17:59.370Z\"\n        }\n    ]\n}"
+				}
+			]
+		}
+	]
+}

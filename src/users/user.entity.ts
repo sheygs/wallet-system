@@ -12,6 +12,7 @@ import { Wallet } from '../wallets/wallet.entity';
 
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
+  [x: string]: any;
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
