@@ -1,8 +1,6 @@
-<p align="center">
-    <h2>Wallet System</h2>
-    <br>
-    <p>A RESTful service that mocks a basic wallet system</p>
-</p>
+### Wallet-System
+
+The Wallet System Service is an API that mocks a basic wallet system. The API provides information about various aspects of wallet systems such as User Authentication/Role-Based Authorization, Paystack API Gateway integration for wallet funding, Wallet Creation, Wallet Balance Retrieval, Wallet Funds Transfer and Transaction History Summary.
 
 #### Features
 
@@ -10,7 +8,34 @@
 - User Wallets Creation
 - Wallet Account Crediting/Funding via Paystack Payment Gateway
 - Wallet Funds Transfer & Approval
-- Wallet Transaction History (Pay-in & Pay-out)
+- Wallet Balance Retrival
+- Wallet Transaction History
+
+### Implementation Details
+
+### High Level Implementation Details
+
+The following steps were followed in the implementation of a wallet system with minimalistic features leveraging on the Paystack API Gateway:
+
+1. PayStack Account Setup: Visit the Paystack website (`https://paystack.com`) and sign up for an account. Then obtain the API keys from the `developer section` of the the aforementioned website. Paystack provides both test and production keys for development and testing purposes. However, in most cases, one'd be utilizing the test keys.
+
+2. Paystack API Integration.
+
+3. Create Wallet Functionality: Within the application, the necessary logic and database structure were implemented to manage user wallets. This involved creating a wallet table, associating wallets with the user accounts, defining actions such as deposit, withdrawal amongst others.
+
+4. User Authentication/Role-Based (Admin) Authorization: A user authentication system was implemented to secure wallet functionality. This includes features like user registration, user login, JWT token authentication, API endpoints protection.
+
+5. Funds Deposit to Wallets: The Paystack API was used to create a payment request or payment authorization link for crediting funds into a user's wallet. This involved setting the necessary details to Paystack like including amount, customer details, and callback URL to handle payment response.
+
+6.Payments Verification: After a payment is made, Paystack will send a `callback` to your specified URL i.e. `http://example.com` either set on the paystack developer dashboard or the one specified in your implementation. Once the notification has been processed, verify the transaction status and update the user's wallet accordingly.
+
+7. Wallet Withdrawal Functionality: This was implemented from the scratch - point `3`. For every `deposit` or `transfer` request initiated regardless of the `transfer_status`, a request was logged to the `wallet_transactions` to keep track of the wallet transactions.
+
+8. Balance Retrieval & Transaction History: Endpoints were implemented to retrieve user's wallets balances' & transaction history. This involves querying from the `wallet_transactions` and `wallets` tables to spool the results data sets.
+
+### Project Structure
+
+Overall, the project is designed to be scalable, maintainable and extensible. The use of a monolithic architecture that can easily spin off to a micro-service following modular architecture pattern that promotes code organization and separation of concerns.
 
 #### Development Tools
 
@@ -69,7 +94,7 @@ DB_TYPE=postgres
 
 - Replace database_url in .env with your corresponding valid database url 👌
 - Run `yarn install` to install project dependencies
-- Run `yarn start:services` to run the services and you are good
+- Run `yarn start:dev` to run the services and you are good
 - Open browser and visit `http://localhost:4000` and rock it
 
 ### Production Packaging
