@@ -7,6 +7,11 @@ export enum Status {
   SUCCESS = 'success',
 }
 
+export enum TransferStatus {
+  PENDING = 'pending',
+  APPROVED = 'approved',
+}
+
 interface ErrorObject {
   id?: string | string[];
   message: string;

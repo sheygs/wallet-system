@@ -1,10 +1,19 @@
 import { NestFactory } from '@nestjs/core';
+import { WinstonModule } from 'nest-winston';
+import { Logger, INestApplication } from '@nestjs/common';
 import { ValidationPipe } from '@nestjs/common';
+import { appMiddleware } from './app';
+import winstonLogger from './utilities/logger';
 
 import { AppModule } from './app.module';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+(async () => {
+  const app: INestApplication = await NestFactory.create(AppModule, {
+    logger: WinstonModule.createLogger({
+      ...winstonLogger,
+    }),
+  });
+
   app.useGlobalPipes(
     // remove any additional properites not defined in the DTO
     new ValidationPipe({
@@ -12,6 +21,11 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(3000);
-}
-bootstrap();
+  const PORT = +process.env.PORT || 3000;
+
+  appMiddleware(app);
+
+  await app.listen(PORT, () => {
+    Logger.verbose(`server listening on port:${PORT}`);
+  });
+})();

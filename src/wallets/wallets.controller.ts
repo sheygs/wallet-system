@@ -129,7 +129,7 @@ export class WalletsController {
       }),
 
       // update the user's wallet balance
-      this.walletService.updateWalletBalance(wallet_id, amount),
+      this.walletService.updateWalletBalance(wallet_id, amount, 'INC'),
     ]);
 
     return {
