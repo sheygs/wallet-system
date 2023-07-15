@@ -7,9 +7,10 @@ import {
   BaseEntity,
 } from 'typeorm';
 import { Currency } from '../wallets/wallet.entity';
+import { TransferStatus } from '../interface/types';
 
-@Entity({ name: 'wallet_transfers' })
-export class WalletTransfer extends BaseEntity {
+@Entity({ name: 'transfers' })
+export class Transfer extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -19,9 +20,8 @@ export class WalletTransfer extends BaseEntity {
   @Column({ name: 'destination_wallet_id', type: 'uuid' })
   destination_wallet_id: string;
 
-  // amount to transfer
-  @Column({ name: 'amount', type: 'varchar' })
-  amount: string;
+  @Column({ name: 'transferred_amount', type: 'decimal', nullable: false })
+  transferred_amount: number;
 
   @Column({
     name: 'currency',
@@ -34,6 +34,15 @@ export class WalletTransfer extends BaseEntity {
 
   @Column({ name: 'reason', nullable: true, type: 'text' })
   reason?: string;
+
+  @Column({
+    name: 'status',
+    nullable: false,
+    type: 'enum',
+    enum: TransferStatus,
+    default: TransferStatus.PENDING,
+  })
+  status: TransferStatus;
 
   @Column({
     name: 'approved',

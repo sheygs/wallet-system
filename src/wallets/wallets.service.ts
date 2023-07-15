@@ -64,10 +64,15 @@ export class WalletsService {
     return wallet;
   }
 
-  async updateWalletBalance(id: string, amount: number) {
+  async updateWalletBalance(id: string, amount: number, type: string) {
     const wallet = await this.getWalletByID(id);
 
-    wallet.balance = Number(wallet.balance) + Number(amount);
+    if (type === 'INC') {
+      wallet.balance = Number(wallet.balance) + Number(amount);
+    }
+    if (type === 'DEC') {
+      wallet.balance = Number(wallet.balance) - Number(amount);
+    }
 
     await wallet.save();
   }
@@ -88,7 +93,7 @@ export class WalletsService {
       metadata: {
         amount,
         wallet_id,
-        user_id: user_id || '4b4e29f9-4a9c-4af7-81b0-156c080e5830',
+        user_id,
       },
     });
 

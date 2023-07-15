@@ -22,9 +22,6 @@ export class Wallet extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  // setup one to many relationship
-  // a user can create multiple wallets
-  // a wallet belongs to one user
   @Column({ name: 'user_id', type: 'uuid' })
   user_id: string;
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import 'dotenv/config';
 import {
   InitializePaymentRequest,
   InitializePaymentResponse,
@@ -7,9 +8,8 @@ import axios from 'axios';
 
 @Injectable()
 export class PaystackService {
-  private readonly PAYSTACK_API_BASE_URL = 'https://api.paystack.co';
-  private readonly API_SECRET_KEY =
-    'sk_test_40441b9c4edbf780d27840960132c093f2d647ef';
+  private readonly PAYSTACK_API_BASE_URL = process.env.PAYSTACK_API_BASE_URL;
+  private readonly API_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
 
   public async initializeTransaction(request: InitializePaymentRequest) {
     const { data } = await axios.post<InitializePaymentResponse>(

@@ -30,7 +30,7 @@ export class WalletsController {
     private userService: UsersService,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post('/')
   async createWallet(@Body() body: CreateWalletDTO) {
     // check if the account for that user exists
@@ -54,7 +54,7 @@ export class WalletsController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get('/:wallet_id/balance')
   async getWalletBalance(@Param() { wallet_id }: GetWalletDTO) {
     const existingWallet = await this.walletService.getWalletByID(wallet_id);
@@ -69,7 +69,7 @@ export class WalletsController {
     };
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post('/initialize-payment')
   async initializePayment(@Body() body: initializePaymentDTO) {
     const wallet = await this.walletService.getWalletByID(body.wallet_id);
@@ -91,7 +91,7 @@ export class WalletsController {
     };
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post('/deposit')
   async creditWallet(@Body() body: FundWalletDTO) {
     const response = await this.walletService.verifyPaymentTransaction(
@@ -129,7 +129,7 @@ export class WalletsController {
       }),
 
       // update the user's wallet balance
-      this.walletService.updateWalletBalance(wallet_id, amount),
+      this.walletService.updateWalletBalance(wallet_id, amount, 'INC'),
     ]);
 
     return {

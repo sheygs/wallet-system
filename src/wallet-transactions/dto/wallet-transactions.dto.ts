@@ -4,6 +4,7 @@ import {
   IsUUID,
   IsNotEmpty,
   IsEnum,
+  IsDateString,
 } from 'class-validator';
 
 import {
@@ -34,4 +35,24 @@ export class CreateTransactionDTO {
   @IsNotEmpty()
   @IsEnum(TransactionStatus)
   transaction_status: TransactionStatus;
+}
+
+export class TransactionHistoryDTO {
+  @IsString()
+  @IsDateString()
+  @IsOptional()
+  from_date: Date;
+
+  @IsString()
+  @IsDateString()
+  @IsOptional()
+  to_date: Date;
+
+  @IsString()
+  @IsOptional()
+  target_month: string;
+
+  @IsString()
+  @IsOptional()
+  target_year: string;
 }
