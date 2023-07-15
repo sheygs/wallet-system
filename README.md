@@ -11,9 +11,8 @@ The Wallet System Service is an API that mocks a basic wallet system. The API pr
 - Wallet Balance Retrival
 - Wallet Transaction History
 
-### Implementation Details
-
 ### High Level Implementation Details
+
 
 The following steps were followed in the implementation of a wallet system with minimalistic features leveraging on the Paystack API Gateway:
 
