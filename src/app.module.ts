@@ -70,5 +70,8 @@ export class AppModule implements NestModule {
     consumer
       .apply()
       .forRoutes({ path: 'transfers*', method: RequestMethod.ALL });
+    consumer
+      .apply()
+      .forRoutes({ path: 'wallet-transactions*', method: RequestMethod.ALL });
   }
 }
