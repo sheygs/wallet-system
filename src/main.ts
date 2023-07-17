@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { WinstonModule } from 'nest-winston';
 import { Logger, INestApplication } from '@nestjs/common';
-import { ValidationPipe } from '@nestjs/common';
+
 import { appMiddleware } from './app';
 import winstonLogger from './utilities/logger';
 
@@ -13,13 +13,6 @@ import { AppModule } from './app.module';
       ...winstonLogger,
     }),
   });
-
-  app.useGlobalPipes(
-    // remove any additional properites not defined in the DTO
-    new ValidationPipe({
-      whitelist: true,
-    }),
-  );
 
   const PORT = +process.env.PORT || 3000;
 
