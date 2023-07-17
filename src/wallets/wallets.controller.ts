@@ -10,7 +10,7 @@ import {
 import {
   CreateWalletDTO,
   GetWalletDTO,
-  initializePaymentDTO,
+  InitializePaymentDTO,
   FundWalletDTO,
 } from '../wallets/dtos/wallet.dto';
 import { UsersService } from '../users/users.service';
@@ -67,7 +67,7 @@ export class WalletsController {
 
   @UseGuards(JwtAuthGuard)
   @Post('/initialize-payment')
-  async initializePayment(@Body() body: initializePaymentDTO) {
+  async initializePayment(@Body() body: InitializePaymentDTO) {
     const wallet = await this.walletService.getWalletByID(body.wallet_id);
 
     // call paystack API to initialize payment

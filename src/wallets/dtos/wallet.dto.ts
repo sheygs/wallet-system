@@ -31,14 +31,14 @@ export class GetWalletDTO {
   wallet_id: string;
 }
 
-export class initializePaymentDTO extends GetWalletDTO {
+export class InitializePaymentDTO extends GetWalletDTO {
   @IsNumber()
   @IsNotEmpty()
   @Min(1000)
   amount: number;
 }
 
-export class FundWalletDTO extends PartialType(initializePaymentDTO) {
+export class FundWalletDTO extends PartialType(InitializePaymentDTO) {
   @IsString()
   @IsNotEmpty()
   reference: string;
