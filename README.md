@@ -13,7 +13,6 @@ The Wallet System Service is an API that mocks a basic wallet system. The API pr
 
 ### High Level Implementation Details
 
-
 The following steps were followed in the implementation of a wallet system with minimalistic features leveraging on the Paystack API Gateway:
 
 1. PayStack Account Setup: Visit the Paystack website (`https://paystack.com`) and sign up for an account. Then obtain the API keys from the `developer section` of the the aforementioned website. Paystack provides both test and production keys for development and testing purposes. However, in most cases, one'd be utilizing the test keys.
@@ -65,6 +64,7 @@ POSTGRES_USER=XXXX
 POSTGRES_PASSWORD=XXXX
 POSTGRES_DB=postgres
 DB_TYPE=postgres
+MININUM_APPROVAL_AMOUNT=1000000
 ```
 
 #### Installation 📦

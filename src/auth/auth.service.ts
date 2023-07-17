@@ -13,12 +13,12 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
   async signup(body: CreateUserDTO): Promise<User> {
-    const users = await this.usersService.findUser(
+    const existingUser = await this.usersService.findUser(
       body.email,
       body.phone_number,
     );
 
-    if (users.length) {
+    if (existingUser) {
       throw new BadRequestException('user already exists');
     }
     // Hash user password
@@ -31,12 +31,12 @@ export class AuthService {
     return user;
   }
 
-  async validateUser(email: string, password: string) {
+  async validateUser(email: string, password: string): Promise<User> {
     const user = await this.usersService.findUser(email);
 
     if (
-      user.length &&
-      (await this.hashService.comparePassword(password, user[0].password))
+      user &&
+      (await this.hashService.comparePassword(password, user.password))
     ) {
       return user;
     }

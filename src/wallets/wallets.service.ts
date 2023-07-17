@@ -64,7 +64,7 @@ export class WalletsService {
     return wallet;
   }
 
-  async updateWalletBalance(id: string, amount: number, type: string) {
+  async updateWalletBalance(id: string, amount: string, type: string) {
     const wallet = await this.getWalletByID(id);
 
     if (type === 'INC') {

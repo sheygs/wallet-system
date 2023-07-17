@@ -4,24 +4,30 @@ import {
   IsPhoneNumber,
   Length,
   IsOptional,
+  IsNotEmpty,
 } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateUserDTO {
   @IsString()
+  @IsNotEmpty()
   first_name: string;
 
   @IsString()
+  @IsNotEmpty()
   last_name: string;
 
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
   @IsString()
+  @IsNotEmpty()
   @Length(3, 20)
   password: string;
 
   @IsPhoneNumber()
+  @IsNotEmpty()
   phone_number: string;
 }
 

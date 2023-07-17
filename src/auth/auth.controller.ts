@@ -3,12 +3,13 @@ import { CreateUserDTO } from '../users/dtos/user.dto';
 import { AuthService } from '../auth/auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Helpers } from '../utilities/helpers';
+import { SuccessResponse } from 'src/interface/types';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService, private helpers: Helpers) {}
   @Post('/signup')
-  async registerUser(@Body() body: CreateUserDTO) {
+  async registerUser(@Body() body: CreateUserDTO): Promise<SuccessResponse> {
     const user = await this.authService.signup(body);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

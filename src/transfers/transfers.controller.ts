@@ -55,19 +55,22 @@ export class TransfersController {
       );
     }
 
-    if (+sourceWalletBalance <= 0 || +sourceWalletBalance < amount) {
+    if (
+      Number(sourceWalletBalance) <= 0 ||
+      Number(sourceWalletBalance) < amount
+    ) {
       throw new UnprocessableEntityException('Insufficient funds');
     }
 
     await this.walletService.updateWalletBalance(
       source_wallet_id,
-      amount,
+      String(amount),
       'DEC',
     );
 
     await this.walletService.updateWalletBalance(
       destination_wallet_id,
-      amount,
+      String(amount),
       'INC',
     );
 
@@ -97,14 +100,16 @@ export class TransfersController {
 
     const transfer = await this.transferservice.getTransfer(transfer_id);
 
-    if (+transfer.transferred_amount > 1000000) {
-      await this.transferservice.changeApproval(transfer.id, approved);
+    const approvalAmount = +this.helperService.TRANSFER_AMOUNT;
+
+    if (Number(transfer.transferred_amount) <= approvalAmount) {
+      throw new UnprocessableEntityException(
+        `Unable to approve tranfer of ${approvalAmount} or less`,
+      );
     }
 
-    return this.helperService.successResponse(
-      200,
-      transfer,
-      'transfer successful',
-    );
+    await this.transferservice.changeApproval(transfer.id, approved);
+
+    return this.helperService.successResponse(200, {}, 'transfer approved');
   }
 }
