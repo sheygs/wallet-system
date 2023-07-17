@@ -105,7 +105,7 @@ export class WalletsController {
       await this.walletTransactionService.createTransactionLog({
         user_id,
         source_wallet_id: wallet_id,
-        amount,
+        amount: Number(amount),
         transaction_type: TransactionType.DEPOSIT,
         transaction_status: TransactionStatus.FAILED,
       });
@@ -118,7 +118,7 @@ export class WalletsController {
       this.walletTransactionService.createTransactionLog({
         user_id,
         source_wallet_id: wallet_id,
-        amount,
+        amount: Number(amount),
         transaction_type: TransactionType.DEPOSIT,
         transaction_status: TransactionStatus.SUCCESSFUL,
       }),
@@ -127,6 +127,6 @@ export class WalletsController {
       this.walletService.updateWalletBalance(wallet_id, amount, 'INC'),
     ]);
 
-    return this.helpersService.successResponse(200, response, 'Wallet funded');
+    return this.helpersService.successResponse(200, response, 'wallet funded');
   }
 }

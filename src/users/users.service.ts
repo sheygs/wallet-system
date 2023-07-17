@@ -15,13 +15,16 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  // search for an existing user by email or phone number
-  async findUser(email?: string, phoneNumber?: string): Promise<User[]> {
-    const users = await this.userRepository.find({
-      where: [email && { email }, phoneNumber && { phone_number: phoneNumber }],
+  // existing user search by email or phone number
+  async findUser(email?: string, phoneNumber?: string): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: {
+        ...(email && { email }),
+        ...(phoneNumber && { phone_number: phoneNumber }),
+      },
     });
 
-    return users;
+    return user;
   }
 
   async getUserById(user_id: string): Promise<User> {

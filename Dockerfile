@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:18-alpine3.16
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 # Install app dependencies
 COPY package*.json ./
 
-RUN yarn install
+RUN yarn install --pure-lockfile --non-interactive
 
 # Bundle app source
 COPY . .

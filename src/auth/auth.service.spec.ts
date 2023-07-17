@@ -37,7 +37,7 @@ describe('AuthService', () => {
       sign: jest.fn().mockReturnValue('fake-token'),
     };
 
-    const module = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
         {
@@ -78,7 +78,7 @@ describe('AuthService', () => {
 
   it('it throws an error if user signs up with an email in use', async () => {
     fakeUserService.findUser = () =>
-      Promise.resolve([{ email: 'olueko34@gmail.com' } as unknown as User]);
+      Promise.resolve({ email: 'olueko34@gmail.com' } as unknown as User);
     await expect(
       service.signup({
         email: 'olueko34@gmail.com',

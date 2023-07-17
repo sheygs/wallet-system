@@ -4,6 +4,7 @@ import 'dotenv/config';
 import {
   InitializePaymentRequest,
   InitializePaymentResponse,
+  VerifyTransactionResponse,
 } from '../interface/types';
 
 @Injectable()
@@ -27,7 +28,7 @@ export class PaystackService {
   }
 
   public async verifyTransaction(reference: string) {
-    const { data } = await axios.get(
+    const { data } = await axios.get<VerifyTransactionResponse>(
       `${this.PAYSTACK_API_BASE_URL}/transaction/verify/${reference}`,
       {
         headers: {
