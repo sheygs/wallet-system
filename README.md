@@ -107,7 +107,7 @@ docker build -t ${IMAGETAG} -f Dockerfile .
 #### Test
 
 ```bash
-   $ yarn run test
+   $ yarn test:e2e
 ```
 
 #### Available Endpoints
@@ -143,7 +143,8 @@ docker build -t ${IMAGETAG} -f Dockerfile .
 
 #### Postman Documentation
 
-- Please see `/postman_docs` on the root directory.
+- Please see `/postman_docs` on the root directory OR
+- Navigate to `http://localhost:4000/docs` on your computer to view the openapi documentation.
 
 ### Improvement Points
 
