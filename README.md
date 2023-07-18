@@ -27,7 +27,7 @@ The following steps were followed in the implementation of a wallet system with 
 
 6. Payments Verification: After a payment is made, Paystack will send a `callback` to your specified URL i.e. `http://example.com` either set on the paystack developer dashboard or the one specified in your implementation. Once the notification has been processed, verify the transaction status and update the user's wallet accordingly.
 
-7. Wallet Withdrawal Functionality: This was implemented from the scratch - point `3`. For every `deposit` or `transfer` request initiated regardless of the `transfer_status`, a request was logged to the `wallet_transactions` to keep track of the wallet transactions.
+7. Wallet Withdrawal Functionality: This was implemented from the scratch - point `3`. For every `deposit` or `transfer` request initiated, a request was logged to the `wallet_transactions` to keep track of the wallet transactions.
 
 8. Balance Retrieval & Transaction History: Endpoints were implemented to retrieve user's wallets balances' & transaction history. This involves querying from the `wallet_transactions` and `wallets` tables to spool the results data sets.
 
