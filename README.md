@@ -97,7 +97,6 @@ TEST_POSTGRES_DB=XXXX
 
 #### Without Docker
 
-- Replace database_url in .env with your corresponding valid database url 👌
 - Run `yarn install` to install project dependencies
 - Run `yarn start:dev` to run the services and you are good
 - Open browser and visit `http://localhost:4000` and rock it
