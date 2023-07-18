@@ -6,6 +6,9 @@ import {
   Get,
   Param,
   UnprocessableEntityException,
+  NotFoundException,
+  HttpStatus,
+  HttpCode,
 } from '@nestjs/common';
 import {
   CreateWalletDTO,
@@ -33,10 +36,15 @@ export class WalletsController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.CREATED)
   @Post('/')
   async createWallet(@Body() body: CreateWalletDTO) {
     // check if the account for that user exists
     const user = await this.userService.getUserById(body.user_id);
+
+    if (!user) {
+      throw new NotFoundException('No account exists for this user');
+    }
 
     // check for duplicate currency wallet creation
     const existingWallet = await this.walletService.searchWallet({
@@ -47,11 +55,16 @@ export class WalletsController {
     if (!existingWallet) {
       const wallet = await this.walletService.createWallet(body);
 
-      return this.helpersService.successResponse(201, wallet, 'Wallet created');
+      return this.helpersService.successResponse(
+        HttpStatus.CREATED,
+        wallet,
+        'Wallet created',
+      );
     }
   }
 
   @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
   @Get('/:wallet_id/balance')
   async getWalletBalance(@Param() { wallet_id }: GetWalletDTO) {
     const existingWallet = await this.walletService.getWalletByID(wallet_id);
@@ -59,13 +72,14 @@ export class WalletsController {
     const { currency, balance } = existingWallet;
 
     return this.helpersService.successResponse(
-      200,
+      HttpStatus.OK,
       { currency, balance },
       'Wallet balance retrieved',
     );
   }
 
   @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
   @Post('/initialize-payment')
   async initializePayment(@Body() body: InitializePaymentDTO) {
     const wallet = await this.walletService.getWalletByID(body.wallet_id);
@@ -80,13 +94,14 @@ export class WalletsController {
     });
 
     return this.helpersService.successResponse(
-      200,
+      HttpStatus.OK,
       response,
       'Payment initialized successfully',
     );
   }
 
   @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
   @Post('/deposit')
   async creditWallet(@Body() body: FundWalletDTO) {
     const response = await this.walletService.verifyPaymentTransaction(
@@ -127,6 +142,10 @@ export class WalletsController {
       this.walletService.updateWalletBalance(wallet_id, amount, 'INC'),
     ]);
 
-    return this.helpersService.successResponse(200, response, 'wallet funded');
+    return this.helpersService.successResponse(
+      HttpStatus.OK,
+      response,
+      'wallet funded',
+    );
   }
 }

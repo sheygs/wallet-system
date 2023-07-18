@@ -12,7 +12,6 @@ import { Wallet } from '../wallets/wallet.entity';
 
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
-  [x: string]: any;
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -36,6 +35,7 @@ export class User extends BaseEntity {
     name: 'email',
     nullable: true,
     type: 'varchar',
+    unique: true,
   })
   email: string;
 
@@ -50,6 +50,7 @@ export class User extends BaseEntity {
     name: 'phone_number',
     nullable: true,
     type: 'varchar',
+    unique: true,
     length: 20,
   })
   phone_number: string;
