@@ -13,7 +13,7 @@ export class RolesGuard implements CanActivate {
     try {
       const { user } = context.switchToHttp().getRequest();
 
-      return user.is_admin;
+      return user.isAdmin;
     } catch (error) {
       this.logger.error({ error });
       return false;

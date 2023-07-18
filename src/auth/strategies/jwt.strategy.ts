@@ -1,11 +1,12 @@
 import 'dotenv/config';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { UsersService } from '../../users/users.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(private readonly userService: UsersService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -13,15 +14,26 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any): Promise<{
+  async validate(payload: {
     userId: string;
-    username: string;
-    is_admin: boolean;
+    isAdmin: boolean;
+    email?: string;
+    phoneNumber?: string;
+  }): Promise<{
+    userId: string;
+    isAdmin: boolean;
   }> {
+    const authUser = await this.userService.getUserById(payload.userId);
+
+    if (!authUser) {
+      throw new UnauthorizedException('Unauthorized User');
+    }
+
     return {
-      userId: payload.id,
-      username: payload.email,
-      is_admin: payload.is_admin,
+      userId: payload.userId,
+      ...(payload.email && { email: payload.email }),
+      ...(payload.phoneNumber && { phoneNumber: payload.phoneNumber }),
+      isAdmin: payload.isAdmin,
     };
   }
 }

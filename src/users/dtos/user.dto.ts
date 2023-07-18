@@ -6,7 +6,6 @@ import {
   IsOptional,
   IsNotEmpty,
 } from 'class-validator';
-import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateUserDTO {
   @IsString()
@@ -31,7 +30,7 @@ export class CreateUserDTO {
   phone_number: string;
 }
 
-export class LoginUserDTO extends PartialType(CreateUserDTO) {
+export class LoginUserDTO {
   @IsEmail()
   @IsOptional()
   email?: string;

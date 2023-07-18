@@ -18,10 +18,12 @@ export class UsersService {
   // existing user search by email or phone number
   async findUser(email?: string, phoneNumber?: string): Promise<User> {
     const user = await this.userRepository.findOne({
-      where: {
-        ...(email && { email }),
-        ...(phoneNumber && { phone_number: phoneNumber }),
-      },
+      where: [
+        {
+          ...(email && { email }),
+          ...(phoneNumber && { phone_number: phoneNumber }),
+        },
+      ],
     });
 
     return user;
@@ -37,10 +39,6 @@ export class UsersService {
         wallets: true,
       },
     });
-
-    if (!user) {
-      throw new NotFoundException('No account exists for this user');
-    }
 
     return user;
   }

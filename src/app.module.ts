@@ -8,45 +8,27 @@ import 'dotenv/config';
 import { WinstonModule } from 'nest-winston';
 import { APP_FILTER } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { DatabaseModule } from './database/database.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { WalletsModule } from './wallets/wallets.module';
 import { WalletTransactionsModule } from './wallet-transactions/wallet-transactions.module';
 import { TransfersModule } from './transfers/transfers.module';
-import { User } from './users/user.entity';
-import { Wallet } from './wallets/wallet.entity';
-import { WalletTransaction } from './wallet-transactions/wallet-transaction.entity';
-import { Transfer } from './transfers/transfer.entity';
 import { AuthModule } from './auth/auth.module';
 import { HashModule } from './hash/hash.module';
 import { PaystackModule } from './utilities/paystack.module';
 import { HelpersModule } from './utilities/helpers.module';
 import { HttpExceptionFilter } from './exceptions/http-exception.filter';
+import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import winstonLogger from './utilities/logger';
 @Module({
   imports: [
     WinstonModule.forRoot({
       ...winstonLogger,
     }),
-
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`,
-    }),
     UsersModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.POSTGRES_HOST,
-      port: +process.env.POSTGRES_PORT,
-      username: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      database: process.env.POSTGRES_DB,
-      entities: [User, Wallet, WalletTransaction, Transfer],
-      synchronize: process.env.NODE_ENV !== 'production',
-    }),
-    UsersModule,
+    DatabaseModule,
     WalletsModule,
     WalletTransactionsModule,
     TransfersModule,
@@ -54,9 +36,13 @@ import winstonLogger from './utilities/logger';
     HashModule,
     PaystackModule,
     HelpersModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
   ],
   controllers: [AppController],
   providers: [
+    JwtStrategy,
     AppService,
     {
       provide: APP_FILTER,
@@ -70,5 +56,8 @@ export class AppModule implements NestModule {
     consumer
       .apply()
       .forRoutes({ path: 'transfers*', method: RequestMethod.ALL });
+    consumer
+      .apply()
+      .forRoutes({ path: 'wallet-transactions*', method: RequestMethod.ALL });
   }
 }
