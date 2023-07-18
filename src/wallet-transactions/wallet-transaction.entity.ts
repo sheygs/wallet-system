@@ -19,16 +19,12 @@ export enum TransactionStatus {
 
 @Entity({ name: 'wallet_transactions' })
 export class WalletTransaction extends BaseEntity {
-  //transaction_id
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ name: 'user_id', type: 'uuid', nullable: true })
   user_id?: string;
 
-  // setup one to many relationship
-  // a wallet can create multiple wallet transactions
-  // a wallet transactions belongs to one wallet
   @Column({ name: 'source_wallet_id', type: 'uuid' })
   source_wallet_id: string;
 

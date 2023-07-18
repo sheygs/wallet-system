@@ -96,7 +96,7 @@ export class WalletsController {
     return this.helpersService.successResponse(
       HttpStatus.OK,
       response,
-      'Payment initialized successfully',
+      'Payment initialized',
     );
   }
 
@@ -145,7 +145,7 @@ export class WalletsController {
     return this.helpersService.successResponse(
       HttpStatus.OK,
       response,
-      'wallet funded',
+      'Wallet funded',
     );
   }
 }

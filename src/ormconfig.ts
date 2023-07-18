@@ -1,7 +1,7 @@
 import 'dotenv/config';
-import { ConnectionConfig } from './interface/types';
+import { DataSourceOptions } from 'typeorm';
 
-export let config: ConnectionConfig = {
+export let config: DataSourceOptions = {
   type: 'postgres',
   host: process.env.POSTGRES_HOST,
   port: +process.env.POSTGRES_PORT,
