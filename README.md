@@ -51,7 +51,7 @@ Overall, the project is designed to be scalable, maintainable and extensible. Th
 - [Git](https://git-scm.com/downloads)
 - [Paystack API Secret Key](https://support.paystack.com/hc/en-us/articles/360011508199-How-do-I-generate-new-API-keys-#:~:text=How%20do%20I%20get%20a,'Generate%20new%20secret%20key'.)
 
-#### Rename _.env.test_ to _.env_ and replace the placeholders
+#### Rename _.env.sample_ to _.env_ and replace the placeholders
 
 ```bash
 PORT=4000
@@ -65,6 +65,14 @@ POSTGRES_PASSWORD=XXXX
 POSTGRES_DB=postgres
 DB_TYPE=postgres
 MININUM_APPROVAL_AMOUNT=1000000
+
+TEST_PAYSTACK_SECRET_KEY=XXXX
+TEST_PAYSTACK_API_BASE_URL=https://api.paystack.co
+TEST_POSTGRES_HOST=localhost 
+TEST_POSTGRES_PORT=5432 
+TEST_POSTGRES_USER=XXXX
+TEST_POSTGRES_PASSWORD=XXXX
+TEST_POSTGRES_DB=XXXX 
 ```
 
 #### Installation 📦
