@@ -1,6 +1,7 @@
 import 'dotenv/config';
+import { ConnectionConfig } from './interface/types';
 
-export let config: any = {
+export let config: ConnectionConfig = {
   type: 'postgres',
   host: process.env.POSTGRES_HOST,
   port: +process.env.POSTGRES_PORT,

@@ -139,3 +139,17 @@ interface History {
   message: string;
   time: number;
 }
+
+export interface ConnectionConfig {
+  type: string;
+  host: string;
+  port: number;
+  username: string;
+  password: string;
+  database: string;
+  entities: string[];
+  synchronize: boolean;
+  migrations: string[];
+  migrationsRun: boolean;
+  logging: boolean;
+}
