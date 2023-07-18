@@ -9,7 +9,7 @@ import { Wallet } from '../src/wallets/wallet.entity';
 import { User } from '../src/users/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-describe('Authentication System', () => {
+describe('Wallet', () => {
   let app: INestApplication;
   let moduleFixture: TestingModule;
   let walletRepository: Repository<Wallet>;
@@ -43,8 +43,8 @@ describe('Authentication System', () => {
 
   afterEach(async () => {
     await Promise.all([
-      walletRepository.query(`DELETE FROM wallets;`),
-      userRepository.query(`DELETE FROM users;`),
+      walletRepository.query('DELETE FROM wallets;'),
+      userRepository.query('DELETE FROM users;'),
     ]);
   });
 
@@ -54,7 +54,7 @@ describe('Authentication System', () => {
   });
 
   describe('Wallet Module', () => {
-    const id = '4776bd35-44f3-4c82-b7d9-06627db401b3';
+    let id = '4776bd35-44f3-4c82-b7d9-06627db401b3';
     const email = 'mark.john@gmail.com';
     const phone_number = '+2348032345346';
     const is_admin = false;
@@ -122,7 +122,8 @@ describe('Authentication System', () => {
           });
       });
 
-      it('Should throw a not found error when an invalid user_id is provided', async () => {
+      it('Should throw a 404 error when an invalid user_id is provided', async () => {
+        id = '4776bd35-44f3-4c82-b7d9-06627db401c4';
         return request(app.getHttpServer())
           .post('/wallets')
           .set({ Authorization: `Bearer ${user.access_token}` })

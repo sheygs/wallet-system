@@ -1,4 +1,4 @@
-### Wallet-System
+#### Wallet-System
 
 The Wallet System Service is an API that mocks a basic wallet system. The API provides information about various aspects of wallet systems such as User Authentication/Role-Based Authorization, Paystack API Gateway integration for wallet funding, Wallet Creation, Wallet Balance Retrieval, Wallet Funds Transfer and Transaction History Summary.
 
@@ -11,7 +11,7 @@ The Wallet System Service is an API that mocks a basic wallet system. The API pr
 - Wallet Balance Retrival
 - Wallet Transaction History
 
-### High Level Implementation Details
+#### High Level Implementation Details
 
 The following steps were followed in the implementation of a wallet system with minimalistic features leveraging on the Paystack API Gateway:
 
@@ -31,25 +31,23 @@ The following steps were followed in the implementation of a wallet system with 
 
 8. Balance Retrieval & Transaction History: Endpoints were implemented to retrieve user's wallets balances' & transaction history. This involves querying from the `wallet_transactions` and `wallets` tables to spool the results data sets.
 
-### Project Structure
+#### Project Structure
 
 Overall, the project is designed to be scalable, maintainable and extensible. The use of a monolithic architecture that can easily spin off to a micro-service following modular architecture pattern that promotes code organization and separation of concerns.
 
 #### Development Tools
 
-- NodeJS
+- [NodeJS](https://nodejs.org/en/download/)
 - [NestJS](https://docs.nestjs.com/)
 - [PostgreSQL](https://www.postgresql.org/download/)
 - [Typeorm](https://typeorm.io/)
 - [Jest](https://jestjs.io/)
-- [Paystack](https://paystack.com/)
 
 #### Requirements
 
-- [NodeJS](https://nodejs.org/en/download/)
+- [Paystack](https://paystack.com/docs/api/)
 - [Postman](https://www.postman.com/downloads/)
 - [Git](https://git-scm.com/downloads)
-- [Paystack API Secret Key](https://support.paystack.com/hc/en-us/articles/360011508199-How-do-I-generate-new-API-keys-#:~:text=How%20do%20I%20get%20a,'Generate%20new%20secret%20key'.)
 
 #### Rename _.env.sample_ to _.env_ and replace the placeholders
 
@@ -68,11 +66,11 @@ MININUM_APPROVAL_AMOUNT=1000000
 
 TEST_PAYSTACK_SECRET_KEY=XXXX
 TEST_PAYSTACK_API_BASE_URL=https://api.paystack.co
-TEST_POSTGRES_HOST=localhost 
-TEST_POSTGRES_PORT=5432 
+TEST_POSTGRES_HOST=localhost
+TEST_POSTGRES_PORT=5432
 TEST_POSTGRES_USER=XXXX
 TEST_POSTGRES_PASSWORD=XXXX
-TEST_POSTGRES_DB=XXXX 
+TEST_POSTGRES_DB=XXXX
 ```
 
 #### Installation 📦
@@ -104,7 +102,7 @@ TEST_POSTGRES_DB=XXXX
 - Run `yarn start:dev` to run the services and you are good
 - Open browser and visit `http://localhost:4000` and rock it
 
-### Production Packaging
+#### Production Packaging
 
 - RUN `yarn run start:prod` to start the production build
 
@@ -154,7 +152,7 @@ docker build -t ${IMAGETAG} -f Dockerfile .
 - Please see `/postman_docs` on the root directory OR
 - Navigate to `http://localhost:4000/docs` on your computer to view the openapi documentation.
 
-### Improvement Points
+#### Improvement Points
 
-- Implement a Notification process (email or mobile notification) when an automated deposit fails due to insufficient funds.
-- Implement Phone Number verification using third-party providers e.g. Twilio API
+- Implement a Notification process (email/mobile notification) when an automated deposit fails due to insufficient funds.
+- Implement Phone Number verification using third-party SMS providers e.g. Twilio API
