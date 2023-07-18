@@ -5,8 +5,6 @@ import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 import { HashModule } from '../hash/hash.module';
 import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from './strategies/local.strategy';
-import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { HelpersModule } from '../utilities/helpers.module';
 
@@ -21,7 +19,7 @@ import { HelpersModule } from '../utilities/helpers.module';
       signOptions: { expiresIn: process.env.JWT_EXPIRY },
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService],
   controllers: [AuthController],
   exports: [AuthService],
 })

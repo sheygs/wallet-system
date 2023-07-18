@@ -1,7 +1,15 @@
-import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Request,
+  HttpStatus,
+  HttpCode,
+} from '@nestjs/common';
 import { CreateUserDTO } from '../users/dtos/user.dto';
+import { LoginUserDTO } from './dtos/auth.dto';
 import { AuthService } from '../auth/auth.service';
-import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Helpers } from '../utilities/helpers';
 import { SuccessResponse } from 'src/interface/types';
 
@@ -13,14 +21,24 @@ export class AuthController {
     const user = await this.authService.signup(body);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...details } = user;
+    const { password: undefined, ...details } = user;
 
-    return this.helpers.successResponse(201, { ...details }, 'User created');
+    return this.helpers.successResponse(
+      HttpStatus.CREATED,
+      { ...details },
+      'User created',
+    );
   }
 
-  @UseGuards(LocalAuthGuard)
   @Post('/login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  @HttpCode(HttpStatus.OK)
+  async login(@Body() authLogin: LoginUserDTO) {
+    const loginDetail = await this.authService.login(authLogin);
+
+    return this.helpers.successResponse(
+      HttpStatus.OK,
+      loginDetail,
+      'Login successful',
+    );
   }
 }
