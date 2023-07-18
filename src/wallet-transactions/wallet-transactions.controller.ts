@@ -1,4 +1,11 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { WalletTransactionsService } from './wallet-transactions.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/RolesGuard';
@@ -13,13 +20,14 @@ export class WalletTransactionsController {
   ) {}
 
   @UseGuards(JwtAuthGuard, RolesGuard)
+  @HttpCode(HttpStatus.OK)
   @Get('/history')
   async getTransactionHistory(@Query() queryParams: TransactionHistoryDTO) {
     const transactions =
       await this.walletTransactionsService.getTransactionHistory(queryParams);
 
     return this.helpersService.successResponse(
-      200,
+      HttpStatus.OK,
       transactions,
       'transactions retrieved',
     );

@@ -6,6 +6,8 @@ import {
   Patch,
   UseGuards,
   Param,
+  HttpStatus,
+  HttpCode,
 } from '@nestjs/common';
 import { TransferService } from './transfers.service';
 import {
@@ -33,6 +35,7 @@ export class TransfersController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
   @Post('/')
   async createWalletTransfer(@Body() body: CreateTransferDTO) {
     const { source_wallet_id, destination_wallet_id, amount } = body;
@@ -84,13 +87,14 @@ export class TransfersController {
     });
 
     return this.helperService.successResponse(
-      201,
+      HttpStatus.OK,
       transfer,
       'transfer successful',
     );
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
+  @HttpCode(HttpStatus.OK)
   @Patch('/:transfer_id/approve')
   async approveTransfer(
     @Param() { transfer_id }: TransferIdDTO,
@@ -110,6 +114,10 @@ export class TransfersController {
 
     await this.transferservice.changeApproval(transfer.id, approved);
 
-    return this.helperService.successResponse(200, {}, 'transfer approved');
+    return this.helperService.successResponse(
+      HttpStatus.OK,
+      {},
+      'transfer approved',
+    );
   }
 }
