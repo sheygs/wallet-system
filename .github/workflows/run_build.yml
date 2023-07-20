@@ -7,18 +7,23 @@ on:
 jobs:
   run-ci:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
     steps:
-      - name: checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: set up node.js
+      - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: 18
+          node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
 
-      - name: set up NPM
-        run: npm ci && npm install
+      - name: Set up yarn
+        run: yarn install
 
-      - name: run build
+      - name: Run build
         run: yarn run build
