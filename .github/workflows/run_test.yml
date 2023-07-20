@@ -1,4 +1,4 @@
-name: 'Run Lint'
+name: 'Run Test'
 
 on:
   pull_request:
@@ -20,8 +20,5 @@ jobs:
       - name: set up NPM
         run: npm ci && yarn install
 
-      - name: run prettier
-        run: yarn run format
-
-      - name: run lint
-        run: yarn run lint
+      - name: run test
+        run: yarn test:e2e

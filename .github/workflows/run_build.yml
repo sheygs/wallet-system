@@ -20,5 +20,5 @@ jobs:
       - name: set up NPM
         run: npm ci && npm install
 
-      - name: Run Build
+      - name: run build
         run: yarn run build
