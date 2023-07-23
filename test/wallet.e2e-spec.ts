@@ -43,8 +43,8 @@ describe('Wallet', () => {
 
   afterEach(async () => {
     await Promise.all([
-      walletRepository.query('DELETE FROM wallets;'),
-      userRepository.query('DELETE FROM users;'),
+      walletRepository?.query('DELETE FROM wallets;'),
+      userRepository?.query('DELETE FROM users;'),
     ]);
   });
 

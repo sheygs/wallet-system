@@ -55,9 +55,9 @@ describe('Transfer', () => {
 
   afterEach(async () => {
     await Promise.all([
-      walletTransactionRepo.query('DELETE FROM wallet_transactions;'),
-      walletRepository.query('DELETE FROM wallets;'),
-      userRepository.query('DELETE FROM users;'),
+      walletTransactionRepo?.query('DELETE FROM wallet_transactions;'),
+      walletRepository?.query('DELETE FROM wallets;'),
+      userRepository?.query('DELETE FROM users;'),
     ]);
   });
 

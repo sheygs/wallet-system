@@ -35,7 +35,7 @@ describe('Authentication System', () => {
   });
 
   afterEach(async () => {
-    await userRepository.query('DELETE FROM users;');
+    await userRepository?.query('DELETE FROM users;');
   });
 
   afterAll(async () => {
