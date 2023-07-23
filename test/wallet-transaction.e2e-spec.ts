@@ -3,10 +3,11 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { sign as jwtSign } from 'jsonwebtoken';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { AppModule } from './../src/app.module';
 import { User } from '../src/users/user.entity';
 import { Currency, Wallet } from '../src/wallets/wallet.entity';
 import {
@@ -128,8 +129,12 @@ describe('Transfer', () => {
       await walletTransactionRepo.save(walletTransactions);
     });
     describe('GET /wallet-transactions/history', () => {
-      const from_date = '2023-07-18';
-      const to_date = '2023-07-19';
+      const [MM, dd, yyyy] = new Date().toLocaleDateString().split('/');
+      const from_date = `${yyyy}-${MM.length === 1 ? '0' : ''}${MM}-${dd}`;
+      const to_date = `${yyyy}-${MM.length === 1 ? '0' : ''}${MM}-${String(
+        +dd + 1,
+      )}`;
+      console.log({ from_date, to_date });
       it('Should fetch wallet transactions summary between date ranges', async () => {
         return request(app.getHttpServer())
           .get('/wallet-transactions/history')
