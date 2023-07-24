@@ -16,6 +16,10 @@ import {
   WalletTransaction,
 } from '../src/wallet-transactions/wallet-transaction.entity';
 
+import { config } from 'dotenv';
+
+config({ path: '../.env.sample' });
+
 describe('Transfer', () => {
   let app: INestApplication;
   let moduleFixture: TestingModule;
@@ -134,7 +138,7 @@ describe('Transfer', () => {
       const to_date = `${yyyy}-${MM.length === 1 ? '0' : ''}${MM}-${String(
         +dd + 1,
       )}`;
-      console.log({ from_date, to_date });
+
       it('Should fetch wallet transactions summary between date ranges', async () => {
         return request(app.getHttpServer())
           .get('/wallet-transactions/history')

@@ -7,6 +7,10 @@ import { Repository } from 'typeorm';
 import { User } from '../src/users/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
+import { config } from 'dotenv';
+
+config({ path: '../.env.sample' });
+
 describe('Authentication System', () => {
   let app: INestApplication;
   let moduleFixture: TestingModule;

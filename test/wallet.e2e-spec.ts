@@ -9,6 +9,10 @@ import { Wallet } from '../src/wallets/wallet.entity';
 import { User } from '../src/users/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
+import { config } from 'dotenv';
+
+config({ path: '../.env.sample' });
+
 describe('Wallet', () => {
   let app: INestApplication;
   let moduleFixture: TestingModule;
