@@ -17,8 +17,8 @@ jobs:
           node-version: 18
           registry-url: https://npm.pkg.github.com/
 
-      - name: Set up NPM
-        run: npm ci && npm install
+      - name: Set up Yarn
+        run: yarn install --pure-lockfile
 
       - name: Run Prettier
         run: yarn run format
