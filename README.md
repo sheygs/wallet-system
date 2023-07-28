@@ -115,37 +115,6 @@ docker build -t ${IMAGETAG} -f Dockerfile .
    $ yarn test:e2e
 ```
 
-#### Available Endpoints
-
-`/api/v1/`
-
-| method | route        | description   |
-| ------ | ------------ | ------------- |
-| POST   | /auth/signup | Register User |
-| POST   | /auth/login  | Login User    |
-
-`/api/v1/wallets`
-
-| method | route                 | description        |
-| ------ | --------------------- | ------------------ |
-| POST   | /                     | Create Wallet      |
-| GET    | /:`wallet_id`/balance | Get Wallet Balance |
-| POST   | /initialize-payment   | Initialize Payment |
-| POST   | /deposit              | Fund Payment       |
-
-`/api/v1/transfers`
-
-| method | route                   | description            |
-| ------ | ----------------------- | ---------------------- |
-| POST   | /                       | Create Wallet Transfer |
-| PATCH  | /:`transfer_id`/approve | Approve Transfer       |
-
-`/api/v1/wallet-transactions`
-
-| method | route    | description             | Query Parameters - Optional                            |
-| ------ | -------- | ----------------------- | ------------------------------------------------------ |
-| GET    | /history | Get Transaction Summary | `from_date`, `to_date`, `target_month` , `target_year` |
-
 #### Postman Documentation
 
 - Please see `/postman_docs` on the root directory OR
