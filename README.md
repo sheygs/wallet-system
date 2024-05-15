@@ -76,7 +76,7 @@ TEST_POSTGRES_DB=XXXX
 #### Installation 📦
 
 ```bash
-   $ git clone https://github.com/sheygs13/wallet-system.git
+   $ git clone https://github.com/sheygs/wallet-system.git
    $ cd wallet-system
    $ yarn install
 ```
