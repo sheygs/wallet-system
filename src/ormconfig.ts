@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { DataSourceOptions } from 'typeorm';
 
-export let config: DataSourceOptions = {
+export let dataSource: DataSourceOptions = {
   type: 'postgres',
   host: process.env.POSTGRES_HOST,
   port: +process.env.POSTGRES_PORT,
@@ -16,7 +16,7 @@ export let config: DataSourceOptions = {
 };
 
 if (process.env.NODE_ENV === 'test') {
-  config = {
+  dataSource = {
     type: 'postgres',
     host: process.env.TEST_POSTGRES_HOST,
     port: +process.env.TEST_POSTGRES_PORT,
