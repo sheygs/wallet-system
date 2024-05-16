@@ -39,7 +39,6 @@ export class WalletsController {
   @HttpCode(HttpStatus.CREATED)
   @Post('/')
   async createWallet(@Body() body: CreateWalletDTO) {
-    // check if the account for that user exists
     const user = await this.userService.getUserById(body.user_id);
 
     if (!user) {
