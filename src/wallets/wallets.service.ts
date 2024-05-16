@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseCurrency, Wallet } from './wallet.entity';
+import { Wallet } from './wallet.entity';
 import { PaystackService } from '../utilities/paystack';
 import { VerifyTransactionResponse } from '../interface/types';
 
