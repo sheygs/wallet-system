@@ -32,6 +32,13 @@ export class WalletTransaction extends BaseEntity {
   amount: number;
 
   @Column({
+    name: 'reference',
+    type: 'varchar',
+    nullable: true,
+  })
+  reference: string;
+
+  @Column({
     name: 'transaction_type',
     type: 'enum',
     nullable: false,

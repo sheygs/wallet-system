@@ -10,9 +10,9 @@ export let config: DataSourceOptions = {
   database: process.env.POSTGRES_DB,
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
   synchronize: process.env.NODE_ENV !== 'production',
-  migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+  migrations: ['migrations/**/*{.ts,.js}'],
   migrationsRun: true,
-  logging: true,
+  logging: process.env.NODE_ENV !== 'production',
 };
 
 if (process.env.NODE_ENV === 'test') {

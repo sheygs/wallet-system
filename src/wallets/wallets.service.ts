@@ -7,8 +7,9 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Wallet } from './wallet.entity';
+import { BaseCurrency, Wallet } from './wallet.entity';
 import { PaystackService } from '../utilities/paystack';
+import { VerifyTransactionResponse } from '../interface/types';
 
 @Injectable()
 export class WalletsService {
@@ -64,14 +65,24 @@ export class WalletsService {
     return wallet;
   }
 
-  async updateWalletBalance(id: string, amount: string, type: string) {
+  // 'NGN' currency simulation
+  async updateWalletBalance(
+    id: string,
+    amount: string,
+    type: string,
+  ): Promise<void> {
     const wallet = await this.getWalletByID(id);
 
+    const nairaAmount = Number(amount) / 100;
+
     if (type === 'INC') {
-      wallet.balance = Number(wallet.balance) + Number(amount);
+      wallet.balance = Number(wallet.balance) + nairaAmount;
+      wallet.kobo_balance = Number(wallet.kobo_balance) + Number(amount);
     }
+
     if (type === 'DEC') {
-      wallet.balance = Number(wallet.balance) - Number(amount);
+      wallet.balance = Number(wallet.balance) - nairaAmount;
+      wallet.kobo_balance = Number(wallet.kobo_balance) - Number(amount);
     }
 
     await wallet.save();
@@ -83,7 +94,9 @@ export class WalletsService {
     return wallet.balance;
   }
 
-  async initializePaymentTransaction(payload: any) {
+  async initializePaymentTransaction(payload: any): Promise<{
+    authorization_url: string;
+  }> {
     const { amount, email, currency, wallet_id, user_id } = payload;
 
     const response = await this.paystackService.initializeTransaction({
@@ -94,6 +107,7 @@ export class WalletsService {
         amount,
         wallet_id,
         user_id,
+        currency,
       },
     });
 
@@ -110,7 +124,9 @@ export class WalletsService {
     return { authorization_url: response.data.authorization_url };
   }
 
-  async verifyPaymentTransaction(reference: string) {
+  async verifyPaymentTransaction(
+    reference: string,
+  ): Promise<VerifyTransactionResponse> {
     const transaction = await this.paystackService.verifyTransaction(reference);
 
     if (!transaction.status) {

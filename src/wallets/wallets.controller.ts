@@ -110,7 +110,9 @@ export class WalletsController {
 
     const {
       data: {
-        metadata: { amount, wallet_id, user_id },
+        reference,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        metadata: { amount, wallet_id, user_id, currency },
         status: transactionStatus,
         gateway_response,
       },
@@ -123,6 +125,7 @@ export class WalletsController {
         amount: Number(amount),
         transaction_type: TransactionType.DEPOSIT,
         transaction_status: TransactionStatus.FAILED,
+        reference: reference || body.reference,
       });
 
       throw new UnprocessableEntityException(gateway_response);
@@ -136,6 +139,7 @@ export class WalletsController {
         amount: Number(amount),
         transaction_type: TransactionType.DEPOSIT,
         transaction_status: TransactionStatus.SUCCESSFUL,
+        reference: reference || body.reference,
       }),
 
       // update the user's wallet balance

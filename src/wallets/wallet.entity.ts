@@ -17,6 +17,12 @@ export enum Currency {
   GHS = 'GHS',
 }
 
+export enum BaseCurrency {
+  NGN = 'KOBO',
+  USD = 'CENTS',
+  GHS = 'PESEWA',
+}
+
 @Entity({ name: 'wallets' })
 export class Wallet extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -36,6 +42,23 @@ export class Wallet extends BaseEntity {
     default: Currency.NGN,
   })
   currency?: Currency;
+
+  @Column({
+    name: 'kobo_balance',
+    nullable: false,
+    type: 'decimal',
+    default: 0,
+  })
+  kobo_balance?: number;
+
+  @Column({
+    name: 'base_currency',
+    nullable: false,
+    type: 'enum',
+    enum: BaseCurrency,
+    default: BaseCurrency.NGN,
+  })
+  base_currency?: BaseCurrency;
 
   @CreateDateColumn({
     name: 'created_at',

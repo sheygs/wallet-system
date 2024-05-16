@@ -36,6 +36,7 @@ interface Metadata {
   amount: string;
   wallet_id: string;
   user_id: string;
+  currency: string;
 }
 
 export interface InitializePaymentRequest {

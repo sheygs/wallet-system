@@ -84,6 +84,7 @@ export class TransfersController {
       amount: transfer.transferred_amount,
       transaction_type: TransactionType.TRANSFER,
       transaction_status: TransactionStatus.SUCCESSFUL,
+      reference: '',
     });
 
     return this.helperService.successResponse(

@@ -28,6 +28,11 @@ export class CreateTransactionDTO {
 
   @IsString()
   @IsNotEmpty()
+  @IsOptional()
+  reference: string;
+
+  @IsString()
+  @IsNotEmpty()
   @IsEnum(TransactionType)
   transaction_type: TransactionType;
 
