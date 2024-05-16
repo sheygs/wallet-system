@@ -71,9 +71,9 @@ export class WalletsService {
     amount: string,
     type: string,
   ): Promise<void> {
-    const wallet = await this.getWalletByID(id);
+    const wallet: Wallet = await this.getWalletByID(id);
 
-    const nairaAmount = Number(amount) / 100;
+    const nairaAmount: number = Number(amount) / 100;
 
     if (type === 'INC') {
       wallet.balance = Number(wallet.balance) + nairaAmount;
@@ -88,7 +88,7 @@ export class WalletsService {
     await wallet.save();
   }
 
-  async getWalletBalance(id: string) {
+  async getWalletBalance(id: string): Promise<number> {
     const wallet = await this.getWalletByID(id);
 
     return wallet.balance;

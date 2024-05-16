@@ -11,7 +11,7 @@ export class TransferService {
     private transferRepository: Repository<Transfer>,
   ) {}
 
-  async createWalletTransfer(body: CreateTransferDTO) {
+  async createWalletTransfer(body: CreateTransferDTO): Promise<Transfer> {
     const { amount, ...others } = body;
 
     const walletTransfer = await this.transferRepository.create({
@@ -22,7 +22,7 @@ export class TransferService {
     return this.transferRepository.save(walletTransfer);
   }
 
-  async getTransfer(transfer_id: string) {
+  async getTransfer(transfer_id: string): Promise<Transfer> {
     const transfer = await this.transferRepository.findOne({
       where: {
         id: transfer_id,
@@ -36,7 +36,10 @@ export class TransferService {
     return transfer;
   }
 
-  async changeApproval(transfer_id: string, approved: boolean) {
+  async changeApproval(
+    transfer_id: string,
+    approved: boolean,
+  ): Promise<Transfer> {
     const transfer = await this.getTransfer(transfer_id);
 
     transfer.approved = approved;

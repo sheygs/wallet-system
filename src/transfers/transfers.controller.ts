@@ -24,6 +24,8 @@ import {
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/RolesGuard';
 import { Helpers } from '../utilities/helpers';
+import { Transfer } from './transfer.entity';
+import { SuccessResponse } from '../interface/types';
 
 @Controller('transfers')
 export class TransfersController {
@@ -37,7 +39,9 @@ export class TransfersController {
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @Post('/')
-  async createWalletTransfer(@Body() body: CreateTransferDTO) {
+  async createWalletTransfer(
+    @Body() body: CreateTransferDTO,
+  ): Promise<SuccessResponse> {
     const { source_wallet_id, destination_wallet_id, amount } = body;
 
     const sourceWallet = await this.walletService.getWalletByID(
@@ -77,7 +81,9 @@ export class TransfersController {
       'INC',
     );
 
-    const transfer = await this.transferservice.createWalletTransfer(body);
+    const transfer: Transfer = await this.transferservice.createWalletTransfer(
+      body,
+    );
 
     await this.walletTransactionsService.createTransactionLog({
       source_wallet_id: transfer.source_wallet_id,
@@ -100,7 +106,7 @@ export class TransfersController {
   async approveTransfer(
     @Param() { transfer_id }: TransferIdDTO,
     @Body() body: ApproveTransferDTO,
-  ) {
+  ): Promise<SuccessResponse> {
     const { approved } = body;
 
     const transfer = await this.transferservice.getTransfer(transfer_id);

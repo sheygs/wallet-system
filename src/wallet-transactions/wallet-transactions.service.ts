@@ -17,7 +17,8 @@ export class WalletTransactionsService {
   async createTransactionLog(
     body: CreateTransactionDTO,
   ): Promise<WalletTransaction> {
-    const transaction = this.walletTransactionRepository.create(body);
+    const transaction: WalletTransaction =
+      this.walletTransactionRepository.create(body);
 
     return this.walletTransactionRepository.save(transaction);
   }
