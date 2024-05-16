@@ -14,14 +14,18 @@ export class WalletTransactionsService {
     private walletTransactionRepository: Repository<WalletTransaction>,
   ) {}
 
-  async createTransactionLog(body: CreateTransactionDTO) {
+  async createTransactionLog(
+    body: CreateTransactionDTO,
+  ): Promise<WalletTransaction> {
     const transaction = this.walletTransactionRepository.create(body);
 
     return this.walletTransactionRepository.save(transaction);
   }
 
   // transaction summary by month or date range filtering
-  async getTransactionHistory(queryParams: TransactionHistoryDTO) {
+  async getTransactionHistory(
+    queryParams: TransactionHistoryDTO,
+  ): Promise<WalletTransaction[]> {
     // eslint-disable-next-line prefer-const
     let { from_date, to_date, target_month, target_year } = queryParams;
 

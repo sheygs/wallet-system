@@ -27,7 +27,7 @@ export class WalletsService {
     return this.walletRepository.save(wallet);
   }
 
-  async getWalletByID(wallet_id: string) {
+  async getWalletByID(wallet_id: string): Promise<Wallet> {
     const wallet = await this.walletRepository.findOne({
       where: {
         id: wallet_id,
