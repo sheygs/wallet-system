@@ -25,7 +25,7 @@ The following steps were followed in the implementation of a wallet system with 
 
 5. Funds Deposit to Wallets: The Paystack API was used to create a payment request or payment authorization link for crediting funds into a user's wallet. This involved setting the necessary details to Paystack like including amount, customer details, and callback URL to handle payment response.
 
-5b. **The requested amount must be sent in the subunit of that currency**. Sending an amount in subunits simply means multiplying the base amount by `100`. For example, if a customer is supposed to make a payment of `NGN 100`, you would send `10000 = 100 * 100` in your request.
+5b. The requested amount must be sent in the subunit of that currency. Sending an amount in subunits simply means multiplying the base amount by `100`. For example, if a customer is supposed to make a payment of `NGN 100`, you would send `10000 = 100 * 100` in your request.
 
 6. Payments Verification: After a payment is made, Paystack will send a `callback` to your specified URL i.e. `http://example.com` either set on the paystack developer dashboard or the one specified in your implementation. Once the notification has been processed, verify the transaction status and update the user's wallet accordingly.
 
