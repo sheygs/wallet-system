@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing';
 import { APP_GUARD } from '@nestjs/core';
 import { BadRequestException, INestApplication } from '@nestjs/common';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AuthController } from '../src/auth/auth.controller';
 import { AuthService } from '../src/auth/auth.service';
 import { Helpers } from '../src/utilities/helpers';

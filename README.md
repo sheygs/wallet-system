@@ -79,7 +79,7 @@ TEST_POSTGRES_DB=XXXX
 
 Use Node 24 LTS (`nvm use`) and Yarn 1.22.22. Install with
 `yarn install --frozen-lockfile`. Set `JWT_SECRET` to a random secret of at least
-32 bytes and `JWT_EXPIRY=1h`. New signup passwords require 12–72 characters and
+32 bytes and `JWT_EXPIRY=15m`. New signup passwords require 12–72 characters and
 must fit in 72 UTF-8 bytes; existing shorter passwords can still log in.
 
 Schema updates use migrations; automatic schema synchronization is disabled.
@@ -123,7 +123,7 @@ Recorded keys do not expire and ordinary SQL cannot edit or delete them. Migrati
 rollback is blocked once a key is recorded. Existing historical transfers have no
 reliable client keys to backfill; update clients and reconcile outstanding
 unkeyed requests during rollout. Privileged database owners can still override
-these safeguards, so the least-privilege runtime role remains a follow-up.
+these safeguards, and production now requires the restricted runtime role described below.
 
 VS Code configuration sets the project TypeScript path and selection prompt,
 and selects ESLint's flat config. If the editor is still using a bundled TypeScript version, choose
@@ -139,8 +139,8 @@ successful. Replay rejected by either the service check or database index return
 HTTP 409, and the deposit transaction rolls back its balance update.
 
 Wallet minor-unit balances must be nonnegative whole numbers at most
-`9007199254740991`. Display balances must equal minor units divided by 100;
-the service formats them with exact integer arithmetic. Ledger/transfer amounts
+`9007199254740991`. Display balances are generated from minor units divided by 100 with exact
+database arithmetic. Ledger/transfer amounts
 must be positive whole numbers within the same limit. Transfer wallets must be
 different and exist; ledger wallets and any recorded user/reviewer IDs must
 exist. Referenced records cannot be hard-deleted, while wallet archival preserves
@@ -151,8 +151,7 @@ changes that would free an already credited reference. Pending/failed entries
 remain mutable until successful. Corrections require a designed compensating
 entry or audited administrative repair, not rewriting successful history.
 Privileged database owners can still alter/drop these safeguards or truncate
-records; the application's least-privilege database role remains a separate
-follow-up. Tests use privileged truncation only in a disposable database.
+records; production uses a separate restricted runtime role. Tests use privileged truncation only in a disposable database.
 
 The financial integrity migration locks writes, checks duplicate/missing paid
 references, invalid/inconsistent balances and amounts, self transfers, and
@@ -266,3 +265,92 @@ docker build -t ${IMAGETAG} -f Dockerfile .
 
 - Implement a Notification process (email/mobile notification) when an automated deposit fails due to insufficient funds.
 - Implement Phone Number verification using third-party SMS providers e.g. Twilio API
+
+## Security review completion and production rollout
+
+The remaining application findings from the security review
+now have implementations and regression coverage. Nest 12.1.2 and TypeScript
+6.0.3 run on Node 24.15+; the Jest scripts enable VM modules for Nest's ESM
+packages while the application stays CommonJS.
+
+Access tokens enforce HS256, issuer (`JWT_ISSUER`, default `wallet-system`),
+audience (`JWT_AUDIENCE`, default `wallet-system-api`), UUID identity, expiry and
+an account revocation version. `JWT_EXPIRY` defaults to `15m` and accepts explicit
+`s`, `m` or `h` units up to one hour. Existing tokens must be replaced by logging
+in after rollout. Login returns `refresh_token` and `refresh_expires_at` alongside
+`access_token`. Submit the refresh token once to `POST /api/v1/auth/refresh`;
+store its replacement atomically. Families have a fixed seven-day expiry.
+Refresh reuse, including concurrent refresh requests, revokes all account
+sessions. `POST /api/v1/auth/logout` also revokes all sessions immediately.
+
+All API replicas share PostgreSQL rate counters: 60 requests/minute per IP,
+5 signup/login requests per minute per IP, and 5 login attempts per minute per
+account with five-minute backoff. Email and phone aliases share the account's
+bucket. Forwarded IP headers are ignored unless `TRUSTED_PROXIES` contains
+explicit trusted IPs/CIDRs. The database limiter fails closed on storage errors;
+schedule [auth-maintenance.sql](scripts/database/auth-maintenance.sql) daily.
+Alert on `security.rate_limit_blocked` and `security.refresh_token_reuse` events.
+
+Production Swagger is disabled. Browser clients require an exact comma-separated
+`CORS_ORIGINS` allowlist; wildcard origins are rejected. Remote production database
+connections default to `POSTGRES_SSL_MODE=verify-full`, with system trust or a CA
+file supplied through `POSTGRES_SSL_CA_FILE`. Only an explicitly configured local
+or private Compose connection permits `disable`.
+
+Transaction history now takes paired `YYYY-MM-DD` dates or paired month/year
+filters, rejects mixed/incomplete filters, includes the final UTC day and caps
+ranges at 366 days. Without filters it returns the last 30 UTC days. Results are
+`data: { items, next_cursor }`, ordered by timestamp and UUID. Set `limit` from
+1–100 (default 50); pass `next_cursor` with the same date filters to continue.
+Cursors preserve PostgreSQL microsecond precision. The updated Postman collection
+includes pagination, token rotation and logout.
+
+`kobo_balance` remains the compatible field name for integer minor units in all
+three currencies. `balance` and `base_currency` are generated database columns:
+NGN/KOBO, USD/CENTS and GHS/PESEWA. They cannot be written independently, and wallet
+currency is immutable. Both sides of every new successful transfer are recorded
+in `ledger_entries`; deposits balance against an external clearing account.
+Journals and entries are append-only, currency-consistent and balanced at commit.
+Migration opening checkpoints preserve existing balances without inventing
+historical transactions. Reconciliation checks all wallets, including archived
+wallets, at production startup and every minute; alert on
+`security.balance_reconciliation_failed` or `security.reconciliation_check_failed`.
+The stored minor-unit balance serves reads; reconciliation detects drift instead
+of silently replacing it. Audited owner-only corrections use
+`post_wallet_correction(wallet_uuid, signed_minor_units, unique_reference, reason)`
+to append a compensating entry and update the balance atomically.
+
+Production startup runs no migrations and refuses privileged/owner database
+credentials or pending migrations. Compose provisions a separate schema owner and
+runtime login, runs a migration job, applies explicit runtime grants, then starts
+the API. Configure bootstrap `POSTGRES_USER/PASSWORD`, separate
+`POSTGRES_MIGRATION_USER/PASSWORD`, and `POSTGRES_RUNTIME_USER/PASSWORD`.
+[scripts/database/provision-roles.sql](scripts/database/provision-roles.sql) and
+[grant-runtime.sql](scripts/database/grant-runtime.sql) provide the same setup for
+an existing database. Supply their psql variables using your deployment's secret
+handling; apply grants after every migration. The runtime role cannot own tables,
+create schema objects, truncate history, create pre-funded wallets or execute
+administrative corrections. Schema preflight rejects incompatible columns, enums,
+keys, nullability, uniqueness or wallet foreign keys for explicit repair.
+
+**Existing deployments require a logical backup/restore before switching images.**
+The database stays PostgreSQL 15 but moves from glibc/Debian to musl/Alpine.
+Compose uses a new `pgdata_alpine` volume and does not attach the old `pgdata`
+volume. Stop old application writers, back up roles and data, restore with
+`pg_dump`/`pg_restore` into the new volume, provision migration ownership, apply
+migrations and runtime grants, and verify balances, collation-sensitive indexes,
+opening checkpoints and application behavior before directing traffic to it.
+Keep the original backup and volume for recovery. Opening balances still need
+comparison with verified provider/bank statements; the synthetic rehearsal does
+not verify production financial history.
+
+A repeatable disposable rehearsal is provided by
+[rehearse-upgrade.cjs](scripts/database/rehearse-upgrade.cjs). Run `yarn build`, set
+`TEST_POSTGRES_*`, `REHEARSAL_POSTGRES_DB=wallet_security_rehearsal_legacy` and
+`REHEARSAL_SNAPSHOT_FILE` to a temporary JSON path, then run
+`node scripts/database/rehearse-upgrade.cjs prepare` against an empty database.
+Dump it, restore into another disposable `wallet_security_rehearsal_*` database,
+point the test settings and rehearsal name at that restore, and run the script's
+`upgrade` mode. It checks restoration and migration preservation of users,
+balances, transfers, history and idempotency records, derived units and ledger
+reconciliation. Never use the rehearsal with real deployment databases.

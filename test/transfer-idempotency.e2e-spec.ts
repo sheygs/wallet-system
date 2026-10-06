@@ -3,7 +3,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { DataSource } from 'typeorm';
 import { randomUUID } from 'node:crypto';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { WalletsService } from '../src/wallets/wallets.service';
 import { User } from '../src/users/user.entity';
@@ -56,15 +56,17 @@ describe('Transfer request retries (PostgreSQL)', () => {
     destination = await db
       .getRepository(Wallet)
       .save({ user_id: recipient.id, currency: Currency.NGN });
-    token = app.get(JwtService).sign({ userId: owner.id });
+    token = app.get(JwtService).sign({ authVersion: 0, userId: owner.id });
   });
   afterEach(async () => {
     // Only a disposable, privileged test database may truncate protected history.
     await db.query('TRUNCATE transfer_requests');
     await db.query('TRUNCATE wallet_transactions');
     await db.query('DELETE FROM transfers');
+    await db.query('TRUNCATE ledger_entries, ledger_journals');
     await db.query('DELETE FROM wallets');
     await db.query('DELETE FROM users');
+    await db.query('TRUNCATE auth_rate_limits');
   });
   afterAll(async () => {
     await app.close();
@@ -159,7 +161,9 @@ describe('Transfer request retries (PostgreSQL)', () => {
   it('scopes a key to its authenticated user', async () => {
     const key = randomUUID();
     await post(key).expect(200);
-    const recipientToken = app.get(JwtService).sign({ userId: recipient.id });
+    const recipientToken = app
+      .get(JwtService)
+      .sign({ authVersion: 0, userId: recipient.id });
     // The recipient cannot retrieve the owner's stored result with that key.
     await post(key, body(), recipientToken).expect(403);
     const reverse = {

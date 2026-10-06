@@ -21,3 +21,9 @@ export class LoginUserDTO {
   @IsOptional()
   phone_number?: string;
 }
+
+export class RefreshTokenDTO {
+  @IsString()
+  @Length(43, 43)
+  refresh_token: string;
+}

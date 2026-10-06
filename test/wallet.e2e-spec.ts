@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { sign as jwtSign } from 'jsonwebtoken';
-import * as request from 'supertest';
+import { signTestToken as jwtSign } from './security-test-helpers';
+import request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { Repository } from 'typeorm';
 import {
@@ -47,8 +47,10 @@ describe('Wallet', () => {
   });
 
   afterEach(async () => {
+    await walletRepository.query('TRUNCATE ledger_entries, ledger_journals');
     await walletRepository.query('DELETE FROM wallets;');
     await userRepository.query('DELETE FROM users;');
+    await userRepository.query('TRUNCATE auth_rate_limits');
   });
 
   afterAll(async () => {
@@ -60,6 +62,7 @@ describe('Wallet', () => {
     const email = 'mark.john@gmail.com';
     const phone_number = '+2348032345346';
     const is_admin = false;
+
     let user: Record<string, any> = {};
     beforeEach(async () => {
       user = {
@@ -98,7 +101,7 @@ describe('Wallet', () => {
             expect(status).toEqual('success');
             expect(data.user_id).toEqual(id);
             expect(data.currency).toEqual('NGN');
-            expect(data.balance).toEqual('0');
+            expect(data.balance).toEqual('0.00');
           });
       });
 
@@ -206,11 +209,13 @@ describe('Wallet', () => {
         });
 
         await walletRepository.softDelete(archived.id);
+
         const response = await request(app.getHttpServer())
           .post('/wallets')
           .set('Authorization', `Bearer ${user.access_token}`)
           .send({ user_id: id })
           .expect(201);
+
         expect(response.body.data.id).not.toBe(archived.id);
 
         const history = await walletRepository.findOne({
@@ -326,7 +331,7 @@ describe('Wallet', () => {
             expect(status).toEqual('success');
             expect(data.user_id).toEqual(id);
             expect(data.currency).toEqual('NGN');
-            expect(data.balance).toEqual('0');
+            expect(data.balance).toEqual('0.00');
           });
       });
     });
@@ -336,6 +341,7 @@ describe('Wallet', () => {
       const balance = '1000';
       const currency = 'NGN';
       let wallet;
+
       it('Should retrieve the balance of a wallet', async () => {
         wallet = await walletRepository.save({
           id,
@@ -352,7 +358,7 @@ describe('Wallet', () => {
             const { data, status } = response.body;
             expect(status).toEqual('success');
             expect(data.currency).toEqual('NGN');
-            expect(data.balance).toEqual('1000');
+            expect(data.balance).toEqual('1000.00');
           });
       });
 
@@ -371,6 +377,7 @@ describe('Wallet', () => {
             );
           });
       });
+
       it('Should throw an error when an invalid wallet_id is provided', async () => {
         const wallet_id = 'ec455a9f-7496-4529-9cb4-d235c859acc7';
         return request(app.getHttpServer())
@@ -384,6 +391,7 @@ describe('Wallet', () => {
             expect(error.message).toEqual('Wallet account not found');
           });
       });
+
       it('Should throw an error when no token is provided', async () => {
         return request(app.getHttpServer())
           .get(`/wallets/${wallet.id}/balance`)

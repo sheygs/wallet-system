@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { Repository } from 'typeorm';
 import { User } from '../src/users/user.entity';
@@ -36,6 +36,7 @@ describe('Authentication System', () => {
 
   afterEach(async () => {
     await userRepository.query('DELETE FROM users;');
+    await userRepository.query('TRUNCATE auth_rate_limits');
   });
 
   afterAll(async () => {

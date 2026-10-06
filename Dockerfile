@@ -4,11 +4,19 @@
 FROM golang:1.27.0-bookworm AS postgres-helper
 RUN CGO_ENABLED=0 GOBIN=/out go install github.com/tianon/gosu@1.19
 
-FROM postgres:15-trixie AS postgres
-RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+FROM postgres:15-alpine3.24 AS postgres
+RUN apk upgrade --no-cache
 COPY --from=postgres-helper /out/gosu /usr/local/bin/gosu
+COPY scripts/database /opt/wallet-database
+COPY scripts/database/init-roles.sh /docker-entrypoint-initdb.d/10-wallet-roles.sh
 
-FROM node:24-trixie-slim AS dependencies
+# Yarn installs dependencies; omit the unused npm bundle and its advisories.
+FROM node:24-alpine3.24 AS node-base
+RUN apk upgrade --no-cache \
+    && rm -rf /usr/local/lib/node_modules/npm \
+    && rm -f /usr/local/bin/npm /usr/local/bin/npx
+
+FROM node-base AS dependencies
 WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 RUN --mount=type=cache,id=wallet-yarn-v2,target=/usr/local/share/.cache/yarn,sharing=locked yarn install --frozen-lockfile --non-interactive
@@ -18,17 +26,16 @@ COPY nest-cli.json tsconfig*.json ./
 COPY src ./src
 RUN yarn build
 
-FROM node:24-trixie-slim AS production-dependencies
+FROM node-base AS production-dependencies
 WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 RUN --mount=type=cache,id=wallet-yarn-v2,target=/usr/local/share/.cache/yarn,sharing=locked yarn install --frozen-lockfile --non-interactive --production=true
 
-FROM node:24-trixie-slim AS runtime
+FROM node-base AS application
 # Refresh OS security patches and omit package managers from the runtime image.
-RUN apt-get update && apt-get upgrade -y \
-    && rm -rf /var/lib/apt/lists/* /usr/local/lib/node_modules/npm /opt/yarn-* \
-    && rm -f /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg
-ENV NODE_ENV=production PORT=4000
+RUN rm -rf /opt/yarn-* \
+    && rm -f /usr/local/bin/yarn /usr/local/bin/yarnpkg
+ENV NODE_ENV=production PORT=4000 TZ=UTC
 WORKDIR /usr/src/app
 COPY --from=production-dependencies --chown=node:node /usr/src/app/node_modules ./node_modules
 COPY --from=build --chown=node:node /usr/src/app/dist ./dist
@@ -37,3 +44,10 @@ USER node
 EXPOSE 4000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s CMD node -e "fetch('http://127.0.0.1:4000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 CMD ["node", "dist/main.js"]
+
+# Migration jobs need only the production CLI and compiled migration files.
+FROM application AS migrations
+HEALTHCHECK NONE
+CMD ["node", "node_modules/typeorm/cli.js", "migration:run", "-d", "dist/database/migration-data-source.js"]
+
+FROM application AS runtime

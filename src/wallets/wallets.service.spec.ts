@@ -197,7 +197,6 @@ describe('Wallet security', () => {
     wallets[0].kobo_balance = Number.MAX_SAFE_INTEGER - 1000;
     await service.deposit('payment', 'owner');
     expect(wallets[0].kobo_balance).toBe(Number.MAX_SAFE_INTEGER);
-    expect(wallets[0].balance).toBe('90071992547409.91');
   });
 
   it('maps a successful-deposit index collision to HTTP 409', async () => {

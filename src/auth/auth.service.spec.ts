@@ -1,6 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { QueryFailedError } from 'typeorm';
+import { DataSource, QueryFailedError } from 'typeorm';
+import { SharedRateLimit } from './shared-rate-limit';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { HashService } from '../hash/hash.service';
@@ -16,6 +17,8 @@ describe('Signup database errors', () => {
         hashPassword: jest.fn().mockResolvedValue('hashed-password'),
       } as unknown as HashService,
       {} as JwtService,
+      {} as DataSource,
+      {} as SharedRateLimit,
     );
   });
   const signup = () => ({

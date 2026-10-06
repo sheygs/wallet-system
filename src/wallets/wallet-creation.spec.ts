@@ -5,12 +5,16 @@ import { ACTIVE_WALLET_UNIQUE_INDEX, Currency, Wallet } from './wallet.entity';
 
 describe('Wallet creation conflicts', () => {
   let service: WalletsService;
-  let repository: { create: jest.Mock; findOne: jest.Mock; save: jest.Mock };
+  let repository: { create: jest.Mock; findOne: jest.Mock; query: jest.Mock };
   beforeEach(() => {
     repository = {
       create: jest.fn().mockImplementation((body) => body),
       findOne: jest.fn().mockResolvedValue(null),
-      save: jest.fn().mockImplementation(async (wallet) => wallet),
+      query: jest
+        .fn()
+        .mockImplementation(async (_sql, [user_id, currency]) => [
+          { user_id, currency },
+        ]),
     };
     service = new WalletsService(
       repository as unknown as Repository<Wallet>,
@@ -32,11 +36,11 @@ describe('Wallet creation conflicts', () => {
     await expect(
       service.createWallet({ user_id: 'owner' }),
     ).rejects.toBeInstanceOf(ConflictException);
-    expect(repository.save).not.toHaveBeenCalled();
+    expect(repository.query).not.toHaveBeenCalled();
   });
 
   it('maps a race on the active-wallet index to HTTP 409', async () => {
-    repository.save.mockRejectedValue(
+    repository.query.mockRejectedValue(
       new QueryFailedError(
         'INSERT',
         [],
@@ -60,7 +64,7 @@ describe('Wallet creation conflicts', () => {
         constraint: 'wallets_pkey',
       }),
     );
-    repository.save.mockRejectedValue(error);
+    repository.query.mockRejectedValue(error);
     await expect(service.createWallet({ user_id: 'owner' })).rejects.toBe(
       error,
     );
@@ -68,7 +72,7 @@ describe('Wallet creation conflicts', () => {
 
   it('preserves database outages rather than misreporting a duplicate', async () => {
     const error = new Error('connection lost');
-    repository.save.mockRejectedValue(error);
+    repository.query.mockRejectedValue(error);
     await expect(service.createWallet({ user_id: 'owner' })).rejects.toBe(
       error,
     );

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Between, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { historyPolicy } from './history-policy';
 import { InjectRepository } from '@nestjs/typeorm';
 import { WalletTransaction } from './wallet-transaction.entity';
 import {
@@ -26,24 +27,48 @@ export class WalletTransactionsService {
   // transaction summary by month or date range filtering
   async getTransactionHistory(
     queryParams: TransactionHistoryDTO,
-  ): Promise<WalletTransaction[]> {
-    let { from_date, to_date, target_month, target_year } = queryParams;
+  ): Promise<{ items: WalletTransaction[]; next_cursor: string | null }> {
+    const { from, until, limit, scope, cursor } = historyPolicy(queryParams);
+    const query = this.walletTransactionRepository
+      .createQueryBuilder('transaction')
+      .where(
+        'transaction.created_at >= :from AND transaction.created_at < :until',
+        {
+          from: from.toISOString().slice(0, -1),
+          until: until.toISOString().slice(0, -1),
+        },
+      )
+      .addSelect(
+        `to_char(transaction.created_at, 'YYYY-MM-DD"T"HH24:MI:SS.US')`,
+        'cursor_at',
+      )
+      .orderBy('transaction.created_at', 'ASC')
+      .addOrderBy('transaction.id', 'ASC')
+      .take(limit + 1);
 
-    from_date = new Date(from_date);
-    to_date = new Date(to_date);
+    if (cursor)
+      query.andWhere(
+        '(transaction.created_at, transaction.id) > (CAST(:at AS timestamp), CAST(:id AS uuid))',
+        cursor,
+      );
 
-    // targetMonth - 1 to adjust for JavaScript month indexing (January is month 0)
-    if (target_month && target_year) {
-      from_date = new Date(+target_year, +target_month - 1, 1);
-      to_date = new Date(+target_year, +target_month, 0);
-    }
+    const { entities, raw } = await query.getRawAndEntities();
+    const hasMore = entities.length > limit;
+    const items = entities.slice(0, limit);
+    const last = items[items.length - 1];
 
-    const transactions = await this.walletTransactionRepository.find({
-      where: {
-        created_at: Between(from_date, to_date),
-      },
-    });
-
-    return transactions;
+    return {
+      items,
+      next_cursor: hasMore
+        ? Buffer.from(
+            JSON.stringify({
+              v: 1,
+              scope,
+              at: raw[limit - 1].cursor_at,
+              id: last.id,
+            }),
+          ).toString('base64url')
+        : null,
+    };
   }
 }

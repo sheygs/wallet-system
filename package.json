@@ -13,30 +13,30 @@
     "start:debug": "cross-env NODE_ENV=development nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,test}/**/*.ts\"",
-    "test": "cross-env NODE_ENV=test jest",
-    "test:watch": "cross-env NODE_ENV=test jest --watch --maxWorkers=1",
-    "test:cov": "cross-env NODE_ENV=test jest --coverage",
-    "test:debug": "cross-env NODE_ENV=test node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json --detectOpenHandles --maxWorkers=1",
+    "test": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --watch --maxWorkers=1",
+    "test:cov": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "test:debug": "cross-env NODE_ENV=test node --experimental-vm-modules --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --config ./test/jest-e2e.json --detectOpenHandles --maxWorkers=1",
     "typeorm": "ts-node ./node_modules/typeorm/cli",
     "typeorm:c-migration": "yarn typeorm -- migration:create src/migrations/$npm_config_name",
     "typeorm:create-migration": "yarn typeorm -- migration:create src/migrations/CreateTable",
-    "typeorm:run-migrations": "yarn typeorm migration:run -- -d src/ormconfig.ts",
-    "typeorm:revert-migrations": "yarn typeorm migration:revert -- -d src/ormconfig.ts",
+    "typeorm:run-migrations": "yarn typeorm migration:run -- -d src/database/migration-data-source.ts",
+    "typeorm:revert-migrations": "yarn typeorm migration:revert -- -d src/database/migration-data-source.ts",
     "lint:fix": "eslint \"{src,test}/**/*.ts\" --fix",
     "format:check": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
     "typecheck": "tsc --noEmit --incremental false"
   },
   "dependencies": {
-    "@nestjs/common": "^11.0.0",
-    "@nestjs/config": "^4.0.0",
-    "@nestjs/core": "^11.0.0",
-    "@nestjs/jwt": "^11.0.0",
-    "@nestjs/mapped-types": "^2.1.0",
-    "@nestjs/passport": "^11.0.0",
-    "@nestjs/platform-express": "^11.0.0",
-    "@nestjs/swagger": "^11.0.0",
-    "@nestjs/typeorm": "^11.0.0",
+    "@nestjs/common": "^12.1.2",
+    "@nestjs/config": "^12.0.1",
+    "@nestjs/core": "^12.1.2",
+    "@nestjs/jwt": "^12.0.2",
+    "@nestjs/mapped-types": "^12.0.0",
+    "@nestjs/passport": "^12.0.0",
+    "@nestjs/platform-express": "^12.1.2",
+    "@nestjs/swagger": "^12.0.2",
+    "@nestjs/typeorm": "^12.0.2",
     "axios": "^1.6.0",
     "bcrypt": "^6.0.0",
     "class-transformer": "^0.5.1",
@@ -56,9 +56,9 @@
     "@nestjs/throttler": "^6.7.1"
   },
   "devDependencies": {
-    "@nestjs/cli": "^11.0.0",
-    "@nestjs/schematics": "^11.0.0",
-    "@nestjs/testing": "^11.0.0",
+    "@nestjs/cli": "^12.0.8",
+    "@nestjs/schematics": "^12.0.6",
+    "@nestjs/testing": "^12.1.2",
     "@types/bcrypt": "^6.0.0",
     "@types/compression": "^1.7.2",
     "@types/express": "^5.0.0",
@@ -67,8 +67,8 @@
     "@types/passport-jwt": "^4.0.1",
     "@types/passport-local": "^1.0.35",
     "@types/supertest": "^6.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.71.1",
+    "@typescript-eslint/parser": "^8.71.1",
     "cross-env": "^7.0.3",
     "eslint": "^10.12.0",
     "eslint-config-prettier": "^10.0.0",
@@ -81,7 +81,7 @@
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.1.3"
+    "typescript": "^6.0.0"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -101,7 +101,7 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": ">=24 <25"
+    "node": ">=24.15 <25"
   },
   "packageManager": "yarn@1.22.22",
   "resolutions": {

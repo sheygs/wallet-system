@@ -62,8 +62,10 @@ describe('Financial database safeguards', () => {
     await db.query('TRUNCATE wallet_transactions');
     await db.query('TRUNCATE transfer_requests');
     await db.query('DELETE FROM transfers');
+    await db.query('TRUNCATE ledger_entries, ledger_journals');
     await db.query('DELETE FROM wallets');
     await db.query('DELETE FROM users');
+    await db.query('TRUNCATE auth_rate_limits');
     jest.clearAllMocks();
   });
   afterAll(async () => {
@@ -133,7 +135,7 @@ describe('Financial database safeguards', () => {
     async (balance) => {
       await expect(
         db.query(
-          'UPDATE wallets SET kobo_balance = $1::numeric, balance = $1::numeric / 100 WHERE id = $2',
+          'UPDATE wallets SET kobo_balance = $1::numeric WHERE id = $2',
           [balance, source.id],
         ),
       ).rejects.toMatchObject({
@@ -149,12 +151,11 @@ describe('Financial database safeguards', () => {
     },
   );
 
-  it('rejects inconsistent display and minor-unit balances', async () => {
+  it('rejects writes to the derived display balance', async () => {
     await expect(
-      db.getRepository(Wallet).update(source.id, { balance: 51 }),
+      db.query('UPDATE wallets SET balance = 51 WHERE id = $1', [source.id]),
     ).rejects.toMatchObject({
-      code: '23514',
-      constraint: 'wallets_balances_valid',
+      code: '428C9',
     });
   });
 
@@ -358,7 +359,7 @@ describe('Financial database safeguards', () => {
 
   it('credits the maximum safe balance without losing display cents', async () => {
     await db.query(
-      'UPDATE wallets SET kobo_balance = $1::numeric, balance = $1::numeric / 100 WHERE id = $2',
+      'UPDATE wallets SET kobo_balance = $1::numeric WHERE id = $2',
       [String(Number.MAX_SAFE_INTEGER - 1000), source.id],
     );
     verifiedPayment('maximum-balance');
