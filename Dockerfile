@@ -8,7 +8,7 @@ FROM postgres:15-trixie AS postgres
 RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
 COPY --from=postgres-helper /out/gosu /usr/local/bin/gosu
 
-FROM node:24-trixie-slim AS dependencies
+FROM node:25-trixie-slim AS dependencies
 WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 RUN --mount=type=cache,id=wallet-yarn-v2,target=/usr/local/share/.cache/yarn,sharing=locked yarn install --frozen-lockfile --non-interactive
@@ -18,12 +18,12 @@ COPY nest-cli.json tsconfig*.json ./
 COPY src ./src
 RUN yarn build
 
-FROM node:24-trixie-slim AS production-dependencies
+FROM node:25-trixie-slim AS production-dependencies
 WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 RUN --mount=type=cache,id=wallet-yarn-v2,target=/usr/local/share/.cache/yarn,sharing=locked yarn install --frozen-lockfile --non-interactive --production=true
 
-FROM node:24-trixie-slim AS runtime
+FROM node:25-trixie-slim AS runtime
 # Refresh OS security patches and omit package managers from the runtime image.
 RUN apt-get update && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/* /usr/local/lib/node_modules/npm /opt/yarn-* \
