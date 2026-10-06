@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # Rebuild gosu with a patched Go toolchain; the upstream database image bundles
 # an older Go standard library in this privilege-switching helper.
-FROM golang:1.26.8-bookworm AS postgres-helper
+FROM golang:1.27.0-bookworm AS postgres-helper
 RUN CGO_ENABLED=0 GOBIN=/out go install github.com/tianon/gosu@1.19
 
 FROM postgres:15-trixie AS postgres
