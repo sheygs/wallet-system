@@ -72,7 +72,8 @@ collection does not advertise them.
 
 Signup/wallet creation return 201. Login, payment initialization, deposit,
 transfer, review and history return 200. Scripts check the success envelope and
-capture session variables. Examples also cover duplicate/replay conflicts and
+capture session variables. Balances and database-loaded amounts are decimal
+strings; a newly created transfer can return its amount as a number. Examples also cover duplicate/replay conflicts and
 review failures; these examples are documentation, not requests sent by the
 success-path scripts.
 
