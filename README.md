@@ -259,7 +259,7 @@ docker build -t ${IMAGETAG} -f Dockerfile .
 
 ## Postman Documentation
 
-- Please see `/postman_docs` on the root directory OR
+- Import [the Postman collection](postman_docs/Wallet_System.postman_collection.json) and follow [its setup guide](postman_docs/README.md).
 - Navigate to `http://localhost:4000/docs` on your computer to view the openapi documentation.
 
 ## Improvement Points
