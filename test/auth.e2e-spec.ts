@@ -39,7 +39,6 @@ describe('Authentication System', () => {
   });
 
   afterAll(async () => {
-    await moduleFixture.close();
     await app.close();
   });
 
@@ -54,7 +53,7 @@ describe('Authentication System', () => {
             first_name: 'John',
             last_name: lastName,
             email,
-            password: 'john.doe',
+            password: 'john.doe.secure',
             phone_number: '+2348045637284',
           })
           .expect(201)
@@ -75,7 +74,7 @@ describe('Authentication System', () => {
           .send({
             first_name: 'John',
             last_name: lastName,
-            password: 'john.doe',
+            password: 'john.doe.secure',
             phone_number: '+2348045637284',
           })
           .expect(400)
@@ -112,7 +111,7 @@ describe('Authentication System', () => {
 
             expect(error.message).toEqual(
               expect.arrayContaining([
-                'password must be longer than or equal to 3 characters',
+                'password must be longer than or equal to 12 characters',
                 'password should not be empty',
                 'password must be a string',
               ]),
@@ -189,7 +188,7 @@ describe('Authentication System', () => {
             expect(status).toEqual('failure');
             expect(error.name).toEqual('Bad Request');
 
-            expect(error.message).toEqual('Invalid email/phone number');
+            expect(error.message).toEqual('Invalid credentials');
           });
       });
 
@@ -206,7 +205,7 @@ describe('Authentication System', () => {
             expect(code).toEqual(400);
             expect(status).toEqual('failure');
             expect(error.name).toEqual('Bad Request');
-            expect(error.message).toEqual('Invalid email/phone number');
+            expect(error.message).toEqual('Invalid credentials');
           });
       });
 
@@ -223,7 +222,7 @@ describe('Authentication System', () => {
             expect(code).toEqual(400);
             expect(status).toEqual('failure');
             expect(error.name).toEqual('Bad Request');
-            expect(error.message).toEqual('Invalid email/phone number');
+            expect(error.message).toEqual('Invalid credentials');
           });
       });
     });

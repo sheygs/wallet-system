@@ -1,33 +1,51 @@
-version: '3.9'
-
 services:
   api:
-    container_name: wallet_systen_api
     build:
       context: .
-      dockerfile: Dockerfile
+      target: runtime
+    init: true
+    restart: unless-stopped
     ports:
-      - 4000:4000
+      - "127.0.0.1:${PORT:-4000}:4000"
     environment:
-      - DB_TYPE=postgres
-      - POSTGRES_HOST=postgres
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_PORT=5432
+      NODE_ENV: production
+      PORT: 4000
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB}
+      POSTGRES_PORT: 5432
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET}
+      JWT_EXPIRY: ${JWT_EXPIRY:-1h}
+      PAYSTACK_SECRET_KEY: ${PAYSTACK_SECRET_KEY:?Set PAYSTACK_SECRET_KEY}
+      PAYSTACK_API_BASE_URL: https://api.paystack.co
+      MININUM_APPROVAL_AMOUNT: ${MININUM_APPROVAL_AMOUNT:-1000000}
     depends_on:
-      - postgres
-
+      postgres:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
   postgres:
-    container_name: postgres_container
-    image: postgres:15
-    ports:
-      - 5432:5432
+    image: wallet-system-postgres:15
+    build:
+      context: .
+      target: postgres
+    restart: unless-stopped
     environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     volumes:
       - pgdata:/var/lib/postgresql/data
 volumes:
-  pgdata: {}
+  pgdata:

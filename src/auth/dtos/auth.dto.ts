@@ -14,7 +14,7 @@ export class LoginUserDTO {
 
   @IsString()
   @IsNotEmpty()
-  @Length(3, 20)
+  @Length(3, 72)
   password: string;
 
   @IsPhoneNumber()

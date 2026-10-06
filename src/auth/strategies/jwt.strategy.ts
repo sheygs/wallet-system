@@ -33,7 +33,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       userId: payload.userId,
       ...(payload.email && { email: payload.email }),
       ...(payload.phoneNumber && { phoneNumber: payload.phoneNumber }),
-      isAdmin: payload.isAdmin,
+      isAdmin: authUser.is_admin === true,
     };
   }
 }

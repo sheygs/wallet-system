@@ -17,6 +17,7 @@ export class UsersService {
 
   // existing user search by email or phone number
   async findUser(email?: string, phoneNumber?: string): Promise<User> {
+    if (!email && !phoneNumber) return null;
     const user = await this.userRepository.findOne({
       where: [
         {

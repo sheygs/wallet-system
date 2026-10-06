@@ -5,7 +5,7 @@ import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 import { HashModule } from '../hash/hash.module';
 import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtSignOptions } from '@nestjs/jwt';
 import { HelpersModule } from '../utilities/helpers.module';
 
 @Module({
@@ -16,7 +16,10 @@ import { HelpersModule } from '../utilities/helpers.module';
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: process.env.JWT_EXPIRY },
+      signOptions: {
+        expiresIn: (process.env.JWT_EXPIRY ||
+          '1h') as JwtSignOptions['expiresIn'],
+      },
     }),
   ],
   providers: [AuthService],

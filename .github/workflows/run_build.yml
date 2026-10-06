@@ -1,24 +1,80 @@
-name: 'Run Build'
-
+name: CI
 on:
-  pull_request:
+  push:
     branches: [main]
-
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
-  run-ci:
+  validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:15-trixie
+        env:
+          POSTGRES_USER: wallet_test
+          POSTGRES_PASSWORD: wallet-test-only
+          POSTGRES_DB: wallet_test
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U wallet_test -d wallet_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      TEST_POSTGRES_HOST: 127.0.0.1
+      TEST_POSTGRES_PORT: 5432
+      TEST_POSTGRES_USER: wallet_test
+      TEST_POSTGRES_PASSWORD: wallet-test-only
+      TEST_POSTGRES_DB: wallet_test
+      JWT_SECRET: wallet-test-only-secret-with-at-least-32-characters
+      PAYSTACK_API_BASE_URL: https://api.paystack.co
+      PAYSTACK_SECRET_KEY: test-only
+      MININUM_APPROVAL_AMOUNT: 1000000
     steps:
-      - name: checkout repository
-        uses: actions/checkout@v2
-
-      - name: set up node.js
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
-          node-version: 18
-          registry-url: https://npm.pkg.github.com/
-
-      - name: set up Yarn
-        run: yarn install --pure-lockfile
-
-      - name: Run Build
-        run: yarn run build
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+      - run: yarn install --frozen-lockfile --non-interactive
+      - run: yarn format:check
+      - run: yarn lint
+      - run: yarn typecheck
+      - run: yarn build
+      - run: yarn test --runInBand
+      - run: yarn test:e2e
+      - name: Audit all dependencies
+        run: |
+          yarn audit --json > audit.json || audit_status=$?
+          node scripts/check-audit.cjs
+  docker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - run: docker build --target runtime -t wallet-system:ci .
+      - name: Scan fixable high and critical image vulnerabilities
+        run: >-
+          docker run --rm
+          -v /var/run/docker.sock:/var/run/docker.sock:ro
+          ghcr.io/aquasecurity/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa
+          image --scanners vuln --severity HIGH,CRITICAL
+          --ignore-unfixed --exit-code 1 wallet-system:ci
+      - run: docker build --target postgres -t wallet-system-postgres:ci .
+      - name: Scan fixable high and critical database image vulnerabilities
+        run: >-
+          docker run --rm
+          -v /var/run/docker.sock:/var/run/docker.sock:ro
+          ghcr.io/aquasecurity/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa
+          image --scanners vuln --severity HIGH,CRITICAL
+          --ignore-unfixed --exit-code 1 wallet-system-postgres:ci

@@ -54,8 +54,12 @@ const winstonLogger = {
       ...options.console,
     }),
 
-    new transports.File(options.combined),
-    new transports.File(options.error),
+    ...(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test'
+      ? []
+      : [
+          new transports.File(options.combined),
+          new transports.File(options.error),
+        ]),
   ],
 };
 

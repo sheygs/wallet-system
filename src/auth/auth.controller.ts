@@ -1,3 +1,4 @@
+import { Throttle } from '@nestjs/throttler';
 import { Controller, Post, Body, HttpStatus, HttpCode } from '@nestjs/common';
 import { CreateUserDTO } from '../users/dtos/user.dto';
 import { LoginUserDTO } from './dtos/auth.dto';
@@ -7,7 +8,10 @@ import { SuccessResponse } from 'src/interface/types';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService, private helpers: Helpers) {}
+  constructor(
+    private authService: AuthService,
+    private helpers: Helpers,
+  ) {}
   @Post('/signup')
   async registerUser(@Body() body: CreateUserDTO): Promise<SuccessResponse> {
     const user = await this.authService.signup(body);
@@ -22,6 +26,7 @@ export class AuthController {
     );
   }
 
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @Post('/login')
   @HttpCode(HttpStatus.OK)
   async login(@Body() authLogin: LoginUserDTO) {

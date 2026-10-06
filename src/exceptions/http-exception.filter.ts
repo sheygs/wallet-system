@@ -30,11 +30,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
       HttpStatus.INTERNAL_SERVER_ERROR;
 
     const message: string =
-      error.response?.data?.message ||
-      error.response?.data?.msg ||
-      error.response?.message ||
-      error.response?.error ||
-      error?.message;
+      status >= 500
+        ? 'Internal server error'
+        : error.response?.data?.message ||
+          error.response?.data?.msg ||
+          error.response?.message ||
+          error.response?.error ||
+          error?.message;
 
     const path: string = request ? request.url : null;
 

@@ -1,11 +1,12 @@
 import {
   Controller,
+  Req,
+  ForbiddenException,
   Post,
   Body,
   UseGuards,
   Get,
   Param,
-  UnprocessableEntityException,
   NotFoundException,
   HttpStatus,
   HttpCode,
@@ -20,10 +21,6 @@ import { UsersService } from '../users/users.service';
 import { WalletsService } from './wallets.service';
 import { WalletTransactionsService } from '../wallet-transactions/wallet-transactions.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import {
-  TransactionStatus,
-  TransactionType,
-} from '../wallet-transactions/wallet-transaction.entity';
 import { Helpers } from '../utilities/helpers';
 
 @Controller('wallets')
@@ -38,35 +35,38 @@ export class WalletsController {
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.CREATED)
   @Post('/')
-  async createWallet(@Body() body: CreateWalletDTO) {
+  async createWallet(
+    @Body() body: CreateWalletDTO,
+    @Req() request: { user: { userId: string } },
+  ) {
+    if (body.user_id !== request.user.userId)
+      throw new ForbiddenException('Cannot create a wallet for another user');
+
     const user = await this.userService.getUserById(body.user_id);
 
     if (!user) {
       throw new NotFoundException('No account exists for this user');
     }
 
-    // check for duplicate currency wallet creation
-    const existingWallet = await this.walletService.searchWallet({
-      user_id: user.id,
-      currency: body.currency,
-    });
+    const wallet = await this.walletService.createWallet(body);
 
-    if (!existingWallet) {
-      const wallet = await this.walletService.createWallet(body);
-
-      return this.helpersService.successResponse(
-        HttpStatus.CREATED,
-        wallet,
-        'Wallet created',
-      );
-    }
+    return this.helpersService.successResponse(
+      HttpStatus.CREATED,
+      wallet,
+      'Wallet created',
+    );
   }
 
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @Get('/:wallet_id/balance')
-  async getWalletBalance(@Param() { wallet_id }: GetWalletDTO) {
+  async getWalletBalance(
+    @Param() { wallet_id }: GetWalletDTO,
+    @Req() request: { user: { userId: string } },
+  ) {
     const existingWallet = await this.walletService.getWalletByID(wallet_id);
+
+    this.walletService.assertOwner(existingWallet, request.user.userId);
 
     const { currency, balance } = existingWallet;
 
@@ -80,9 +80,13 @@ export class WalletsController {
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @Post('/initialize-payment')
-  async initializePayment(@Body() body: InitializePaymentDTO) {
+  async initializePayment(
+    @Body() body: InitializePaymentDTO,
+    @Req() request: { user: { userId: string } },
+  ) {
     const wallet = await this.walletService.getWalletByID(body.wallet_id);
 
+    this.walletService.assertOwner(wallet, request.user.userId);
     // call paystack API to initialize payment
     const response = await this.walletService.initializePaymentTransaction({
       email: wallet?.user?.email,
@@ -102,52 +106,15 @@ export class WalletsController {
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @Post('/deposit')
-  async creditWallet(@Body() body: FundWalletDTO) {
-    const response = await this.walletService.verifyPaymentTransaction(
-      body.reference,
-    );
-
-    const {
-      data: {
-        reference,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        metadata: { amount, wallet_id, user_id, currency },
-        status: transactionStatus,
-        gateway_response,
-      },
-    } = await this.walletService.verifyPaymentTransaction(body.reference);
-
-    if (transactionStatus !== 'success') {
-      await this.walletTransactionService.createTransactionLog({
-        user_id,
-        source_wallet_id: wallet_id,
-        amount: Number(amount),
-        transaction_type: TransactionType.DEPOSIT,
-        transaction_status: TransactionStatus.FAILED,
-        reference: reference || body.reference,
-      });
-
-      throw new UnprocessableEntityException(gateway_response);
-    }
-
-    await Promise.all([
-      // log transaction
-      this.walletTransactionService.createTransactionLog({
-        user_id,
-        source_wallet_id: wallet_id,
-        amount: Number(amount),
-        transaction_type: TransactionType.DEPOSIT,
-        transaction_status: TransactionStatus.SUCCESSFUL,
-        reference: reference || body.reference,
-      }),
-
-      // update the user's wallet balance
-      this.walletService.updateWalletBalance(wallet_id, amount, 'INC'),
-    ]);
+  async creditWallet(
+    @Body() body: FundWalletDTO,
+    @Req() request: { user: { userId: string } },
+  ) {
+    await this.walletService.deposit(body.reference, request.user.userId);
 
     return this.helpersService.successResponse(
       HttpStatus.OK,
-      response,
+      {},
       'Wallet funded',
     );
   }
