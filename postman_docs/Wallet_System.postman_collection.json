@@ -1,1332 +1,1579 @@
 {
-	"info": {
-		"_postman_id": "0c105bfa-b545-4740-98ba-cf5022f3d4df",
-		"name": "Wallet System",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28150349",
-		"_collection_link": "https://dark-crater-74135.postman.co/workspace/My-WorkSpace~3290af0b-7b0d-430e-b44a-a44418cffba2/collection/28150349-0c105bfa-b545-4740-98ba-cf5022f3d4df?action=share&creator=28150349&source=collection_link"
-	},
-	"item": [
-		{
-			"name": "Base",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}",
-					"host": [
-						"{{BASE_URL}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Sign Up",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"john\",\n    \"last_name\": \"doe\",\n    \"phone_number\": \"+2347039301972\",\n    \"email\": \"john.doe@gmail.com\",\n    \"password\": \"kkols\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/auth/signup",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"auth",
-						"signup"
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Sign Up",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"first_name\": \"john\",\n    \"last_name\": \"doe\",\n    \"phone_number\": \"+2347039301972\",\n    \"email\": \"john.doe@gmail.com\",\n    \"password\": \"kkols\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/api/v1/auth/signup",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"auth",
-								"signup"
-							]
-						}
-					},
-					"status": "Created",
-					"code": 201,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Content-Security-Policy",
-							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
-						},
-						{
-							"key": "Cross-Origin-Opener-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Cross-Origin-Resource-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Origin-Agent-Cluster",
-							"value": "?1"
-						},
-						{
-							"key": "Referrer-Policy",
-							"value": "no-referrer"
-						},
-						{
-							"key": "Strict-Transport-Security",
-							"value": "max-age=15552000; includeSubDomains"
-						},
-						{
-							"key": "X-Content-Type-Options",
-							"value": "nosniff"
-						},
-						{
-							"key": "X-DNS-Prefetch-Control",
-							"value": "off"
-						},
-						{
-							"key": "X-Download-Options",
-							"value": "noopen"
-						},
-						{
-							"key": "X-Frame-Options",
-							"value": "SAMEORIGIN"
-						},
-						{
-							"key": "X-Permitted-Cross-Domain-Policies",
-							"value": "none"
-						},
-						{
-							"key": "X-XSS-Protection",
-							"value": "0"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "Content-Length",
-							"value": "323"
-						},
-						{
-							"key": "ETag",
-							"value": "W/\"143-2SUI95Or5BcLlI9KayCRNVwA1hk\""
-						},
-						{
-							"key": "Vary",
-							"value": "Accept-Encoding"
-						},
-						{
-							"key": "Date",
-							"value": "Sat, 15 Jul 2023 09:19:01 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"User created\",\n    \"data\": {\n        \"first_name\": \"john\",\n        \"last_name\": \"doe\",\n        \"email\": \"john.doe@gmail.com\",\n        \"phone_number\": \"+2347039301972\",\n        \"is_admin\": false,\n        \"updated_at\": \"2023-07-15T09:19:01.350Z\",\n        \"deleted_at\": null,\n        \"id\": \"3b7b8566-bcba-47cf-8bb4-cd129c6b4bd8\",\n        \"created_at\": \"2023-07-15T09:19:01.350Z\"\n    }\n}"
-				}
-			]
-		},
-		{
-			"name": "Login",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"john.doe@gmail.com\",\n    \"password\": \"kkols\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/auth/login",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"auth",
-						"login"
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Login",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\": \"john.doe@gmail.com\",\n    \"password\": \"kkols\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/api/v1/auth/login",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"auth",
-								"login"
-							]
-						}
-					},
-					"status": "Created",
-					"code": 201,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Content-Security-Policy",
-							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
-						},
-						{
-							"key": "Cross-Origin-Opener-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Cross-Origin-Resource-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Origin-Agent-Cluster",
-							"value": "?1"
-						},
-						{
-							"key": "Referrer-Policy",
-							"value": "no-referrer"
-						},
-						{
-							"key": "Strict-Transport-Security",
-							"value": "max-age=15552000; includeSubDomains"
-						},
-						{
-							"key": "X-Content-Type-Options",
-							"value": "nosniff"
-						},
-						{
-							"key": "X-DNS-Prefetch-Control",
-							"value": "off"
-						},
-						{
-							"key": "X-Download-Options",
-							"value": "noopen"
-						},
-						{
-							"key": "X-Frame-Options",
-							"value": "SAMEORIGIN"
-						},
-						{
-							"key": "X-Permitted-Cross-Domain-Policies",
-							"value": "none"
-						},
-						{
-							"key": "X-XSS-Protection",
-							"value": "0"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "Content-Length",
-							"value": "357"
-						},
-						{
-							"key": "ETag",
-							"value": "W/\"165-vE7CH3i5upomSEKhpKPBzHrQ/u8\""
-						},
-						{
-							"key": "Vary",
-							"value": "Accept-Encoding"
-						},
-						{
-							"key": "Date",
-							"value": "Sat, 15 Jul 2023 09:21:23 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"id\": \"3b7b8566-bcba-47cf-8bb4-cd129c6b4bd8\",\n    \"email\": \"john.doe@gmail.com\",\n    \"is_admin\": false,\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNiN2I4NTY2LWJjYmEtNDdjZi04YmI0LWNkMTI5YzZiNGJkOCIsImVtYWlsIjoiam9obi5kb2VAZ21haWwuY29tIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2ODk0MTI4ODMsImV4cCI6MTY4OTQxNDA4M30.NrPdt56KropAHLuoKd5LeHaUUjBcxViZcF740EWGZtA\"\n}"
-				}
-			]
-		},
-		{
-			"name": "Create Wallet",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTM4NjE3OSwiZXhwIjoxNjg5Mzg3Mzc5fQ.qttKI0E_T5UA-896kLMJzBD4Z4qVkMKgCy-WfGTxGgg",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"user_id\": \"729c41c5-f786-4278-962c-d6283d352aba\",\n    \"currency\": \"GHS\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/wallets",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"wallets"
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "New Request",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"user_id\": \"4b4e29f9-4a9c-4af7-81b0-156c080e5830\",\n    \"currency\": \"GHS\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/wallets",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"wallets"
-							]
-						}
-					},
-					"status": "Created",
-					"code": 201,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "X-Powered-By",
-							"value": "Express"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "Content-Length",
-							"value": "289"
-						},
-						{
-							"key": "ETag",
-							"value": "W/\"121-/uaypYkdyLn+0J3ibC4joilG8lw\""
-						},
-						{
-							"key": "Date",
-							"value": "Fri, 14 Jul 2023 08:34:59 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"Wallet created\",\n    \"data\": {\n        \"user_id\": \"4b4e29f9-4a9c-4af7-81b0-156c080e5830\",\n        \"currency\": \"GHS\",\n        \"updated_at\": \"2023-07-14T08:34:59.885Z\",\n        \"deleted_at\": null,\n        \"id\": \"0a3a4252-94d1-4600-86f2-cd239aa4a96d\",\n        \"balance\": \"0\",\n        \"created_at\": \"2023-07-14T08:34:59.885Z\"\n    }\n}"
-				}
-			]
-		},
-		{
-			"name": "Get Wallet Balance",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTM4NjE3OSwiZXhwIjoxNjg5Mzg3Mzc5fQ.qttKI0E_T5UA-896kLMJzBD4Z4qVkMKgCy-WfGTxGgg",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/wallets/:wallet_id/balance",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"wallets",
-						":wallet_id",
-						"balance"
-					],
-					"variable": [
-						{
-							"key": "wallet_id",
-							"value": "192d1158-ba6b-4928-92d0-5053ed4a75a7"
-						}
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Get Wallet Balance",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/wallets/:wallet_id/balance",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"wallets",
-								":wallet_id",
-								"balance"
-							],
-							"variable": [
-								{
-									"key": "wallet_id",
-									"value": "0a3a4252-94d1-4600-86f2-cd239aa4a96d"
-								}
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "X-Powered-By",
-							"value": "Express"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "Content-Length",
-							"value": "108"
-						},
-						{
-							"key": "ETag",
-							"value": "W/\"6c-zFPmR3RAI2/jhFkMwGh640NUnt4\""
-						},
-						{
-							"key": "Date",
-							"value": "Fri, 14 Jul 2023 08:36:46 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Wallet balance retrieved\",\n    \"data\": {\n        \"currency\": \"GHS\",\n        \"balance\": \"0\"\n    }\n}"
-				}
-			]
-		},
-		{
-			"name": "Fund Wallet",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI2ODI2ODk2LTZjYzQtNGQyOC1hYzE2LThiNjVhMjVjZjdjNiIsImVtYWlsIjoic3h4eHgueXl5eUBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTI2NTQ0MSwiZXhwIjoxNjg5MjY2NjQxfQ.3np6FHBfp91UUixBOn0907UNKKtsigoPSdysmp9RI70",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"reference\": \"lm7nz5xmrl\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/wallets/deposit",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"wallets",
-						"deposit"
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Fund Wallet",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"reference\": \"lm7nz5xmrl\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/api/v1/wallets/deposit",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"wallets",
-								"deposit"
-							]
-						}
-					},
-					"status": "Created",
-					"code": 201,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Content-Security-Policy",
-							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
-						},
-						{
-							"key": "Cross-Origin-Opener-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Cross-Origin-Resource-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Origin-Agent-Cluster",
-							"value": "?1"
-						},
-						{
-							"key": "Referrer-Policy",
-							"value": "no-referrer"
-						},
-						{
-							"key": "Strict-Transport-Security",
-							"value": "max-age=15552000; includeSubDomains"
-						},
-						{
-							"key": "X-Content-Type-Options",
-							"value": "nosniff"
-						},
-						{
-							"key": "X-DNS-Prefetch-Control",
-							"value": "off"
-						},
-						{
-							"key": "X-Download-Options",
-							"value": "noopen"
-						},
-						{
-							"key": "X-Frame-Options",
-							"value": "SAMEORIGIN"
-						},
-						{
-							"key": "X-Permitted-Cross-Domain-Policies",
-							"value": "none"
-						},
-						{
-							"key": "X-XSS-Protection",
-							"value": "0"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "ETag",
-							"value": "W/\"6a8-LtNGfv7iY6KUuo7IYs95hnsFQtQ\""
-						},
-						{
-							"key": "Vary",
-							"value": "Accept-Encoding"
-						},
-						{
-							"key": "Content-Encoding",
-							"value": "gzip"
-						},
-						{
-							"key": "Date",
-							"value": "Sat, 15 Jul 2023 01:16:24 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5"
-						},
-						{
-							"key": "Transfer-Encoding",
-							"value": "chunked"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Wallet funded\",\n    \"response\": {\n        \"status\": true,\n        \"message\": \"Verification successful\",\n        \"data\": {\n            \"id\": 2951395777,\n            \"domain\": \"test\",\n            \"status\": \"success\",\n            \"reference\": \"lm7nz5xmrl\",\n            \"receipt_number\": null,\n            \"amount\": 10000000,\n            \"message\": null,\n            \"gateway_response\": \"Successful\",\n            \"paid_at\": \"2023-07-15T01:15:52.000Z\",\n            \"created_at\": \"2023-07-15T01:15:33.000Z\",\n            \"channel\": \"card\",\n            \"currency\": \"NGN\",\n            \"ip_address\": \"197.211.58.37\",\n            \"metadata\": {\n                \"amount\": \"10000000\",\n                \"wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n                \"user_id\": \"27158712-3e0e-44be-8da5-6a248f5376c9\"\n            },\n            \"log\": {\n                \"start_time\": 1689383747,\n                \"time_spent\": 5,\n                \"attempts\": 1,\n                \"errors\": 0,\n                \"success\": true,\n                \"mobile\": false,\n                \"input\": [],\n                \"history\": [\n                    {\n                        \"type\": \"action\",\n                        \"message\": \"Attempted to pay with card\",\n                        \"time\": 4\n                    },\n                    {\n                        \"type\": \"success\",\n                        \"message\": \"Successfully paid with card\",\n                        \"time\": 5\n                    }\n                ]\n            },\n            \"fees\": 160000,\n            \"fees_split\": null,\n            \"authorization\": {\n                \"authorization_code\": \"AUTH_kp26dol5di\",\n                \"bin\": \"408408\",\n                \"last4\": \"4081\",\n                \"exp_month\": \"12\",\n                \"exp_year\": \"2030\",\n                \"channel\": \"card\",\n                \"card_type\": \"visa \",\n                \"bank\": \"TEST BANK\",\n                \"country_code\": \"NG\",\n                \"brand\": \"visa\",\n                \"reusable\": true,\n                \"signature\": \"SIG_yypN86wTD58Y0eNNc17N\",\n                \"account_name\": null,\n                \"receiver_bank_account_number\": null,\n                \"receiver_bank\": null\n            },\n            \"customer\": {\n                \"id\": 130309284,\n                \"first_name\": null,\n                \"last_name\": null,\n                \"email\": \"segun.ekoh@gmail.com\",\n                \"customer_code\": \"CUS_688zyt20w0z19o6\",\n                \"phone\": null,\n                \"metadata\": null,\n                \"risk_action\": \"default\",\n                \"international_format_phone\": null\n            },\n            \"plan\": null,\n            \"split\": {},\n            \"order_id\": null,\n            \"paidAt\": \"2023-07-15T01:15:52.000Z\",\n            \"createdAt\": \"2023-07-15T01:15:33.000Z\",\n            \"requested_amount\": 10000000,\n            \"pos_transaction_data\": null,\n            \"source\": null,\n            \"fees_breakdown\": null,\n            \"transaction_date\": \"2023-07-15T01:15:33.000Z\",\n            \"plan_object\": {},\n            \"subaccount\": {}\n        }\n    }\n}"
-				}
-			]
-		},
-		{
-			"name": "Intialize Payment",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTM4NjE3OSwiZXhwIjoxNjg5Mzg3Mzc5fQ.qttKI0E_T5UA-896kLMJzBD4Z4qVkMKgCy-WfGTxGgg",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n    \"amount\": 10000000,\n    \"currency\": \"NGN\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/wallets/initialize-payment",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"wallets",
-						"initialize-payment"
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Intialize Payment",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n    \"amount\": 10000000,\n    \"currency\": \"NGN\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/api/v1/wallets/initialize-payment",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"wallets",
-								"initialize-payment"
-							]
-						}
-					},
-					"status": "Created",
-					"code": 201,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Content-Security-Policy",
-							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
-						},
-						{
-							"key": "Cross-Origin-Opener-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Cross-Origin-Resource-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Origin-Agent-Cluster",
-							"value": "?1"
-						},
-						{
-							"key": "Referrer-Policy",
-							"value": "no-referrer"
-						},
-						{
-							"key": "Strict-Transport-Security",
-							"value": "max-age=15552000; includeSubDomains"
-						},
-						{
-							"key": "X-Content-Type-Options",
-							"value": "nosniff"
-						},
-						{
-							"key": "X-DNS-Prefetch-Control",
-							"value": "off"
-						},
-						{
-							"key": "X-Download-Options",
-							"value": "noopen"
-						},
-						{
-							"key": "X-Frame-Options",
-							"value": "SAMEORIGIN"
-						},
-						{
-							"key": "X-Permitted-Cross-Domain-Policies",
-							"value": "none"
-						},
-						{
-							"key": "X-XSS-Protection",
-							"value": "0"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "Content-Length",
-							"value": "153"
-						},
-						{
-							"key": "ETag",
-							"value": "W/\"99-2cYhzejIMXakacejC6Z2igtRavs\""
-						},
-						{
-							"key": "Vary",
-							"value": "Accept-Encoding"
-						},
-						{
-							"key": "Date",
-							"value": "Sat, 15 Jul 2023 01:15:33 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"Payment initialized successfully\",\n    \"data\": {\n        \"authorization_url\": \"https://checkout.paystack.com/gjzbuqz08ghiac0\"\n    }\n}"
-				}
-			]
-		},
-		{
-			"name": "Wallets Transfer",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTM4NjE3OSwiZXhwIjoxNjg5Mzg3Mzc5fQ.qttKI0E_T5UA-896kLMJzBD4Z4qVkMKgCy-WfGTxGgg",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"source_wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n    \"destination_wallet_id\": \"f741ca75-bed1-4239-a58f-d344590dbbd1\",\n    \"amount\": 1000,\n    \"currency\": \"NGN\",\n    \"reason\": \"test simulation\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/transfers",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"transfers"
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Wallets Transfer",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"source_wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n    \"destination_wallet_id\": \"f741ca75-bed1-4239-a58f-d344590dbbd1\",\n    \"amount\": 1000,\n    \"currency\": \"NGN\",\n    \"reason\": \"test simulation\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/api/v1/transfers",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"transfers"
-							]
-						}
-					},
-					"status": "Created",
-					"code": 201,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Content-Security-Policy",
-							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
-						},
-						{
-							"key": "Cross-Origin-Opener-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Cross-Origin-Resource-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Origin-Agent-Cluster",
-							"value": "?1"
-						},
-						{
-							"key": "Referrer-Policy",
-							"value": "no-referrer"
-						},
-						{
-							"key": "Strict-Transport-Security",
-							"value": "max-age=15552000; includeSubDomains"
-						},
-						{
-							"key": "X-Content-Type-Options",
-							"value": "nosniff"
-						},
-						{
-							"key": "X-DNS-Prefetch-Control",
-							"value": "off"
-						},
-						{
-							"key": "X-Download-Options",
-							"value": "noopen"
-						},
-						{
-							"key": "X-Frame-Options",
-							"value": "SAMEORIGIN"
-						},
-						{
-							"key": "X-Permitted-Cross-Domain-Policies",
-							"value": "none"
-						},
-						{
-							"key": "X-XSS-Protection",
-							"value": "0"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "Content-Length",
-							"value": "423"
-						},
-						{
-							"key": "ETag",
-							"value": "W/\"1a7-HCcIVX2r8kbyYQCxOlbmqDUDXK8\""
-						},
-						{
-							"key": "Vary",
-							"value": "Accept-Encoding"
-						},
-						{
-							"key": "Date",
-							"value": "Sat, 15 Jul 2023 01:17:59 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"transfer successful\",\n    \"data\": {\n        \"source_wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n        \"destination_wallet_id\": \"f741ca75-bed1-4239-a58f-d344590dbbd1\",\n        \"transferred_amount\": 1000,\n        \"currency\": \"NGN\",\n        \"reason\": \"test simulation\",\n        \"approved\": false,\n        \"updated_at\": \"2023-07-15T01:17:59.361Z\",\n        \"id\": \"039dc1b3-b7fd-4d43-a6f8-5837b1a331ed\",\n        \"status\": \"pending\",\n        \"created_at\": \"2023-07-15T01:17:59.361Z\"\n    }\n}"
-				}
-			]
-		},
-		{
-			"name": "Approve Transfer",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTM4NjE3OSwiZXhwIjoxNjg5Mzg3Mzc5fQ.qttKI0E_T5UA-896kLMJzBD4Z4qVkMKgCy-WfGTxGgg",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"approved\": true\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/transfers/:transfer_id/approve",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"transfers",
-						":transfer_id",
-						"approve"
-					],
-					"variable": [
-						{
-							"key": "transfer_id",
-							"value": "22e5bcad-82ae-44fc-8d7e-69ac08e40538"
-						}
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Approve Transfer",
-					"originalRequest": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"approved\": true\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/api/v1/transfers/:transfer_id/approve",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"transfers",
-								":transfer_id",
-								"approve"
-							],
-							"variable": [
-								{
-									"key": "transfer_id",
-									"value": null
-								}
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Content-Security-Policy",
-							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
-						},
-						{
-							"key": "Cross-Origin-Opener-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Cross-Origin-Resource-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Origin-Agent-Cluster",
-							"value": "?1"
-						},
-						{
-							"key": "Referrer-Policy",
-							"value": "no-referrer"
-						},
-						{
-							"key": "Strict-Transport-Security",
-							"value": "max-age=15552000; includeSubDomains"
-						},
-						{
-							"key": "X-Content-Type-Options",
-							"value": "nosniff"
-						},
-						{
-							"key": "X-DNS-Prefetch-Control",
-							"value": "off"
-						},
-						{
-							"key": "X-Download-Options",
-							"value": "noopen"
-						},
-						{
-							"key": "X-Frame-Options",
-							"value": "SAMEORIGIN"
-						},
-						{
-							"key": "X-Permitted-Cross-Domain-Policies",
-							"value": "none"
-						},
-						{
-							"key": "X-XSS-Protection",
-							"value": "0"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "Content-Length",
-							"value": "425"
-						},
-						{
-							"key": "ETag",
-							"value": "W/\"1a9-LWBm4UWlLc4JsKV0qvJIvLtE4FQ\""
-						},
-						{
-							"key": "Vary",
-							"value": "Accept-Encoding"
-						},
-						{
-							"key": "Date",
-							"value": "Sat, 15 Jul 2023 01:20:11 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"code\": 201,\n    \"status\": \"success\",\n    \"message\": \"transfer successful\",\n    \"data\": {\n        \"id\": \"039dc1b3-b7fd-4d43-a6f8-5837b1a331ed\",\n        \"source_wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n        \"destination_wallet_id\": \"f741ca75-bed1-4239-a58f-d344590dbbd1\",\n        \"transferred_amount\": \"1000\",\n        \"currency\": \"NGN\",\n        \"reason\": \"test simulation\",\n        \"status\": \"pending\",\n        \"approved\": false,\n        \"created_at\": \"2023-07-15T01:17:59.361Z\",\n        \"updated_at\": \"2023-07-15T01:17:59.361Z\"\n    }\n}"
-				}
-			]
-		},
-		{
-			"name": "Transaction Summary",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyOWM0MWM1LWY3ODYtNDI3OC05NjJjLWQ2MjgzZDM1MmFiYSIsImVtYWlsIjoia29sYXdvbGUuZWtvaEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY4OTM4NjE3OSwiZXhwIjoxNjg5Mzg3Mzc5fQ.qttKI0E_T5UA-896kLMJzBD4Z4qVkMKgCy-WfGTxGgg",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/wallet-transactions/history?from_date=2023-07-15&to_date=2023-07-16&target_month=7&target_year=2023",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"wallet-transactions",
-						"history"
-					],
-					"query": [
-						{
-							"key": "from_date",
-							"value": "2023-07-15",
-							"description": "[Optional] - Start Date"
-						},
-						{
-							"key": "to_date",
-							"value": "2023-07-16",
-							"description": "[Optional] - End Date, When specified, Start Date must be specified"
-						},
-						{
-							"key": "target_month",
-							"value": "7",
-							"description": "[Optional] - Get Transaction Summary Based on a Specified month. When specified, target_year must be specified"
-						},
-						{
-							"key": "target_year",
-							"value": "2023",
-							"description": "[Optional] - Target Year for date range filtering"
-						}
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Transaction Summary",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BASE_URL}}/api/v1/wallet-transactions/history?from_date=2023-07-15&to_date=2023-07-16&target_month=7&target_year=2023",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"wallet-transactions",
-								"history"
-							],
-							"query": [
-								{
-									"key": "from_date",
-									"value": "2023-07-15",
-									"description": "[Optional] - Start Date"
-								},
-								{
-									"key": "to_date",
-									"value": "2023-07-16",
-									"description": "[Optional] - End Date, When specified, Start Date must be specified"
-								},
-								{
-									"key": "target_month",
-									"value": "7",
-									"description": "[Optional] - Get Transaction Summary Based on a Specified month. When specified, target_year must be specified"
-								},
-								{
-									"key": "target_year",
-									"value": "2023",
-									"description": "[Optional] - Target Year for date range filtering"
-								}
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Content-Security-Policy",
-							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
-						},
-						{
-							"key": "Cross-Origin-Opener-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Cross-Origin-Resource-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Origin-Agent-Cluster",
-							"value": "?1"
-						},
-						{
-							"key": "Referrer-Policy",
-							"value": "no-referrer"
-						},
-						{
-							"key": "Strict-Transport-Security",
-							"value": "max-age=15552000; includeSubDomains"
-						},
-						{
-							"key": "X-Content-Type-Options",
-							"value": "nosniff"
-						},
-						{
-							"key": "X-DNS-Prefetch-Control",
-							"value": "off"
-						},
-						{
-							"key": "X-Download-Options",
-							"value": "noopen"
-						},
-						{
-							"key": "X-Frame-Options",
-							"value": "SAMEORIGIN"
-						},
-						{
-							"key": "X-Permitted-Cross-Domain-Policies",
-							"value": "none"
-						},
-						{
-							"key": "X-XSS-Protection",
-							"value": "0"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "Content-Length",
-							"value": "590"
-						},
-						{
-							"key": "ETag",
-							"value": "W/\"24e-vVXfGwZwNWF6KO70e3EKKm79CI8\""
-						},
-						{
-							"key": "Vary",
-							"value": "Accept-Encoding"
-						},
-						{
-							"key": "Date",
-							"value": "Sat, 15 Jul 2023 01:40:06 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"code\": 200,\n    \"status\": \"success\",\n    \"message\": \"transactions retrieved\",\n    \"data\": [\n        {\n            \"id\": \"64103605-e450-443d-95b4-77b78e567d74\",\n            \"user_id\": \"27158712-3e0e-44be-8da5-6a248f5376c9\",\n            \"source_wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n            \"amount\": \"10000000\",\n            \"transaction_type\": \"DEPOSIT\",\n            \"transaction_status\": \"successful\",\n            \"created_at\": \"2023-07-15T01:16:24.636Z\"\n        },\n        {\n            \"id\": \"4a089ad8-c164-4f7d-9105-593bb5b52e1f\",\n            \"user_id\": null,\n            \"source_wallet_id\": \"ec455a9f-7496-4529-9cb4-d235c859acd9\",\n            \"amount\": \"1000\",\n            \"transaction_type\": \"TRANSFER\",\n            \"transaction_status\": \"successful\",\n            \"created_at\": \"2023-07-15T01:17:59.370Z\"\n        }\n    ]\n}"
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "0c105bfa-b545-4740-98ba-cf5022f3d4df",
+    "name": "Wallet System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Wallet System API. Configure BASE_URL and USER_PASSWORD in collection variables, then Sign Up, Login and Create Wallet. Login stores ACCESS_TOKEN and USER_ID; Create Wallet stores WALLET_ID. Set SOURCE_WALLET_ID to your funded wallet and DESTINATION_WALLET_ID to an existing recipient wallet in the same currency. Amounts are integer minor units, minimum 1000.\n\nWallet Transfer requires Idempotency-Key. Its pre-request script generates a UUID only when IDEMPOTENCY_KEY is empty, preserving it for retries. Keep the same body and key for Retry Transfer. Clear/change the key only for a deliberate new transfer. Reusing a key with a changed body returns 409. Requests above the server's approval threshold remain pending without reserving funds; retries return the original creation result even after review.\n\nSet ADMIN_EMAIL and ADMIN_PASSWORD for a pre-provisioned admin, then Login as Admin; signup cannot grant admin rights. Approval, rejection and history use ADMIN_ACCESS_TOKEN. Run these requests individually as a manual workflow; payment completion and admin provisioning require external steps. See postman_docs/README.md for setup and current API limitations."
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{ACCESS_TOKEN}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:4000",
+      "type": "string",
+      "description": "API origin; excludes /api/v1. Override for your local instance."
+    },
+    {
+      "key": "USER_EMAIL",
+      "value": "wallet.user@example.com",
+      "type": "string",
+      "description": "Account email; choose a unique email for signup."
+    },
+    {
+      "key": "USER_PASSWORD",
+      "value": "",
+      "type": "string",
+      "description": "Set a private password: 12\u201372 characters and at most 72 UTF-8 bytes for signup."
+    },
+    {
+      "key": "USER_PHONE",
+      "value": "+2348031234567",
+      "type": "string",
+      "description": "Valid unique phone number for signup."
+    },
+    {
+      "key": "USER_ID",
+      "value": "",
+      "type": "string",
+      "description": "Stored by successful signup/login; wallet creation must use this authenticated user."
+    },
+    {
+      "key": "ACCESS_TOKEN",
+      "value": "",
+      "type": "string",
+      "description": "Stored by Login. No real token is shipped in this collection."
+    },
+    {
+      "key": "CURRENCY",
+      "value": "NGN",
+      "type": "string",
+      "description": "Wallet currency: NGN, USD or GHS; omitted currency defaults to NGN."
+    },
+    {
+      "key": "WALLET_ID",
+      "value": "",
+      "type": "string",
+      "description": "Stored by Create Wallet; must belong to the signed-in account."
+    },
+    {
+      "key": "PAYMENT_AMOUNT",
+      "value": "1000",
+      "type": "string",
+      "description": "Positive integer minor units, at least 1000."
+    },
+    {
+      "key": "PAYMENT_REFERENCE",
+      "value": "",
+      "type": "string",
+      "description": "Reference from a completed successful Paystack payment initialized for this wallet/user."
+    },
+    {
+      "key": "SOURCE_WALLET_ID",
+      "value": "",
+      "type": "string",
+      "description": "Your funded source wallet; set explicitly after Create Wallet."
+    },
+    {
+      "key": "DESTINATION_WALLET_ID",
+      "value": "",
+      "type": "string",
+      "description": "Existing recipient wallet, distinct from source and with matching currency."
+    },
+    {
+      "key": "TRANSFER_AMOUNT",
+      "value": "1000",
+      "type": "string",
+      "description": "Positive integer minor units. Above MININUM_APPROVAL_AMOUNT (default 1000000) requires admin review."
+    },
+    {
+      "key": "TRANSFER_REASON",
+      "value": "Postman transfer example",
+      "type": "string",
+      "description": "Transfer reason; keep unchanged for retries."
+    },
+    {
+      "key": "IDEMPOTENCY_KEY",
+      "value": "",
+      "type": "string",
+      "description": "Generated only if empty. Reuse for retries; clear/change for a new transfer."
+    },
+    {
+      "key": "TRANSFER_ID",
+      "value": "",
+      "type": "string",
+      "description": "Stored by successful transfer creation; only pending approval requests can be reviewed."
+    },
+    {
+      "key": "ADMIN_EMAIL",
+      "value": "",
+      "type": "string",
+      "description": "Email of an existing, trusted admin account."
+    },
+    {
+      "key": "ADMIN_PASSWORD",
+      "value": "",
+      "type": "string",
+      "description": "Private password for that existing admin."
+    },
+    {
+      "key": "ADMIN_ACCESS_TOKEN",
+      "value": "",
+      "type": "string",
+      "description": "Stored by Login as Admin. Admin requests use this token separately from ACCESS_TOKEN."
+    },
+    {
+      "key": "FROM_DATE",
+      "value": "2026-10-01T00:00:00.000Z",
+      "type": "string",
+      "description": "Start bound for history; pair with TO_DATE."
+    },
+    {
+      "key": "TO_DATE",
+      "value": "2026-10-31T23:59:59.999Z",
+      "type": "string",
+      "description": "Exact end bound for history; pair with FROM_DATE."
+    },
+    {
+      "key": "TARGET_MONTH",
+      "value": "10",
+      "type": "string",
+      "description": "Optional calendar-month filter; enable with TARGET_YEAR instead of date bounds."
+    },
+    {
+      "key": "TARGET_YEAR",
+      "value": "2026",
+      "type": "string",
+      "description": "Pair with TARGET_MONTH."
+    }
+  ],
+  "item": [
+    {
+      "name": "Base",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{BASE_URL}}/",
+        "description": "Public readiness response.",
+        "auth": {
+          "type": "noauth"
+        }
+      },
+      "response": [
+        {
+          "name": "Service ready",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{BASE_URL}}/",
+            "description": "Public readiness response.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"okay\",\n  \"data\": null\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sign Up",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{BASE_URL}}/api/v1/auth/signup",
+        "description": "Register an ordinary user. Signup requires a 12\u201372 character password within 72 UTF-8 bytes and does not accept admin privileges.",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"first_name\": \"Wallet\",\n  \"last_name\": \"User\",\n  \"email\": \"{{USER_EMAIL}}\",\n  \"phone_number\": \"{{USER_PHONE}}\",\n  \"password\": \"{{USER_PASSWORD}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "User created",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/auth/signup",
+            "description": "Register an ordinary user. Signup requires a 12\u201372 character password within 72 UTF-8 bytes and does not accept admin privileges.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Wallet\",\n  \"last_name\": \"User\",\n  \"email\": \"{{USER_EMAIL}}\",\n  \"phone_number\": \"{{USER_PHONE}}\",\n  \"password\": \"{{USER_PASSWORD}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 201,\n  \"status\": \"success\",\n  \"message\": \"User created\",\n  \"data\": {\n    \"id\": \"11111111-1111-4111-8111-111111111111\",\n    \"first_name\": \"Wallet\",\n    \"last_name\": \"User\",\n    \"email\": \"wallet.user@example.com\",\n    \"phone_number\": \"+2348031234567\",\n    \"is_admin\": false,\n    \"created_at\": \"2026-10-06T12:00:00.000Z\",\n    \"updated_at\": \"2026-10-06T12:00:00.000Z\",\n    \"deleted_at\": null\n  }\n}"
+        },
+        {
+          "name": "Duplicate account",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/auth/signup",
+            "description": "Register an ordinary user. Signup requires a 12\u201372 character password within 72 UTF-8 bytes and does not accept admin privileges.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Wallet\",\n  \"last_name\": \"User\",\n  \"email\": \"{{USER_EMAIL}}\",\n  \"phone_number\": \"{{USER_PHONE}}\",\n  \"password\": \"{{USER_PASSWORD}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 400,\n  \"status\": \"failure\",\n  \"data\": null,\n  \"error\": {\n    \"name\": \"Bad Request\",\n    \"message\": \"User with the email/phone number already exists\",\n    \"path\": \"/api/v1/auth/signup\"\n  }\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(201); });",
+              "if (pm.response.code === 201) {",
+              "  pm.test(\"Password hash is omitted\", function () { pm.expect(body.data).not.to.have.property(\"password\"); });",
+              "  pm.collectionVariables.set(\"USER_ID\", body.data.id);",
+              "  pm.collectionVariables.unset(\"ACCESS_TOKEN\");",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{BASE_URL}}/api/v1/auth/login",
+        "description": "Login by email (or replace email with phone_number). Returns HTTP 200 and a wrapped data.access_token. Five login requests per minute per IP are allowed.",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{USER_EMAIL}}\",\n  \"password\": \"{{USER_PASSWORD}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Login successful",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/auth/login",
+            "description": "Login by email (or replace email with phone_number). Returns HTTP 200 and a wrapped data.access_token. Five login requests per minute per IP are allowed.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{USER_EMAIL}}\",\n  \"password\": \"{{USER_PASSWORD}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"id\": \"11111111-1111-4111-8111-111111111111\",\n    \"email\": \"wallet.user@example.com\",\n    \"is_admin\": false,\n    \"access_token\": \"<access-token-returned-by-login>\"\n  }\n}"
+        },
+        {
+          "name": "Invalid credentials",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/auth/login",
+            "description": "Login by email (or replace email with phone_number). Returns HTTP 200 and a wrapped data.access_token. Five login requests per minute per IP are allowed.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{USER_EMAIL}}\",\n  \"password\": \"{{USER_PASSWORD}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 400,\n  \"status\": \"failure\",\n  \"data\": null,\n  \"error\": {\n    \"name\": \"Bad Request\",\n    \"message\": \"Invalid credentials\",\n    \"path\": \"/api/v1/auth/login\"\n  }\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(200); });",
+              "if (pm.response.code === 200) {",
+              "  pm.test(\"Access token returned\", function () { pm.expect(body.data.access_token).to.be.a(\"string\").and.not.empty; });",
+              "  pm.collectionVariables.set(\"ACCESS_TOKEN\", body.data.access_token);",
+              "  pm.collectionVariables.set(\"USER_ID\", body.data.id);",
+              "} else {",
+              "  pm.collectionVariables.unset(\"ACCESS_TOKEN\");",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create Wallet",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{BASE_URL}}/api/v1/wallets",
+        "description": "Create a wallet for USER_ID, which must match the authenticated account. One active wallet per user/currency. Omit currency to default to NGN; duplicates return 409.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"{{USER_ID}}\",\n  \"currency\": \"{{CURRENCY}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Wallet created",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/wallets",
+            "description": "Create a wallet for USER_ID, which must match the authenticated account. One active wallet per user/currency. Omit currency to default to NGN; duplicates return 409.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{USER_ID}}\",\n  \"currency\": \"{{CURRENCY}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 201,\n  \"status\": \"success\",\n  \"message\": \"Wallet created\",\n  \"data\": {\n    \"id\": \"22222222-2222-4222-8222-222222222222\",\n    \"user_id\": \"11111111-1111-4111-8111-111111111111\",\n    \"currency\": \"NGN\",\n    \"base_currency\": \"KOBO\",\n    \"balance\": \"0\",\n    \"kobo_balance\": \"0\",\n    \"created_at\": \"2026-10-06T12:00:00.000Z\",\n    \"updated_at\": \"2026-10-06T12:00:00.000Z\",\n    \"deleted_at\": null\n  }\n}"
+        },
+        {
+          "name": "Currency already exists",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/wallets",
+            "description": "Create a wallet for USER_ID, which must match the authenticated account. One active wallet per user/currency. Omit currency to default to NGN; duplicates return 409.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{USER_ID}}\",\n  \"currency\": \"{{CURRENCY}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 409,\n  \"status\": \"failure\",\n  \"data\": null,\n  \"error\": {\n    \"name\": \"Conflict\",\n    \"message\": \"Wallet of the specified currency already exists\",\n    \"path\": \"/api/v1/wallets\"\n  }\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(201); });",
+              "if (pm.response.code === 201) pm.collectionVariables.set(\"WALLET_ID\", body.data.id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Wallet Balance",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{BASE_URL}}/api/v1/wallets/{{WALLET_ID}}/balance",
+        "description": "Read your own wallet balance. A wallet owned by another user returns 403."
+      },
+      "response": [
+        {
+          "name": "Wallet balance",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{BASE_URL}}/api/v1/wallets/{{WALLET_ID}}/balance",
+            "description": "Read your own wallet balance. A wallet owned by another user returns 403."
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"Wallet balance retrieved\",\n  \"data\": {\n    \"currency\": \"NGN\",\n    \"balance\": \"0\"\n  }\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Initialize Payment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{BASE_URL}}/api/v1/wallets/initialize-payment",
+        "description": "Initialize a Paystack payment for your wallet. Amount is integer minor units (minimum 1000). Currency/email/user metadata come from the owned wallet. Complete the returned checkout URL before Fund Wallet; this response does not credit the wallet.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"wallet_id\": \"{{WALLET_ID}}\",\n  \"amount\": {{PAYMENT_AMOUNT}}\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Checkout initialized",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/wallets/initialize-payment",
+            "description": "Initialize a Paystack payment for your wallet. Amount is integer minor units (minimum 1000). Currency/email/user metadata come from the owned wallet. Complete the returned checkout URL before Fund Wallet; this response does not credit the wallet.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet_id\": \"{{WALLET_ID}}\",\n  \"amount\": {{PAYMENT_AMOUNT}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"Payment initialized\",\n  \"data\": {\n    \"authorization_url\": \"https://checkout.paystack.com/example-checkout\"\n  }\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fund Wallet",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{BASE_URL}}/api/v1/wallets/deposit",
+        "description": "Verify and credit a completed Paystack payment using its reference. The provider must report successful status, amount, currency and matching wallet/user metadata. Already credited references return 409. Returns an empty data object, not provider/customer/card information.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"reference\": \"{{PAYMENT_REFERENCE}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Wallet funded",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/wallets/deposit",
+            "description": "Verify and credit a completed Paystack payment using its reference. The provider must report successful status, amount, currency and matching wallet/user metadata. Already credited references return 409. Returns an empty data object, not provider/customer/card information.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reference\": \"{{PAYMENT_REFERENCE}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"Wallet funded\",\n  \"data\": {}\n}"
+        },
+        {
+          "name": "Payment already credited",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/wallets/deposit",
+            "description": "Verify and credit a completed Paystack payment using its reference. The provider must report successful status, amount, currency and matching wallet/user metadata. Already credited references return 409. Returns an empty data object, not provider/customer/card information.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reference\": \"{{PAYMENT_REFERENCE}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 409,\n  \"status\": \"failure\",\n  \"data\": null,\n  \"error\": {\n    \"name\": \"Conflict\",\n    \"message\": \"Payment already credited\",\n    \"path\": \"/api/v1/wallets/deposit\"\n  }\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wallets Transfer",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "{{IDEMPOTENCY_KEY}}",
+            "type": "text",
+            "description": "Required. Reuse with identical body for retries; clear/change only for a new transfer."
+          }
+        ],
+        "url": "{{BASE_URL}}/api/v1/transfers",
+        "description": "Transfer from your funded source wallet to a distinct same-currency recipient wallet. Uses a stable idempotency key: identical retries return the original response; changed payload with an existing key returns 409. Amount at/below the configured threshold executes immediately; larger requests return pending and move/reserve no funds.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"source_wallet_id\": \"{{SOURCE_WALLET_ID}}\",\n  \"destination_wallet_id\": \"{{DESTINATION_WALLET_ID}}\",\n  \"amount\": {{TRANSFER_AMOUNT}},\n  \"currency\": \"{{CURRENCY}}\",\n  \"reason\": \"{{TRANSFER_REASON}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Executed transfer",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{IDEMPOTENCY_KEY}}",
+                "type": "text",
+                "description": "Required. Reuse with identical body for retries; clear/change only for a new transfer."
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/transfers",
+            "description": "Transfer from your funded source wallet to a distinct same-currency recipient wallet. Uses a stable idempotency key: identical retries return the original response; changed payload with an existing key returns 409. Amount at/below the configured threshold executes immediately; larger requests return pending and move/reserve no funds.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source_wallet_id\": \"{{SOURCE_WALLET_ID}}\",\n  \"destination_wallet_id\": \"{{DESTINATION_WALLET_ID}}\",\n  \"amount\": {{TRANSFER_AMOUNT}},\n  \"currency\": \"{{CURRENCY}}\",\n  \"reason\": \"{{TRANSFER_REASON}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"transfer successful\",\n  \"data\": {\n    \"id\": \"44444444-4444-4444-8444-444444444444\",\n    \"source_wallet_id\": \"22222222-2222-4222-8222-222222222222\",\n    \"destination_wallet_id\": \"33333333-3333-4333-8333-333333333333\",\n    \"transferred_amount\": 1000,\n    \"currency\": \"NGN\",\n    \"reason\": \"Postman transfer example\",\n    \"status\": \"executed\",\n    \"approved\": false,\n    \"requires_approval\": false,\n    \"requested_by\": \"11111111-1111-4111-8111-111111111111\",\n    \"created_at\": \"2026-10-06T12:00:00.000Z\",\n    \"updated_at\": \"2026-10-06T12:00:00.000Z\"\n  }\n}"
+        },
+        {
+          "name": "Pending approval",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{IDEMPOTENCY_KEY}}",
+                "type": "text",
+                "description": "Required. Reuse with identical body for retries; clear/change only for a new transfer."
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/transfers",
+            "description": "Transfer from your funded source wallet to a distinct same-currency recipient wallet. Uses a stable idempotency key: identical retries return the original response; changed payload with an existing key returns 409. Amount at/below the configured threshold executes immediately; larger requests return pending and move/reserve no funds.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source_wallet_id\": \"{{SOURCE_WALLET_ID}}\",\n  \"destination_wallet_id\": \"{{DESTINATION_WALLET_ID}}\",\n  \"amount\": {{TRANSFER_AMOUNT}},\n  \"currency\": \"{{CURRENCY}}\",\n  \"reason\": \"{{TRANSFER_REASON}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"transfer pending approval\",\n  \"data\": {\n    \"id\": \"44444444-4444-4444-8444-444444444444\",\n    \"source_wallet_id\": \"22222222-2222-4222-8222-222222222222\",\n    \"destination_wallet_id\": \"33333333-3333-4333-8333-333333333333\",\n    \"transferred_amount\": 1001000,\n    \"currency\": \"NGN\",\n    \"reason\": \"Postman transfer example\",\n    \"status\": \"pending\",\n    \"approved\": false,\n    \"requires_approval\": true,\n    \"requested_by\": \"11111111-1111-4111-8111-111111111111\",\n    \"created_at\": \"2026-10-06T12:00:00.000Z\",\n    \"updated_at\": \"2026-10-06T12:00:00.000Z\"\n  }\n}"
+        },
+        {
+          "name": "Changed retry payload",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{IDEMPOTENCY_KEY}}",
+                "type": "text",
+                "description": "Required. Reuse with identical body for retries; clear/change only for a new transfer."
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/transfers",
+            "description": "Transfer from your funded source wallet to a distinct same-currency recipient wallet. Uses a stable idempotency key: identical retries return the original response; changed payload with an existing key returns 409. Amount at/below the configured threshold executes immediately; larger requests return pending and move/reserve no funds.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source_wallet_id\": \"{{SOURCE_WALLET_ID}}\",\n  \"destination_wallet_id\": \"{{DESTINATION_WALLET_ID}}\",\n  \"amount\": {{TRANSFER_AMOUNT}},\n  \"currency\": \"{{CURRENCY}}\",\n  \"reason\": \"{{TRANSFER_REASON}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 409,\n  \"status\": \"failure\",\n  \"data\": null,\n  \"error\": {\n    \"name\": \"Conflict\",\n    \"message\": \"Idempotency-Key was already used for a different transfer request\",\n    \"path\": \"/api/v1/transfers\"\n  }\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (!pm.variables.get(\"IDEMPOTENCY_KEY\")) {",
+              "  pm.collectionVariables.set(\"IDEMPOTENCY_KEY\", pm.variables.replaceIn(\"{{$guid}}\"));",
+              "}"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(200); });",
+              "if (pm.response.code === 200) {",
+              "  pm.test(\"Transfer state is returned\", function () { pm.expect(body.data.status).to.be.oneOf([\"pending\", \"executed\"]); });",
+              "  pm.collectionVariables.set(\"TRANSFER_ID\", body.data.id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Retry Transfer",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "{{IDEMPOTENCY_KEY}}",
+            "type": "text",
+            "description": "Required. Reuse with identical body for retries; clear/change only for a new transfer."
+          }
+        ],
+        "url": "{{BASE_URL}}/api/v1/transfers",
+        "description": "Retry Wallets Transfer with unchanged variables and the SAME IDEMPOTENCY_KEY. This request deliberately does not generate a new key. It returns the original creation response even after approval/rejection. One transfer/ledger effect is retained.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"source_wallet_id\": \"{{SOURCE_WALLET_ID}}\",\n  \"destination_wallet_id\": \"{{DESTINATION_WALLET_ID}}\",\n  \"amount\": {{TRANSFER_AMOUNT}},\n  \"currency\": \"{{CURRENCY}}\",\n  \"reason\": \"{{TRANSFER_REASON}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Original response replayed",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{IDEMPOTENCY_KEY}}",
+                "type": "text",
+                "description": "Required. Reuse with identical body for retries; clear/change only for a new transfer."
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/transfers",
+            "description": "Retry Wallets Transfer with unchanged variables and the SAME IDEMPOTENCY_KEY. This request deliberately does not generate a new key. It returns the original creation response even after approval/rejection. One transfer/ledger effect is retained.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source_wallet_id\": \"{{SOURCE_WALLET_ID}}\",\n  \"destination_wallet_id\": \"{{DESTINATION_WALLET_ID}}\",\n  \"amount\": {{TRANSFER_AMOUNT}},\n  \"currency\": \"{{CURRENCY}}\",\n  \"reason\": \"{{TRANSFER_REASON}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"transfer successful\",\n  \"data\": {\n    \"id\": \"44444444-4444-4444-8444-444444444444\",\n    \"source_wallet_id\": \"22222222-2222-4222-8222-222222222222\",\n    \"destination_wallet_id\": \"33333333-3333-4333-8333-333333333333\",\n    \"transferred_amount\": 1000,\n    \"currency\": \"NGN\",\n    \"reason\": \"Postman transfer example\",\n    \"status\": \"executed\",\n    \"approved\": false,\n    \"requires_approval\": false,\n    \"requested_by\": \"11111111-1111-4111-8111-111111111111\",\n    \"created_at\": \"2026-10-06T12:00:00.000Z\",\n    \"updated_at\": \"2026-10-06T12:00:00.000Z\"\n  }\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (!pm.variables.get(\"IDEMPOTENCY_KEY\")) throw new Error(\"Run Wallets Transfer first or set its original IDEMPOTENCY_KEY\");"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(200); });",
+              "if (pm.response.code === 200) {",
+              "  pm.test(\"Original transfer ID replayed\", function () { pm.expect(body.data.id).to.eql(pm.collectionVariables.get(\"TRANSFER_ID\")); });",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Login as Admin",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{BASE_URL}}/api/v1/auth/login",
+        "description": "Use an existing trusted admin account. Stores ADMIN_ACCESS_TOKEN separately; does not replace the ordinary user token. Admin provisioning is outside public signup.",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{ADMIN_EMAIL}}\",\n  \"password\": \"{{ADMIN_PASSWORD}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Admin login",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/auth/login",
+            "description": "Use an existing trusted admin account. Stores ADMIN_ACCESS_TOKEN separately; does not replace the ordinary user token. Admin provisioning is outside public signup.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{ADMIN_EMAIL}}\",\n  \"password\": \"{{ADMIN_PASSWORD}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"id\": \"55555555-5555-4555-8555-555555555555\",\n    \"email\": \"wallet.admin@example.com\",\n    \"is_admin\": true,\n    \"access_token\": \"<admin-access-token-returned-by-login>\"\n  }\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(200); });",
+              "if (pm.response.code === 200 && body.data.is_admin === true) {",
+              "  pm.collectionVariables.set(\"ADMIN_ACCESS_TOKEN\", body.data.access_token);",
+              "} else {",
+              "  pm.collectionVariables.unset(\"ADMIN_ACCESS_TOKEN\");",
+              "}",
+              "pm.test(\"Database role is admin\", function () { pm.expect(body.data && body.data.is_admin).to.eql(true); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Approve Transfer",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{BASE_URL}}/api/v1/transfers/{{TRANSFER_ID}}/approve",
+        "description": "Admin-only. Approve a pending above-threshold request; source ownership, currency and available funds are rechecked and settlement/review commit atomically. Insufficient funds return 422 and leave pending. Reviewing an already executed/rejected request returns 409.",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_ACCESS_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"approved\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Approved and settled",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/transfers/{{TRANSFER_ID}}/approve",
+            "description": "Admin-only. Approve a pending above-threshold request; source ownership, currency and available funds are rechecked and settlement/review commit atomically. Insufficient funds return 422 and leave pending. Reviewing an already executed/rejected request returns 409.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ADMIN_ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"approved\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"transfer approved and executed\",\n  \"data\": {\n    \"id\": \"44444444-4444-4444-8444-444444444444\",\n    \"source_wallet_id\": \"22222222-2222-4222-8222-222222222222\",\n    \"destination_wallet_id\": \"33333333-3333-4333-8333-333333333333\",\n    \"transferred_amount\": 1001000,\n    \"currency\": \"NGN\",\n    \"reason\": \"Postman transfer example\",\n    \"status\": \"executed\",\n    \"approved\": true,\n    \"requires_approval\": true,\n    \"requested_by\": \"11111111-1111-4111-8111-111111111111\",\n    \"created_at\": \"2026-10-06T12:00:00.000Z\",\n    \"updated_at\": \"2026-10-06T12:00:00.000Z\",\n    \"reviewed_by\": \"55555555-5555-4555-8555-555555555555\",\n    \"reviewed_at\": \"2026-10-06T12:00:00.000Z\"\n  }\n}"
+        },
+        {
+          "name": "Already reviewed",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/transfers/{{TRANSFER_ID}}/approve",
+            "description": "Admin-only. Approve a pending above-threshold request; source ownership, currency and available funds are rechecked and settlement/review commit atomically. Insufficient funds return 422 and leave pending. Reviewing an already executed/rejected request returns 409.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ADMIN_ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"approved\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 409,\n  \"status\": \"failure\",\n  \"data\": null,\n  \"error\": {\n    \"name\": \"Conflict\",\n    \"message\": \"Transfer is not pending approval\",\n    \"path\": \"/api/v1/transfers/44444444-4444-4444-8444-444444444444/approve\"\n  }\n}"
+        },
+        {
+          "name": "Funds unavailable",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/transfers/{{TRANSFER_ID}}/approve",
+            "description": "Admin-only. Approve a pending above-threshold request; source ownership, currency and available funds are rechecked and settlement/review commit atomically. Insufficient funds return 422 and leave pending. Reviewing an already executed/rejected request returns 409.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ADMIN_ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"approved\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity",
+          "code": 422,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 422,\n  \"status\": \"failure\",\n  \"data\": null,\n  \"error\": {\n    \"name\": \"Unprocessable Entity\",\n    \"message\": \"Insufficient funds\",\n    \"path\": \"/api/v1/transfers/44444444-4444-4444-8444-444444444444/approve\"\n  }\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(200); });",
+              "if (pm.response.code === 200) {",
+              "  pm.test(\"Approved and executed\", function () { pm.expect(body.data.status).to.eql(\"executed\"); pm.expect(body.data.approved).to.eql(true); });",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reject Transfer",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{BASE_URL}}/api/v1/transfers/{{TRANSFER_ID}}/approve",
+        "description": "Admin-only alternative to approval. Reject a pending request without moving funds. Rejection is terminal; a later approval/rejection returns 409.",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_ACCESS_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"approved\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Rejected without settlement",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{BASE_URL}}/api/v1/transfers/{{TRANSFER_ID}}/approve",
+            "description": "Admin-only alternative to approval. Reject a pending request without moving funds. Rejection is terminal; a later approval/rejection returns 409.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ADMIN_ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"approved\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"transfer rejected\",\n  \"data\": {\n    \"id\": \"44444444-4444-4444-8444-444444444444\",\n    \"source_wallet_id\": \"22222222-2222-4222-8222-222222222222\",\n    \"destination_wallet_id\": \"33333333-3333-4333-8333-333333333333\",\n    \"transferred_amount\": 1001000,\n    \"currency\": \"NGN\",\n    \"reason\": \"Postman transfer example\",\n    \"status\": \"rejected\",\n    \"approved\": false,\n    \"requires_approval\": true,\n    \"requested_by\": \"11111111-1111-4111-8111-111111111111\",\n    \"created_at\": \"2026-10-06T12:00:00.000Z\",\n    \"updated_at\": \"2026-10-06T12:00:00.000Z\",\n    \"reviewed_by\": \"55555555-5555-4555-8555-555555555555\",\n    \"reviewed_at\": \"2026-10-06T12:00:00.000Z\"\n  }\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(200); });",
+              "if (pm.response.code === 200) pm.test(\"Transfer rejected\", function () { pm.expect(body.data.status).to.eql(\"rejected\"); pm.expect(body.data.approved).to.eql(false); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transaction Summary",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}/api/v1/wallet-transactions/history?from_date={{FROM_DATE}}&to_date={{TO_DATE}}",
+          "host": [
+            "{{BASE_URL}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "wallet-transactions",
+            "history"
+          ],
+          "query": [
+            {
+              "key": "from_date",
+              "value": "{{FROM_DATE}}",
+              "description": "Start bound; use with to_date."
+            },
+            {
+              "key": "to_date",
+              "value": "{{TO_DATE}}",
+              "description": "Exact end bound; explicit UTC end-of-day includes that day."
+            },
+            {
+              "key": "target_month",
+              "value": "{{TARGET_MONTH}}",
+              "disabled": true,
+              "description": "Enable with target_year instead of date bounds."
+            },
+            {
+              "key": "target_year",
+              "value": "{{TARGET_YEAR}}",
+              "disabled": true,
+              "description": "Enable with target_month instead of date bounds."
+            }
+          ]
+        },
+        "description": "Admin-only transaction history. Enable either FROM_DATE/TO_DATE or TARGET_MONTH/TARGET_YEAR. Current code uses exact date bounds, and month parameters override supplied date bounds. Pagination and corrected full-month end bounds remain pending; for a full day use an explicit UTC timestamp through 23:59:59.999.",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_ACCESS_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Transaction history",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/wallet-transactions/history?from_date={{FROM_DATE}}&to_date={{TO_DATE}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "wallet-transactions",
+                "history"
+              ],
+              "query": [
+                {
+                  "key": "from_date",
+                  "value": "{{FROM_DATE}}",
+                  "description": "Start bound; use with to_date."
+                },
+                {
+                  "key": "to_date",
+                  "value": "{{TO_DATE}}",
+                  "description": "Exact end bound; explicit UTC end-of-day includes that day."
+                },
+                {
+                  "key": "target_month",
+                  "value": "{{TARGET_MONTH}}",
+                  "disabled": true,
+                  "description": "Enable with target_year instead of date bounds."
+                },
+                {
+                  "key": "target_year",
+                  "value": "{{TARGET_YEAR}}",
+                  "disabled": true,
+                  "description": "Enable with target_month instead of date bounds."
+                }
+              ]
+            },
+            "description": "Admin-only transaction history. Enable either FROM_DATE/TO_DATE or TARGET_MONTH/TARGET_YEAR. Current code uses exact date bounds, and month parameters override supplied date bounds. Pagination and corrected full-month end bounds remain pending; for a full day use an explicit UTC timestamp through 23:59:59.999.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ADMIN_ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"transactions retrieved\",\n  \"data\": [\n    {\n      \"id\": \"66666666-6666-4666-8666-666666666666\",\n      \"user_id\": \"11111111-1111-4111-8111-111111111111\",\n      \"source_wallet_id\": \"22222222-2222-4222-8222-222222222222\",\n      \"amount\": \"1000\",\n      \"reference\": \"example-paid-reference\",\n      \"transaction_type\": \"DEPOSIT\",\n      \"transaction_status\": \"successful\",\n      \"created_at\": \"2026-10-06T12:00:00.000Z\"\n    }\n  ]\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(200); });",
+              "if (pm.response.code === 200) pm.test(\"History array returned\", function () { pm.expect(body.data).to.be.an(\"array\"); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
 }

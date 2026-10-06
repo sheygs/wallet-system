@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Transfer } from './transfer.entity';
-import { CreateTransferDTO } from './dto/transfer.dto';
 
 @Injectable()
 export class TransferService {
@@ -10,17 +9,6 @@ export class TransferService {
     @InjectRepository(Transfer)
     private transferRepository: Repository<Transfer>,
   ) {}
-
-  async createWalletTransfer(body: CreateTransferDTO): Promise<Transfer> {
-    const { amount, ...others } = body;
-
-    const walletTransfer = await this.transferRepository.create({
-      ...others,
-      transferred_amount: amount,
-    });
-
-    return this.transferRepository.save(walletTransfer);
-  }
 
   async getTransfer(transfer_id: string): Promise<Transfer> {
     const transfer = await this.transferRepository.findOne({
@@ -34,16 +22,5 @@ export class TransferService {
     }
 
     return transfer;
-  }
-
-  async changeApproval(
-    transfer_id: string,
-    approved: boolean,
-  ): Promise<Transfer> {
-    const transfer = await this.getTransfer(transfer_id);
-
-    transfer.approved = approved;
-
-    return this.transferRepository.save(transfer);
   }
 }

@@ -5,6 +5,9 @@ import {
   IsNotEmpty,
   IsEnum,
   IsDateString,
+  IsInt,
+  Min,
+  Max,
 } from 'class-validator';
 
 import {
@@ -13,7 +16,7 @@ import {
 } from '../wallet-transaction.entity';
 
 export class CreateTransactionDTO {
-  @IsString()
+  @IsUUID()
   @IsOptional()
   user_id?: string;
 
@@ -22,8 +25,9 @@ export class CreateTransactionDTO {
   @IsNotEmpty()
   source_wallet_id: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsInt()
+  @Min(1)
+  @Max(Number.MAX_SAFE_INTEGER)
   amount: number;
 
   @IsString()

@@ -9,8 +9,8 @@ export let dataSource: DataSourceOptions = {
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-  synchronize: process.env.NODE_ENV !== 'production',
-  migrations: ['migrations/**/*{.ts,.js}'],
+  synchronize: false,
+  migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
   migrationsRun: true,
   logging: process.env.NODE_ENV !== 'production',
 };

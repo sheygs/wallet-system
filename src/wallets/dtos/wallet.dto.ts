@@ -6,7 +6,8 @@ import {
   IsNotEmpty,
   IsEnum,
   Min,
-  IsNumber,
+  IsInt,
+  Max,
 } from 'class-validator';
 
 import { Currency } from '../wallet.entity';
@@ -19,7 +20,7 @@ export class CreateWalletDTO {
   @IsString()
   @IsOptional()
   @IsEnum(Currency)
-  currency: Currency;
+  currency?: Currency;
 }
 
 export class SearchWalletDTO extends CreateWalletDTO {}
@@ -32,7 +33,8 @@ export class GetWalletDTO {
 }
 
 export class InitializePaymentDTO extends GetWalletDTO {
-  @IsNumber()
+  @IsInt()
+  @Max(Number.MAX_SAFE_INTEGER)
   @IsNotEmpty()
   @Min(1000)
   amount: number;

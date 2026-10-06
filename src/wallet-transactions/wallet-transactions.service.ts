@@ -27,7 +27,6 @@ export class WalletTransactionsService {
   async getTransactionHistory(
     queryParams: TransactionHistoryDTO,
   ): Promise<WalletTransaction[]> {
-    // eslint-disable-next-line prefer-const
     let { from_date, to_date, target_month, target_year } = queryParams;
 
     from_date = new Date(from_date);

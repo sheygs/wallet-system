@@ -4,8 +4,6 @@ import { Status, SuccessResponse, ErrorResponse } from '../interface/types';
 
 @Injectable()
 export class Helpers {
-  readonly TRANSFER_AMOUNT = process.env.MININUM_APPROVAL_AMOUNT;
-
   successResponse(
     code: number,
     data: any | { [key: string]: string | number },

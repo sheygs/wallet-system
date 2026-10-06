@@ -5,7 +5,7 @@ import { sign as jwtSign } from 'jsonwebtoken';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { Repository } from 'typeorm';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID as uuidv4 } from 'node:crypto';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../src/users/user.entity';
 import { Currency, Wallet } from '../src/wallets/wallet.entity';
@@ -53,15 +53,12 @@ describe('Transfer', () => {
   });
 
   afterEach(async () => {
-    await Promise.all([
-      walletTransactionRepo.query('DELETE FROM wallet_transactions;'),
-      walletRepository.query('DELETE FROM wallets;'),
-      userRepository.query('DELETE FROM users;'),
-    ]);
+    await walletTransactionRepo.query('TRUNCATE wallet_transactions;');
+    await walletRepository.query('DELETE FROM wallets;');
+    await userRepository.query('DELETE FROM users;');
   });
 
   afterAll(async () => {
-    await moduleFixture.close();
     await app.close();
   });
 
@@ -111,7 +108,9 @@ describe('Transfer', () => {
           id: uuidv4(),
           user_id,
           source_wallet_id: wallet.id,
+          created_at: new Date('2023-07-18T12:00:00Z'),
           amount: 10000,
+          reference: 'history-paid-transaction',
           transaction_type: TransactionType.DEPOSIT,
           transaction_status: TransactionStatus.SUCCESSFUL,
         },
@@ -119,6 +118,7 @@ describe('Transfer', () => {
           id: uuidv4(),
           user_id,
           source_wallet_id: wallet.id,
+          created_at: new Date('2023-07-18T13:00:00Z'),
           amount: 50000,
           transaction_type: TransactionType.TRANSFER,
           transaction_status: TransactionStatus.PENDING,
@@ -127,6 +127,7 @@ describe('Transfer', () => {
 
       await walletTransactionRepo.save(walletTransactions);
     });
+
     describe('GET /wallet-transactions/history', () => {
       const from_date = '2023-07-18';
       const to_date = '2023-07-19';

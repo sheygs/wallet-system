@@ -17,6 +17,8 @@ export class PaystackService {
       `${this.PAYSTACK_API_BASE_URL}/transaction/initialize`,
       request,
       {
+        timeout: 10000,
+        maxRedirects: 0,
         headers: {
           Authorization: `Bearer ${this.API_SECRET_KEY}`,
           'Content-Type': 'application/json',
@@ -29,8 +31,10 @@ export class PaystackService {
 
   public async verifyTransaction(reference: string) {
     const { data } = await axios.get<VerifyTransactionResponse>(
-      `${this.PAYSTACK_API_BASE_URL}/transaction/verify/${reference}`,
+      `${this.PAYSTACK_API_BASE_URL}/transaction/verify/${encodeURIComponent(reference)}`,
       {
+        timeout: 10000,
+        maxRedirects: 0,
         headers: {
           Authorization: `Bearer ${this.API_SECRET_KEY}`,
           'Content-Type': 'application/json',

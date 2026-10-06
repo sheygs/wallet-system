@@ -22,7 +22,7 @@ export class CreateUserDTO {
 
   @IsString()
   @IsNotEmpty()
-  @Length(3, 20)
+  @Length(12, 72)
   password: string;
 
   @IsPhoneNumber()
@@ -36,7 +36,7 @@ export class LoginUserDTO {
   email?: string;
 
   @IsString()
-  @Length(3, 20)
+  @Length(3, 72)
   password: string;
 
   @IsPhoneNumber()

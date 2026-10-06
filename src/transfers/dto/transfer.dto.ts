@@ -1,5 +1,6 @@
 import {
-  IsNumber,
+  IsInt,
+  Max,
   IsString,
   IsEnum,
   IsOptional,
@@ -21,7 +22,8 @@ export class CreateTransferDTO {
   @IsUUID()
   destination_wallet_id: string;
 
-  @IsNumber()
+  @IsInt()
+  @Max(Number.MAX_SAFE_INTEGER)
   @IsNotEmpty()
   @Min(1000)
   amount: number;

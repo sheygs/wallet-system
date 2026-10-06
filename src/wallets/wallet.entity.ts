@@ -8,6 +8,8 @@ import {
   ManyToOne,
   BaseEntity,
   JoinColumn,
+  Index,
+  Check,
 } from 'typeorm';
 import { User } from '../users/user.entity';
 
@@ -23,7 +25,17 @@ export enum BaseCurrency {
   GHS = 'PESEWA',
 }
 
+export const ACTIVE_WALLET_UNIQUE_INDEX = 'wallets_active_user_currency_unique';
+
+@Check(
+  'wallets_balances_valid',
+  '("kobo_balance" >= 0 AND "kobo_balance" <= 9007199254740991 AND "kobo_balance" = trunc("kobo_balance") AND "balance" >= 0 AND "balance" = "kobo_balance" / 100) IS TRUE',
+)
 @Entity({ name: 'wallets' })
+@Index(ACTIVE_WALLET_UNIQUE_INDEX, ['user_id', 'currency'], {
+  unique: true,
+  where: '"deleted_at" IS NULL',
+})
 export class Wallet extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -32,7 +44,7 @@ export class Wallet extends BaseEntity {
   user_id: string;
 
   @Column({ name: 'balance', nullable: false, type: 'decimal', default: 0 })
-  balance?: number;
+  balance?: number | string;
 
   @Column({
     name: 'currency',

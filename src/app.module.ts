@@ -1,3 +1,5 @@
+import { getTransferApprovalThreshold } from './transfers/transfer-policy';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import {
   MiddlewareConsumer,
   Module,
@@ -6,7 +8,7 @@ import {
 } from '@nestjs/common';
 import 'dotenv/config';
 import { WinstonModule } from 'nest-winston';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { AppController } from './app.controller';
@@ -24,6 +26,7 @@ import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import winstonLogger from './utilities/logger';
 @Module({
   imports: [
+    ThrottlerModule.forRoot([{ ttl: 60000, limit: 60 }]),
     WinstonModule.forRoot({
       ...winstonLogger,
     }),
@@ -38,10 +41,18 @@ import winstonLogger from './utilities/logger';
     HelpersModule,
     ConfigModule.forRoot({
       isGlobal: true,
+      validate: (env: Record<string, string>) => {
+        if (!env.JWT_SECRET || Buffer.byteLength(env.JWT_SECRET, 'utf8') < 32) {
+          throw new Error('JWT_SECRET must contain at least 32 bytes');
+        }
+        getTransferApprovalThreshold(env);
+        return env;
+      },
     }),
   ],
   controllers: [AppController],
   providers: [
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
     JwtStrategy,
     AppService,
     {

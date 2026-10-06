@@ -10,6 +10,8 @@ export enum Status {
 export enum TransferStatus {
   PENDING = 'pending',
   APPROVED = 'approved',
+  REJECTED = 'rejected',
+  EXECUTED = 'executed',
 }
 
 interface ErrorObject {

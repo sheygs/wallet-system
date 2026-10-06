@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { QueryFailedError } from 'typeorm';
 import { UsersService } from '../users/users.service';
 import { HashService } from '../hash/hash.service';
 import { CreateUserDTO } from '../users/dtos/user.dto';
@@ -23,12 +24,19 @@ export class AuthService {
       const user = await this.usersService.createUser(body);
 
       return user;
-    } catch (error) {
-      if (error?.code === '23505') {
+    } catch (error: unknown) {
+      if (
+        error instanceof QueryFailedError &&
+        typeof error.driverError === 'object' &&
+        error.driverError !== null &&
+        'code' in error.driverError &&
+        error.driverError.code === '23505'
+      ) {
         throw new BadRequestException(
           'User with the email/phone number already exists',
         );
       }
+      throw error;
     }
   }
 
@@ -38,11 +46,11 @@ export class AuthService {
     const user = await this.usersService.findUser(email, phone_number);
 
     if (!user) {
-      throw new BadRequestException('Invalid email/phone number');
+      throw new BadRequestException('Invalid credentials');
     }
 
     if (!(await this.hashService.comparePassword(password, user.password))) {
-      throw new BadRequestException('Invalid password');
+      throw new BadRequestException('Invalid credentials');
     }
 
     return user;
