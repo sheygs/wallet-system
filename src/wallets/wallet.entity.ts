@@ -29,7 +29,7 @@ export const ACTIVE_WALLET_UNIQUE_INDEX = 'wallets_active_user_currency_unique';
 
 @Check(
   'wallets_balances_valid',
-  '("kobo_balance" >= 0 AND "kobo_balance" <= 9007199254740991 AND "kobo_balance" = trunc("kobo_balance") AND "balance" >= 0 AND "balance" = "kobo_balance" / 100) IS TRUE',
+  '("kobo_balance" >= 0 AND "kobo_balance" <= 9007199254740991 AND "kobo_balance" = trunc("kobo_balance")) IS TRUE',
 )
 @Entity({ name: 'wallets' })
 @Index(ACTIVE_WALLET_UNIQUE_INDEX, ['user_id', 'currency'], {
@@ -43,7 +43,14 @@ export class Wallet extends BaseEntity {
   @Column({ name: 'user_id', type: 'uuid' })
   user_id: string;
 
-  @Column({ name: 'balance', nullable: false, type: 'decimal', default: 0 })
+  @Column({
+    name: 'balance',
+    type: 'decimal',
+    asExpression: 'round(kobo_balance / 100, 2)',
+    generatedType: 'STORED',
+    insert: false,
+    update: false,
+  })
   balance?: number | string;
 
   @Column({
@@ -68,7 +75,10 @@ export class Wallet extends BaseEntity {
     nullable: false,
     type: 'enum',
     enum: BaseCurrency,
-    default: BaseCurrency.NGN,
+    asExpression: `CASE currency WHEN 'NGN' THEN 'KOBO'::wallets_base_currency_enum WHEN 'USD' THEN 'CENTS'::wallets_base_currency_enum WHEN 'GHS' THEN 'PESEWA'::wallets_base_currency_enum END`,
+    generatedType: 'STORED',
+    insert: false,
+    update: false,
   })
   base_currency?: BaseCurrency;
 

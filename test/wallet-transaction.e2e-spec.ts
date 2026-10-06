@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { sign as jwtSign } from 'jsonwebtoken';
-import * as request from 'supertest';
+import { signTestToken as jwtSign } from './security-test-helpers';
+import request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { Repository } from 'typeorm';
 import { randomUUID as uuidv4 } from 'node:crypto';
@@ -54,8 +54,10 @@ describe('Transfer', () => {
 
   afterEach(async () => {
     await walletTransactionRepo.query('TRUNCATE wallet_transactions;');
+    await walletRepository.query('TRUNCATE ledger_entries, ledger_journals');
     await walletRepository.query('DELETE FROM wallets;');
     await userRepository.query('DELETE FROM users;');
+    await userRepository.query('TRUNCATE auth_rate_limits');
   });
 
   afterAll(async () => {
@@ -141,7 +143,8 @@ describe('Transfer', () => {
           .set({ Authorization: `Bearer ${user.access_token}` })
           .expect(200)
           .then((response) => {
-            const { data, status, code } = response.body;
+            const { status, code } = response.body;
+            const data = response.body.data.items;
             expect(code).toEqual(200);
             expect(status).toEqual('success');
             expect(data).toHaveLength(2);

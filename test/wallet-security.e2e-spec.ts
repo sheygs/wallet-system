@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import * as request from 'supertest';
+import request from 'supertest';
 import { JwtService } from '@nestjs/jwt';
 import { Transfer } from '../src/transfers/transfer.entity';
 import { TransferStatus } from '../src/interface/types';
@@ -68,8 +68,10 @@ describe('Concurrent wallet operations (PostgreSQL)', () => {
     await db.query('TRUNCATE wallet_transactions');
     await db.query('TRUNCATE transfer_requests');
     await db.query('DELETE FROM transfers');
+    await db.query('TRUNCATE ledger_entries, ledger_journals');
     await db.query('DELETE FROM wallets');
     await db.query('DELETE FROM users');
+    await db.query('TRUNCATE auth_rate_limits');
     jest.clearAllMocks();
   });
   afterAll(async () => {
@@ -296,9 +298,15 @@ describe('Concurrent wallet operations (PostgreSQL)', () => {
   it('revalidates wallet currency when approving', async () => {
     const pending = await createPending();
     const admin = await createAdmin();
+    await expect(
+      db
+        .getRepository(Wallet)
+        .update(destination.id, { currency: Currency.USD }),
+    ).rejects.toMatchObject({ code: '23514' });
+    // A corrupted request must still be rejected at settlement.
     await db
-      .getRepository(Wallet)
-      .update(destination.id, { currency: Currency.USD });
+      .getRepository(Transfer)
+      .update(pending.id, { currency: Currency.USD });
     await expect(
       service.reviewTransfer(pending.id, true, admin.id),
     ).rejects.toMatchObject({ status: 422 });
@@ -332,7 +340,9 @@ describe('Concurrent wallet operations (PostgreSQL)', () => {
 
   it('rejects non-admin approval at both the API and service', async () => {
     const pending = await createPending();
-    const token = app.get(JwtService).sign({ userId: owner.id, isAdmin: true });
+    const token = app
+      .get(JwtService)
+      .sign({ authVersion: 0, userId: owner.id, isAdmin: true });
     // Even a token claiming admin rights uses the current database role.
     await request(app.getHttpServer())
       .patch(`/transfers/${pending.id}/approve`)
@@ -348,7 +358,9 @@ describe('Concurrent wallet operations (PostgreSQL)', () => {
   it('returns the executed transfer from the admin approval endpoint', async () => {
     const pending = await createPending();
     const admin = await createAdmin();
-    const token = app.get(JwtService).sign({ userId: admin.id });
+    const token = app
+      .get(JwtService)
+      .sign({ authVersion: 0, userId: admin.id });
     const response = await request(app.getHttpServer())
       .patch(`/transfers/${pending.id}/approve`)
       .set('Authorization', `Bearer ${token}`)
@@ -485,7 +497,9 @@ describe('Concurrent wallet operations (PostgreSQL)', () => {
     await db
       .getRepository(Wallet)
       .update(source.id, { kobo_balance: 5000, balance: 50 });
-    const token = app.get(JwtService).sign({ userId: owner.id });
+    const token = app
+      .get(JwtService)
+      .sign({ authVersion: 0, userId: owner.id });
     const response = await request(app.getHttpServer())
       .post('/transfers')
       .set('Idempotency-Key', randomUUID())

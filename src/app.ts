@@ -6,9 +6,13 @@ import {
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 import helmet from 'helmet';
-import * as compression from 'compression';
+import compression from 'compression';
+import { httpPolicy } from './http-policy';
 
 export const appMiddleware = (app: INestApplication) => {
+  const policy = httpPolicy();
+
+  app.getHttpAdapter().getInstance().set('trust proxy', policy.proxies);
   app.useGlobalPipes(
     // remove any additional properites not defined in the DTO
     new ValidationPipe({
@@ -20,9 +24,11 @@ export const appMiddleware = (app: INestApplication) => {
     exclude: [{ path: '/', method: RequestMethod.GET }],
   });
 
-  app.enableCors();
+  app.enableCors({ origin: policy.origins, credentials: false });
   app.use(helmet());
   app.use(compression());
+
+  if (!policy.swagger) return;
 
   const options = new DocumentBuilder()
     .setTitle('Wallet System')
@@ -32,5 +38,6 @@ export const appMiddleware = (app: INestApplication) => {
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
+
   SwaggerModule.setup('/docs', app, document);
 };

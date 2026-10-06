@@ -61,12 +61,20 @@ atomically; insufficient funds return 422 and leave the request pending.
 Rejection moves no funds. Once executed or rejected, another review returns 409.
 Do not run both review requests expecting both to succeed.
 
-**Transaction Summary** uses the admin token. Enable either the date-bound pair
-or the month/year pair. Its current implementation uses exact date bounds; set
-an explicit UTC end-of-day timestamp to include that day. Month/year fields
-currently override date bounds and end at midnight on the month's last day.
-Pagination and corrected month/date semantics have not been implemented, so the
-collection does not advertise them.
+**Transaction Summary** uses the admin token. Supply paired `YYYY-MM-DD` dates
+(including the full final day, maximum 366 days) or paired month/year fields.
+Mixed or incomplete filters return 400. No filter defaults to the last 30 UTC
+days. Results are in `data.items`; `data.next_cursor` is null on the last page.
+`HISTORY_LIMIT` is 1–100 (default 50). The script captures `HISTORY_CURSOR`;
+enable the cursor query to fetch the next page with the same filters, and stop
+when the cursor is empty.
+
+Login also captures `REFRESH_TOKEN` (or `ADMIN_REFRESH_TOKEN`). **Refresh Tokens**
+rotates the ordinary user's token and stores both replacements. Use each refresh
+token once; a concurrent refresh or replay revokes all that account's sessions.
+**Logout All Sessions** immediately revokes all access and refresh tokens.
+Access tokens default to 15 minutes and refresh families expire after seven
+days. For an expired admin access token, re-run **Login as Admin**.
 
 ## Status codes and checks
 
@@ -80,5 +88,5 @@ success-path scripts.
 This is a manual workflow rather than an unattended collection run: payment
 completion, funding, recipient setup and admin provisioning require external
 steps. Select the appropriate requests for automation. Login is limited to five
-requests per minute per IP and all endpoints have a global per-IP limit of 60 per
+requests per minute per IP and per account (with five-minute account backoff), and all endpoints have a global per-IP limit of 60 per
 minute, so repeated runs may return 429.

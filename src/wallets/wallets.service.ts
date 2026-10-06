@@ -64,11 +64,6 @@ export class WalletsService {
     return result;
   }
 
-  private displayBalance(minorUnits: number): string {
-    const value = BigInt(minorUnits);
-    return `${value / 100n}.${(value % 100n).toString().padStart(2, '0')}`;
-  }
-
   private async lockTransferWallets(
     manager: EntityManager,
     sourceId: string,
@@ -132,8 +127,6 @@ export class WalletsService {
 
     source.kobo_balance = sourceBalance;
     destination.kobo_balance = destinationBalance;
-    source.balance = this.displayBalance(sourceBalance);
-    destination.balance = this.displayBalance(destinationBalance);
 
     await manager.save(Wallet, [source, destination]);
     await manager.save(
@@ -389,8 +382,6 @@ export class WalletsService {
           data.amount,
         );
 
-        wallet.balance = this.displayBalance(Number(wallet.kobo_balance));
-
         await manager.save(Wallet, wallet);
         await manager.save(
           WalletTransaction,
@@ -421,13 +412,13 @@ export class WalletsService {
 
     await this.searchWallet({ user_id: body.user_id, currency });
 
-    const wallet = this.walletRepository.create({
-      user_id: body.user_id,
-      currency,
-    });
-
     try {
-      return await this.walletRepository.save(wallet);
+      // Explicit columns keep the runtime role unable to create pre-funded wallets.
+      const [wallet] = await this.walletRepository.query(
+        'INSERT INTO wallets (user_id, currency) VALUES ($1, $2) RETURNING *',
+        [body.user_id, currency],
+      );
+      return this.walletRepository.create(wallet as Partial<Wallet>);
     } catch (error) {
       // A second request may pass the precheck before the first insert commits.
       // PostgreSQL is authoritative; only this specific conflict becomes HTTP 409.

@@ -1,7 +1,9 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
+import { schemaPreflight } from '../database/schema-preflight';
 
 export class InitializeSchema1791280000000 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
+    await schemaPreflight(queryRunner);
     await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
     for (const [name, values] of [
       ['wallets_currency_enum', "'NGN', 'USD', 'GHS'"],

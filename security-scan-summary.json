@@ -1,324 +1,139 @@
 {
   "date": "2026-10-06",
   "scanner": "Trivy 0.75.0",
-  "scope": "HIGH and CRITICAL, including unfixed findings",
+  "scope": "HIGH and CRITICAL, including unfixed findings; no vulnerability ignore rules",
   "images": {
     "api": {
-      "packageFindings": 43,
-      "uniqueCVEs": 8,
-      "findings": [
+      "packageFindings": 0,
+      "uniqueCVEs": 0,
+      "findings": [],
+      "platforms": [
         {
-          "id": "CVE-2026-76642",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "bsdutils",
-            "libblkid1",
-            "liblastlog2-2",
-            "libmount1",
-            "libsmartcols1",
-            "libuuid1",
-            "login",
-            "mount",
-            "util-linux"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-76642"
+          "platform": "linux/arm64",
+          "image": "wallet-security-review-stack-api",
+          "imageId": "sha256:26596ef6a91ecf0fd572664e0169a13cb96a6f6e7539f70486b5587df39526fc",
+          "os": {
+            "Family": "alpine",
+            "Name": "3.24.2"
+          },
+          "packageFindings": 0,
+          "uniqueCVEs": 0,
+          "findings": []
         },
         {
-          "id": "CVE-2026-78408",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "bsdutils",
-            "libblkid1",
-            "liblastlog2-2",
-            "libmount1",
-            "libsmartcols1",
-            "libuuid1",
-            "login",
-            "mount",
-            "util-linux"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-78408"
-        },
-        {
-          "id": "CVE-2026-78409",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "bsdutils",
-            "libblkid1",
-            "liblastlog2-2",
-            "libmount1",
-            "libsmartcols1",
-            "libuuid1",
-            "login",
-            "mount",
-            "util-linux"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-78409"
-        },
-        {
-          "id": "CVE-2026-78410",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "bsdutils",
-            "libblkid1",
-            "liblastlog2-2",
-            "libmount1",
-            "libsmartcols1",
-            "libuuid1",
-            "login",
-            "mount",
-            "util-linux"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-78410"
-        },
-        {
-          "id": "CVE-2026-54369",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libacl1"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-54369"
-        },
-        {
-          "id": "CVE-2026-16742",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libsystemd0",
-            "libudev1"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-16742"
-        },
-        {
-          "id": "CVE-2025-69720",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libtinfo6",
-            "ncurses-base",
-            "ncurses-bin"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2025-69720"
-        },
-        {
-          "id": "CVE-2026-9538",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "perl-base"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-9538"
+          "platform": "linux/amd64",
+          "image": "wallet-system:security-review-amd64",
+          "imageId": "sha256:2e0d928b3dcf9ea47ee91f2bf04cfdf66bf6a8e9b3d00edec58ad5617a8477b9",
+          "os": {
+            "Family": "alpine",
+            "Name": "3.24.2"
+          },
+          "packageFindings": 0,
+          "uniqueCVEs": 0,
+          "findings": []
         }
       ]
     },
     "postgres": {
-      "packageFindings": 62,
-      "uniqueCVEs": 17,
-      "findings": [
+      "packageFindings": 0,
+      "uniqueCVEs": 0,
+      "findings": [],
+      "platforms": [
         {
-          "id": "CVE-2026-76642",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "bsdutils",
-            "libblkid1",
-            "liblastlog2-2",
-            "libmount1",
-            "libsmartcols1",
-            "libuuid1",
-            "login",
-            "mount",
-            "util-linux"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-76642"
+          "platform": "linux/arm64",
+          "image": "wallet-system-postgres:15-alpine",
+          "imageId": "sha256:d310089bdf9ac995202a9ea19f7d592c5e97cdc0c027659417aed312291e21ed",
+          "os": {
+            "Family": "alpine",
+            "Name": "3.24.2"
+          },
+          "packageFindings": 0,
+          "uniqueCVEs": 0,
+          "findings": []
         },
         {
-          "id": "CVE-2026-78408",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "bsdutils",
-            "libblkid1",
-            "liblastlog2-2",
-            "libmount1",
-            "libsmartcols1",
-            "libuuid1",
-            "login",
-            "mount",
-            "util-linux"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-78408"
+          "platform": "linux/amd64",
+          "image": "wallet-system-postgres:security-review-amd64",
+          "imageId": "sha256:a765335a6c4b43842cd9556000fa0ec562076b8eb693f7f6702773bb6ea6ffee",
+          "os": {
+            "Family": "alpine",
+            "Name": "3.24.2"
+          },
+          "packageFindings": 0,
+          "uniqueCVEs": 0,
+          "findings": []
+        }
+      ]
+    },
+    "migrations": {
+      "packageFindings": 0,
+      "uniqueCVEs": 0,
+      "findings": [],
+      "platforms": [
+        {
+          "platform": "linux/arm64",
+          "image": "wallet-security-review-stack-migrations",
+          "imageId": "sha256:67d4ca4c7849285335945970034fb7d5a5d21f0baa809d10fbc2a3d9c03844d5",
+          "os": {
+            "Family": "alpine",
+            "Name": "3.24.2"
+          },
+          "packageFindings": 0,
+          "uniqueCVEs": 0,
+          "findings": []
         },
         {
-          "id": "CVE-2026-78409",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "bsdutils",
-            "libblkid1",
-            "liblastlog2-2",
-            "libmount1",
-            "libsmartcols1",
-            "libuuid1",
-            "login",
-            "mount",
-            "util-linux"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-78409"
-        },
-        {
-          "id": "CVE-2026-78410",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "bsdutils",
-            "libblkid1",
-            "liblastlog2-2",
-            "libmount1",
-            "libsmartcols1",
-            "libuuid1",
-            "login",
-            "mount",
-            "util-linux"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-78410"
-        },
-        {
-          "id": "CVE-2026-24882",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "dirmngr",
-            "gnupg",
-            "gnupg-l10n",
-            "gpg",
-            "gpg-agent",
-            "gpgconf",
-            "gpgsm"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-24882"
-        },
-        {
-          "id": "CVE-2026-54369",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libacl1"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-54369"
-        },
-        {
-          "id": "CVE-2025-69720",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libncursesw6",
-            "libtinfo6",
-            "ncurses-base",
-            "ncurses-bin"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2025-69720"
-        },
-        {
-          "id": "CVE-2026-9538",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libperl5.40",
-            "perl",
-            "perl-base",
-            "perl-modules-5.40"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-9538"
-        },
-        {
-          "id": "CVE-2026-16742",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libsystemd0",
-            "libudev1"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-16742"
-        },
-        {
-          "id": "CVE-2026-6653",
-          "severity": "CRITICAL",
-          "fixedVersion": null,
-          "packages": [
-            "libxml2"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-6653"
-        },
-        {
-          "id": "CVE-2026-74860",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libxml2"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-74860"
-        },
-        {
-          "id": "CVE-2026-86138",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libxml2"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-86138"
-        },
-        {
-          "id": "CVE-2026-86139",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libxml2"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-86139"
-        },
-        {
-          "id": "CVE-2026-86140",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libxml2"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-86140"
-        },
-        {
-          "id": "CVE-2026-86142",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libxml2"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-86142"
-        },
-        {
-          "id": "CVE-2026-86143",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libxml2"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-86143"
-        },
-        {
-          "id": "CVE-2026-86144",
-          "severity": "HIGH",
-          "fixedVersion": null,
-          "packages": [
-            "libxml2"
-          ],
-          "url": "https://avd.aquasec.com/nvd/cve-2026-86144"
+          "platform": "linux/amd64",
+          "image": "wallet-system-migrations:security-review-amd64",
+          "imageId": "sha256:f44a3f5b6bc43d6f3053269a7615eb871cb2af2e7c901489f545adce8a9a2b00",
+          "os": {
+            "Family": "alpine",
+            "Name": "3.24.2"
+          },
+          "packageFindings": 0,
+          "uniqueCVEs": 0,
+          "findings": []
         }
       ]
     }
-  }
+  },
+  "validation": {
+    "node": "24.21.0",
+    "unitTests": 83,
+    "integrationTests": 158,
+    "productionDependencyAudit": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0
+    },
+    "allDependencyAudit": {
+      "info": 0,
+      "low": 0,
+      "moderate": 8,
+      "high": 0,
+      "critical": 0
+    },
+    "remainingAdvisory": {
+      "id": "GHSA-hp3w-g68c-fv3c",
+      "package": "sprintf-js",
+      "severity": "moderate",
+      "scope": "Jest development coverage tooling",
+      "dependencyPaths": 8,
+      "patchedVersion": null
+    },
+    "compose": "Separate migrations and grants jobs exited 0; API healthy under restricted credentials",
+    "restoreRehearsal": "Debian PostgreSQL 15 to Alpine PostgreSQL 15 logical restore and upgrade; fixture financial records unchanged and checkpoints reconciled",
+    "smokeTests": [
+      "arm64 restricted API: health, CORS allowlist, disabled Swagger, signup/login, currency mapping, refresh/logout",
+      "amd64 restricted API: health, disabled Swagger, role validation, native bcrypt login"
+    ],
+    "hostedCI": false,
+    "typescriptConfiguration": "NodeNext resolution with CommonJS emission, explicit roots and isolated transforms; no deprecated baseUrl or ignoreDeprecations; 83 unit and 158 integration tests rechecked"
+  },
+  "notes": [
+    "These scans do not establish absence of lower-severity or unknown vulnerabilities.",
+    "Production rollout requires logical restore into a new Alpine volume, validation of actual records and collation-sensitive indexes, and session/client migration."
+  ]
 }

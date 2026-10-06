@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 15
     services:
       postgres:
-        image: postgres:15-trixie
+        image: postgres:15-alpine3.24
         env:
           POSTGRES_USER: wallet_test
           POSTGRES_PASSWORD: wallet-test-only
@@ -63,18 +63,27 @@ jobs:
         with:
           persist-credentials: false
       - run: docker build --target runtime -t wallet-system:ci .
-      - name: Scan fixable high and critical image vulnerabilities
+      - name: Scan all high and critical image vulnerabilities
         run: >-
           docker run --rm
           -v /var/run/docker.sock:/var/run/docker.sock:ro
           ghcr.io/aquasecurity/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa
           image --scanners vuln --severity HIGH,CRITICAL
-          --ignore-unfixed --exit-code 1 wallet-system:ci
+          --exit-code 1 wallet-system:ci
       - run: docker build --target postgres -t wallet-system-postgres:ci .
-      - name: Scan fixable high and critical database image vulnerabilities
+      - name: Scan all high and critical database image vulnerabilities
         run: >-
           docker run --rm
           -v /var/run/docker.sock:/var/run/docker.sock:ro
           ghcr.io/aquasecurity/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa
           image --scanners vuln --severity HIGH,CRITICAL
-          --ignore-unfixed --exit-code 1 wallet-system-postgres:ci
+          --exit-code 1 wallet-system-postgres:ci
+
+      - run: docker build --target migrations -t wallet-system-migrations:ci .
+      - name: Scan all high and critical migration image vulnerabilities
+        run: >-
+          docker run --rm
+          -v /var/run/docker.sock:/var/run/docker.sock:ro
+          ghcr.io/aquasecurity/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa
+          image --scanners vuln --severity HIGH,CRITICAL
+          --exit-code 1 wallet-system-migrations:ci

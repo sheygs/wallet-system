@@ -4,7 +4,8 @@ import {
   IsUUID,
   IsNotEmpty,
   IsEnum,
-  IsDateString,
+  Matches,
+  Length,
   IsInt,
   Min,
   Max,
@@ -47,21 +48,28 @@ export class CreateTransactionDTO {
 }
 
 export class TransactionHistoryDTO {
-  @IsString()
-  @IsDateString()
   @IsOptional()
-  from_date: Date;
+  @Matches(/^\d{4}-\d{2}-\d{2}$/)
+  from_date?: string;
 
-  @IsString()
-  @IsDateString()
   @IsOptional()
-  to_date: Date;
+  @Matches(/^\d{4}-\d{2}-\d{2}$/)
+  to_date?: string;
 
-  @IsString()
   @IsOptional()
-  target_month: string;
+  @Matches(/^(?:[1-9]|1[0-2])$/)
+  target_month?: string;
 
-  @IsString()
   @IsOptional()
-  target_year: string;
+  @Matches(/^[1-9]\d{3}$/)
+  target_year?: string;
+
+  @IsOptional()
+  @Matches(/^(?:[1-9]|[1-9]\d|100)$/)
+  limit?: string;
+
+  @IsOptional()
+  @IsString()
+  @Length(1, 512)
+  cursor?: string;
 }

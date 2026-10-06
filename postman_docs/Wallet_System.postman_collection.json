@@ -132,15 +132,15 @@
     },
     {
       "key": "FROM_DATE",
-      "value": "2026-10-01T00:00:00.000Z",
+      "value": "2026-10-01",
       "type": "string",
-      "description": "Start bound for history; pair with TO_DATE."
+      "description": "Inclusive UTC start day in YYYY-MM-DD format; pair with TO_DATE."
     },
     {
       "key": "TO_DATE",
-      "value": "2026-10-31T23:59:59.999Z",
+      "value": "2026-10-31",
       "type": "string",
-      "description": "Exact end bound for history; pair with FROM_DATE."
+      "description": "Inclusive UTC final day in YYYY-MM-DD format; pair with FROM_DATE."
     },
     {
       "key": "TARGET_MONTH",
@@ -153,6 +153,30 @@
       "value": "2026",
       "type": "string",
       "description": "Pair with TARGET_MONTH."
+    },
+    {
+      "key": "REFRESH_TOKEN",
+      "value": "",
+      "type": "string",
+      "description": "Private rotating refresh token captured by Login or Refresh Tokens."
+    },
+    {
+      "key": "ADMIN_REFRESH_TOKEN",
+      "value": "",
+      "type": "string",
+      "description": "Private admin refresh token captured by Login as Admin."
+    },
+    {
+      "key": "HISTORY_LIMIT",
+      "value": "50",
+      "type": "string",
+      "description": "History page size, 1\u2013100."
+    },
+    {
+      "key": "HISTORY_CURSOR",
+      "value": "",
+      "type": "string",
+      "description": "Next cursor captured by Transaction Summary. Enable the cursor query for the next page; stop when empty."
     }
   ],
   "item": [
@@ -341,7 +365,7 @@
           }
         ],
         "url": "{{BASE_URL}}/api/v1/auth/login",
-        "description": "Login by email (or replace email with phone_number). Returns HTTP 200 and a wrapped data.access_token. Five login requests per minute per IP are allowed.",
+        "description": "Login returns access_token, rotating refresh_token and refresh_expires_at. Five login attempts per minute per IP and account are allowed; an account block lasts five minutes. Access tokens default to 15 minutes, refresh families expire after seven days. Re-login after deployment invalidates old tokens.",
         "auth": {
           "type": "noauth"
         },
@@ -392,7 +416,7 @@
             }
           ],
           "cookie": [],
-          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"id\": \"11111111-1111-4111-8111-111111111111\",\n    \"email\": \"wallet.user@example.com\",\n    \"is_admin\": false,\n    \"access_token\": \"<access-token-returned-by-login>\"\n  }\n}"
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"id\": \"11111111-1111-4111-8111-111111111111\",\n    \"email\": \"wallet.user@example.com\",\n    \"is_admin\": false,\n    \"access_token\": \"<access-token-returned-by-login>\",\n    \"refresh_token\": \"<private-rotating-refresh-token>\",\n    \"refresh_expires_at\": \"2026-10-13T12:00:00.000Z\"\n  }\n}"
         },
         {
           "name": "Invalid credentials",
@@ -448,7 +472,68 @@
               "  pm.collectionVariables.set(\"USER_ID\", body.data.id);",
               "} else {",
               "  pm.collectionVariables.unset(\"ACCESS_TOKEN\");",
-              "}"
+              "}",
+              "if (pm.response.code === 200) pm.collectionVariables.set(\"REFRESH_TOKEN\", body.data.refresh_token);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Refresh Tokens",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"refresh_token\": \"{{REFRESH_TOKEN}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{BASE_URL}}/api/v1/auth/refresh",
+        "description": "Use the current refresh token exactly once. Stores the replacement tokens. A replay revokes all sessions; concurrent refreshes require re-login."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "if (pm.response.code === 200) { pm.collectionVariables.set(\"ACCESS_TOKEN\", body.data.access_token); pm.collectionVariables.set(\"REFRESH_TOKEN\", body.data.refresh_token); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Logout All Sessions",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": "{{BASE_URL}}/api/v1/auth/logout",
+        "description": "Revokes every access and refresh token for the signed-in account immediately."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "if (pm.response.code === 200) { pm.collectionVariables.unset(\"ACCESS_TOKEN\"); pm.collectionVariables.unset(\"REFRESH_TOKEN\"); }"
             ]
           }
         }
@@ -1084,7 +1169,7 @@
           }
         ],
         "url": "{{BASE_URL}}/api/v1/auth/login",
-        "description": "Use an existing trusted admin account. Stores ADMIN_ACCESS_TOKEN separately; does not replace the ordinary user token. Admin provisioning is outside public signup.",
+        "description": "Login returns access_token, rotating refresh_token and refresh_expires_at. Five login attempts per minute per IP and account are allowed; an account block lasts five minutes. Access tokens default to 15 minutes, refresh families expire after seven days. Re-login after deployment invalidates old tokens.",
         "auth": {
           "type": "noauth"
         },
@@ -1135,7 +1220,7 @@
             }
           ],
           "cookie": [],
-          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"id\": \"55555555-5555-4555-8555-555555555555\",\n    \"email\": \"wallet.admin@example.com\",\n    \"is_admin\": true,\n    \"access_token\": \"<admin-access-token-returned-by-login>\"\n  }\n}"
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"id\": \"55555555-5555-4555-8555-555555555555\",\n    \"email\": \"wallet.admin@example.com\",\n    \"is_admin\": true,\n    \"access_token\": \"<admin-access-token-returned-by-login>\",\n    \"refresh_token\": \"<private-rotating-refresh-token>\",\n    \"refresh_expires_at\": \"2026-10-13T12:00:00.000Z\"\n  }\n}"
         }
       ],
       "event": [
@@ -1152,7 +1237,8 @@
               "} else {",
               "  pm.collectionVariables.unset(\"ADMIN_ACCESS_TOKEN\");",
               "}",
-              "pm.test(\"Database role is admin\", function () { pm.expect(body.data && body.data.is_admin).to.eql(true); });"
+              "pm.test(\"Database role is admin\", function () { pm.expect(body.data && body.data.is_admin).to.eql(true); });",
+              "if (pm.response.code === 200) pm.collectionVariables.set(\"ADMIN_REFRESH_TOKEN\", body.data.refresh_token);"
             ]
           }
         }
@@ -1446,7 +1532,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{BASE_URL}}/api/v1/wallet-transactions/history?from_date={{FROM_DATE}}&to_date={{TO_DATE}}",
+          "raw": "{{BASE_URL}}/api/v1/wallet-transactions/history?from_date={{FROM_DATE}}&to_date={{TO_DATE}}&limit={{HISTORY_LIMIT}}",
           "host": [
             "{{BASE_URL}}"
           ],
@@ -1465,7 +1551,7 @@
             {
               "key": "to_date",
               "value": "{{TO_DATE}}",
-              "description": "Exact end bound; explicit UTC end-of-day includes that day."
+              "description": "Inclusive final UTC calendar day in YYYY-MM-DD format."
             },
             {
               "key": "target_month",
@@ -1478,10 +1564,21 @@
               "value": "{{TARGET_YEAR}}",
               "disabled": true,
               "description": "Enable with target_month instead of date bounds."
+            },
+            {
+              "key": "limit",
+              "value": "{{HISTORY_LIMIT}}",
+              "description": "1\u2013100; default 50."
+            },
+            {
+              "key": "cursor",
+              "value": "{{HISTORY_CURSOR}}",
+              "disabled": true,
+              "description": "Enable for the next page after a nonempty next_cursor. Keep the same date filter."
             }
           ]
         },
-        "description": "Admin-only transaction history. Enable either FROM_DATE/TO_DATE or TARGET_MONTH/TARGET_YEAR. Current code uses exact date bounds, and month parameters override supplied date bounds. Pagination and corrected full-month end bounds remain pending; for a full day use an explicit UTC timestamp through 23:59:59.999.",
+        "description": "Admin-only UTC transaction history. Supply paired YYYY-MM-DD dates (inclusive final day, at most 366 days) or a paired month/year, never both. Omitting filters returns the last 30 UTC days. data.items is a page; data.next_cursor is null when finished. Keep the same filter while paging.",
         "auth": {
           "type": "bearer",
           "bearer": [
@@ -1500,7 +1597,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{BASE_URL}}/api/v1/wallet-transactions/history?from_date={{FROM_DATE}}&to_date={{TO_DATE}}",
+              "raw": "{{BASE_URL}}/api/v1/wallet-transactions/history?from_date={{FROM_DATE}}&to_date={{TO_DATE}}&limit={{HISTORY_LIMIT}}",
               "host": [
                 "{{BASE_URL}}"
               ],
@@ -1519,7 +1616,7 @@
                 {
                   "key": "to_date",
                   "value": "{{TO_DATE}}",
-                  "description": "Exact end bound; explicit UTC end-of-day includes that day."
+                  "description": "Inclusive final UTC calendar day in YYYY-MM-DD format."
                 },
                 {
                   "key": "target_month",
@@ -1532,10 +1629,21 @@
                   "value": "{{TARGET_YEAR}}",
                   "disabled": true,
                   "description": "Enable with target_month instead of date bounds."
+                },
+                {
+                  "key": "limit",
+                  "value": "{{HISTORY_LIMIT}}",
+                  "description": "1\u2013100; default 50."
+                },
+                {
+                  "key": "cursor",
+                  "value": "{{HISTORY_CURSOR}}",
+                  "disabled": true,
+                  "description": "Enable for the next page after a nonempty next_cursor. Keep the same date filter."
                 }
               ]
             },
-            "description": "Admin-only transaction history. Enable either FROM_DATE/TO_DATE or TARGET_MONTH/TARGET_YEAR. Current code uses exact date bounds, and month parameters override supplied date bounds. Pagination and corrected full-month end bounds remain pending; for a full day use an explicit UTC timestamp through 23:59:59.999.",
+            "description": "Admin-only UTC transaction history. Supply paired YYYY-MM-DD dates (inclusive final day, at most 366 days) or a paired month/year, never both. Omitting filters returns the last 30 UTC days. data.items is a page; data.next_cursor is null when finished. Keep the same filter while paging.",
             "auth": {
               "type": "bearer",
               "bearer": [
@@ -1557,7 +1665,7 @@
             }
           ],
           "cookie": [],
-          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"transactions retrieved\",\n  \"data\": [\n    {\n      \"id\": \"66666666-6666-4666-8666-666666666666\",\n      \"user_id\": \"11111111-1111-4111-8111-111111111111\",\n      \"source_wallet_id\": \"22222222-2222-4222-8222-222222222222\",\n      \"amount\": \"1000\",\n      \"reference\": \"example-paid-reference\",\n      \"transaction_type\": \"DEPOSIT\",\n      \"transaction_status\": \"successful\",\n      \"created_at\": \"2026-10-06T12:00:00.000Z\"\n    }\n  ]\n}"
+          "body": "{\n  \"code\": 200,\n  \"status\": \"success\",\n  \"message\": \"transactions retrieved\",\n  \"data\": {\n    \"items\": [\n      {\n        \"id\": \"66666666-6666-4666-8666-666666666666\",\n        \"user_id\": \"11111111-1111-4111-8111-111111111111\",\n        \"source_wallet_id\": \"22222222-2222-4222-8222-222222222222\",\n        \"amount\": \"1000\",\n        \"reference\": \"example-paid-reference\",\n        \"transaction_type\": \"DEPOSIT\",\n        \"transaction_status\": \"successful\",\n        \"created_at\": \"2026-10-06T12:00:00.000Z\"\n      }\n    ],\n    \"next_cursor\": null\n  }\n}"
         }
       ],
       "event": [
@@ -1569,7 +1677,7 @@
               "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
               "const body = pm.response.json();",
               "pm.test(\"Success envelope\", function () { pm.expect(body.status).to.eql(\"success\"); pm.expect(body.code).to.eql(200); });",
-              "if (pm.response.code === 200) pm.test(\"History array returned\", function () { pm.expect(body.data).to.be.an(\"array\"); });"
+              "if (pm.response.code === 200) { pm.test(\"History page returned\", function () { pm.expect(body.data.items).to.be.an(\"array\"); pm.expect(body.data).to.have.property(\"next_cursor\"); }); pm.collectionVariables.set(\"HISTORY_CURSOR\", body.data.next_cursor || \"\"); }"
             ]
           }
         }

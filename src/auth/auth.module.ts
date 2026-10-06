@@ -5,7 +5,9 @@ import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 import { HashModule } from '../hash/hash.module';
 import { PassportModule } from '@nestjs/passport';
-import { JwtModule, JwtSignOptions } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtPolicy } from './jwt-policy';
+import { SharedRateLimit } from './shared-rate-limit';
 import { HelpersModule } from '../utilities/helpers.module';
 
 @Module({
@@ -16,13 +18,10 @@ import { HelpersModule } from '../utilities/helpers.module';
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: {
-        expiresIn: (process.env.JWT_EXPIRY ||
-          '1h') as JwtSignOptions['expiresIn'],
-      },
+      signOptions: jwtPolicy(),
     }),
   ],
-  providers: [AuthService],
+  providers: [AuthService, SharedRateLimit],
   controllers: [AuthController],
   exports: [AuthService],
 })

@@ -1,5 +1,8 @@
 import { getTransferApprovalThreshold } from './transfers/transfer-policy';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { SharedRateLimit } from './auth/shared-rate-limit';
+import { DataSource } from 'typeorm';
+import { jwtPolicy } from './auth/jwt-policy';
 import {
   MiddlewareConsumer,
   Module,
@@ -26,7 +29,33 @@ import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import winstonLogger from './utilities/logger';
 @Module({
   imports: [
-    ThrottlerModule.forRoot([{ ttl: 60000, limit: 60 }]),
+    ThrottlerModule.forRootAsync({
+      imports: [DatabaseModule],
+      inject: [DataSource],
+      useFactory: (db: DataSource) => ({
+        storage: new SharedRateLimit(db),
+        throttlers: [
+          { name: 'global', ttl: 60000, limit: 60 },
+          {
+            name: 'default',
+            ttl: 60000,
+            limit: 60,
+            skipIf: (context) =>
+              !['login', 'refresh', 'registerUser'].includes(
+                context.getHandler().name,
+              ),
+          },
+        ],
+        // One IP bucket across all endpoints, plus stricter named auth buckets.
+        generateKey: (context, tracker, name) => {
+          const handler = context.getHandler().name;
+          if (name === 'global') return `ip:global:${tracker}`;
+          return ['login', 'refresh', 'registerUser'].includes(handler)
+            ? `ip:${handler}:${tracker}`
+            : `ip:global:${tracker}`;
+        },
+      }),
+    }),
     WinstonModule.forRoot({
       ...winstonLogger,
     }),
@@ -46,6 +75,7 @@ import winstonLogger from './utilities/logger';
           throw new Error('JWT_SECRET must contain at least 32 bytes');
         }
         getTransferApprovalThreshold(env);
+        jwtPolicy(env);
         return env;
       },
     }),

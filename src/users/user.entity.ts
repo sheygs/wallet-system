@@ -63,6 +63,9 @@ export class User extends BaseEntity {
   })
   is_admin?: boolean;
 
+  @Column({ type: 'integer', default: 0 })
+  auth_version: number;
+
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',

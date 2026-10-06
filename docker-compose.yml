@@ -1,3 +1,10 @@
+x-database-env: &database-env
+  POSTGRES_HOST: postgres
+  POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB}
+  POSTGRES_PORT: 5432
+  # Private Compose network only. Remote databases require verify-full.
+  POSTGRES_SSL_MODE: disable
+
 services:
   api:
     build:
@@ -8,18 +15,39 @@ services:
     ports:
       - "127.0.0.1:${PORT:-4000}:4000"
     environment:
+      <<: *database-env
       NODE_ENV: production
       PORT: 4000
-      POSTGRES_HOST: postgres
-      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB}
-      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_RUNTIME_USER:-wallet_runtime}
+      POSTGRES_PASSWORD: ${POSTGRES_RUNTIME_PASSWORD:?Set POSTGRES_RUNTIME_PASSWORD}
       JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET}
-      JWT_EXPIRY: ${JWT_EXPIRY:-1h}
+      JWT_EXPIRY: ${JWT_EXPIRY:-15m}
+      JWT_ISSUER: ${JWT_ISSUER:-wallet-system}
+      JWT_AUDIENCE: ${JWT_AUDIENCE:-wallet-system-api}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES:-}
       PAYSTACK_SECRET_KEY: ${PAYSTACK_SECRET_KEY:?Set PAYSTACK_SECRET_KEY}
       PAYSTACK_API_BASE_URL: https://api.paystack.co
       MININUM_APPROVAL_AMOUNT: ${MININUM_APPROVAL_AMOUNT:-1000000}
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+  migrations:
+    build:
+      context: .
+      target: migrations
+    environment:
+      <<: *database-env
+      NODE_ENV: production
+      POSTGRES_USER: ${POSTGRES_MIGRATION_USER:-wallet_migrator}
+      POSTGRES_PASSWORD: ${POSTGRES_MIGRATION_PASSWORD:?Set POSTGRES_MIGRATION_PASSWORD}
     depends_on:
       postgres:
         condition: service_healthy
@@ -30,8 +58,27 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
+  permissions:
+    image: wallet-system-postgres:15-alpine
+    entrypoint: ["sh", "-c"]
+    command:
+      - 'exec psql -v ON_ERROR_STOP=1 -v runtime_role="$$POSTGRES_RUNTIME_USER" -f /opt/wallet-database/grant-runtime.sql'
+    environment:
+      PGHOST: postgres
+      PGDATABASE: ${POSTGRES_DB:?Set POSTGRES_DB}
+      PGUSER: ${POSTGRES_MIGRATION_USER:-wallet_migrator}
+      PGPASSWORD: ${POSTGRES_MIGRATION_PASSWORD:?Set POSTGRES_MIGRATION_PASSWORD}
+      POSTGRES_RUNTIME_USER: ${POSTGRES_RUNTIME_USER:-wallet_runtime}
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
   postgres:
-    image: wallet-system-postgres:15
+    image: wallet-system-postgres:15-alpine
     build:
       context: .
       target: postgres
@@ -40,12 +87,17 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB}
+      POSTGRES_MIGRATION_USER: ${POSTGRES_MIGRATION_USER:-wallet_migrator}
+      POSTGRES_MIGRATION_PASSWORD: ${POSTGRES_MIGRATION_PASSWORD:?Set POSTGRES_MIGRATION_PASSWORD}
+      POSTGRES_RUNTIME_USER: ${POSTGRES_RUNTIME_USER:-wallet_runtime}
+      POSTGRES_RUNTIME_PASSWORD: ${POSTGRES_RUNTIME_PASSWORD:?Set POSTGRES_RUNTIME_PASSWORD}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
       interval: 5s
       timeout: 5s
       retries: 10
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      # libc changes require a logical restore into a new volume.
+      - pgdata_alpine:/var/lib/postgresql/data
 volumes:
-  pgdata:
+  pgdata_alpine:
