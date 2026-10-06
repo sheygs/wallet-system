@@ -36,3 +36,6 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 TODO.md
+
+# Local review notes
+/SECURITY_REVIEW.md

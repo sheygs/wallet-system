@@ -87,8 +87,7 @@ Use a dedicated disposable database for `TEST_POSTGRES_*` because integration
 tests delete their fixture tables. CI provisions that database automatically.
 Run `yarn format:check`, `yarn lint`, `yarn typecheck`, `yarn build`, `yarn test --runInBand`, and
 `yarn test:e2e`. Production Docker containers run as a non-root user and log to
-stdout. See [the security review](SECURITY_REVIEW.md) for remaining issues and
-proposed changes.
+stdout.
 
 ## Transfer request idempotency
 
