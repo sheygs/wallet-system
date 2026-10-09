@@ -4,7 +4,7 @@
 FROM golang:1.27.0-bookworm AS postgres-helper
 RUN CGO_ENABLED=0 GOBIN=/out go install github.com/tianon/gosu@1.19
 
-FROM postgres:15-alpine3.24 AS postgres
+FROM postgres:18-alpine3.24 AS postgres
 RUN apk upgrade --no-cache
 COPY --from=postgres-helper /out/gosu /usr/local/bin/gosu
 COPY scripts/database /opt/wallet-database
