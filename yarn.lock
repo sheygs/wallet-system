@@ -974,10 +974,10 @@
     dotenv-expand "13.0.0"
     es-toolkit "1.52.0"
 
-"@nestjs/core@^12.1.2":
-  version "12.1.2"
-  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-12.1.2.tgz#00bee00b17e700f3c93c89dac79748cf3b981804"
-  integrity sha512-ieNRDv6P6dLsF/wMz9IUjwnyQbj7/Oluq1FXe3Xhje7TFSKPprLc83QniA2I6tjkr7YVDosdL2Dj7CVv9kU8og==
+"@nestjs/core@^12.2.0":
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-12.2.0.tgz#1af54258f7da8d5abd67a48a0f7aeaab8ad85486"
+  integrity sha512-OTNlRALw/xlSJ/cXeIo7HzY/TqE9RSyv6uFS+OY41dDelDwMqnAjpRFiN5RVGOI/R4wAhaD0TJVjsfOrpZJCjA==
   dependencies:
     uid "2.0.2"
     fast-safe-stringify "2.1.1"
