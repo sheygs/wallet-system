@@ -952,10 +952,10 @@
     tsconfig-paths "4.2.0"
     typescript "~6.0.2"
 
-"@nestjs/common@^12.1.2":
-  version "12.1.2"
-  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-12.1.2.tgz#504439c52a90ac2c8885e00c10b324296048f0e1"
-  integrity sha512-e2tvLcEaG18sJy5IXrdSLv0ZBpR5djWxypCLkLuMAEFCvVPYL1lEIhvAMBkarlg+ZA8tbZN40J0tFurUl9NpdA==
+"@nestjs/common@^12.2.0":
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-12.2.0.tgz#b5efa06b38e313f997aaba75c8c4add2938fe6f4"
+  integrity sha512-xC4tUL31tQ2eoZcHheHIjnCrhnqyAEDRMGGHMUrYsOdh0Kg1DvDlLn7zelisErMcpaNanSIApJH6m9AcnK3fQQ==
   dependencies:
     uid "2.0.2"
     "@standard-schema/spec" "1.1.0"
