@@ -11,7 +11,7 @@ COPY scripts/database /opt/wallet-database
 COPY scripts/database/init-roles.sh /docker-entrypoint-initdb.d/10-wallet-roles.sh
 
 # Yarn installs dependencies; omit the unused npm bundle and its advisories.
-FROM node:24-alpine3.24 AS node-base
+FROM node:26-alpine3.24 AS node-base
 RUN apk upgrade --no-cache \
     && rm -rf /usr/local/lib/node_modules/npm \
     && rm -f /usr/local/bin/npm /usr/local/bin/npx
